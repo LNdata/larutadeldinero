@@ -1,0 +1,44 @@
+{% extends "bootstrap/base.html" %}
+
+
+{% block title %}
+  Financiamiento de Campañas
+{% endblock %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+  <ul class="nav nav-pills nav-justified">
+    <li><a href="#">Aportes</a></li>
+  </ul>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+
+{% include 'form.html' %}
+
+<table class="table table-striped">
+  <tr>
+      <th>Elecciones</th>
+      <th>Nombre</th>
+      <th>Documento</th>
+      <th>Importe</th>
+      <th>Agrupación</th>
+      <th>Distrito</th>
+  </tr>
+    {% for obj in object_list %}
+      <tr>
+          <td>{{ obj['ELECCIONES'] }}</a></td>
+          <td><a href="/{{ obj['DOCUMENTO']}}">{{ obj['NOMBRE'].decode('UTF-8')  }} {{ obj['APELLIDO'].decode('UTF-8')  }}</a></td>
+          <td>{{ obj['DOCUMENTO'] }}</td>
+          <td>{{ obj['IMPORTE'] }}</td>
+          <td>{{ obj['AGRUPACION'].decode('UTF-8')  }}</td>
+          <td>{{ obj['DISTRITO'].decode('UTF-8')  }}</td>
+      </tr>
+    {% endfor %}
+</table>
+{% endblock %}

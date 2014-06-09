@@ -1,0 +1,28 @@
+{% extends "bootstrap/base.html" %}
+
+
+{% block title %}
+  Aporte de {{ object['NOMBRE'].decode('UTF-8') }}
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+  <ul class="nav nav-pills nav-justified">
+    <li><a href="#">Aportes</a></li>
+  </ul>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Aporte de {{ object['NOMBRE'].decode('UTF-8') }}</h1>
+  </div>
+</div>
+
+<p>  #"ELECCIONES","CARGO","CODDISTRITO","DISTRITO","NUM","AGRUPACION","LISTA","NOMBRE","APELLIDO","DOCUMENTO","CUIT/L","DOMICILIO","FECHA","TIPO","IMPORTE","APORTE","CODLISTA","NUMCUIT","CUIT"</p>
+
+
+{% endblock %}
