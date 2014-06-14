@@ -1,0 +1,25 @@
+.departamentos {
+  stroke: #ddd;
+  stroke-width: 1px;
+  fill: none;
+}
+
+.provincias {
+  stroke: #ddd;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}
+
+#legend {
+    margin: 1.5em;
+}
+
+li.key {
+    border-top-width: 15px;
+    border-top-style: solid;
+    font-size: .75em;
+    width: 11%;
+    padding-left: 0;
+    padding-right: 0;
+}
