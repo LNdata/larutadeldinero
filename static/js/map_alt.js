@@ -18,8 +18,8 @@ $(function () {
         .attr("height", height);
 
     queue()
-        .defer(d3.json, "/data/argentina.json")
-        .defer(d3.csv, "/data/aportes_2013_all.csv")
+        .defer(d3.json, "data/argentina.json")
+        .defer(d3.csv, "data/aportes_2013_all.csv")
         .await(ready);
 
     function ready(error, argentina, aportes) {
