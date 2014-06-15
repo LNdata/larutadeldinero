@@ -26,12 +26,24 @@
             <div id="map"></div>
         </div>
         <div class="col-md-6">
-            <div class="btn-group-vertical" data-toggle="buttons">
+            <div id="aggregation" class="btn-group-vertical filter" data-toggle="buttons">
               <label class="btn btn-default active">
-                <input checked type="radio" name="options" id="personas"> Cantidad de personas
+                <input checked type="radio" name="options" data-field="count"> Cantidad de personas
               </label>
               <label class="btn btn-default">
-                <input type="radio" name="options" id="aportes"> Aportes
+                <input type="radio" name="options" data-field="importe"> Aportes
+              </label>
+            </div>
+
+            <div class="btn-group-vertical filter" data-toggle="buttons" data-field="agrupacion">
+              <label class="btn btn-default active">
+                <input checked type="radio" name="options" data-value="all"> Todos
+              </label>
+              <label class="btn btn-default">
+                <input type="radio" name="options" data-value="FRENTE PARA LA VICTORIA"> FRENTE PARA LA VICTORIA
+              </label>
+              <label class="btn btn-default">
+                <input type="radio" name="options" data-value="UNION POR CORDOBA"> UNION POR CORDOBA
               </label>
             </div>
         </div>
