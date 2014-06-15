@@ -1,4 +1,10 @@
-$(function () {
+function sortKeysByValue(_a, cmp) {
+    return _a.keys().sort(function(a,b){return cmp(_a.get(a),_a.get(b));});
+}
+
+angular.module('app', ['localytics.directives'])
+
+.controller('MapController', function ($scope, $q) {
     var width = 550,
         height = 1050;
 
@@ -21,10 +27,26 @@ $(function () {
         .await(ready);
 
     function ready(error, argentina, aportes) {
+        var mainData = aportes
+            .filter(function(d){return d["AGRUPACION"] != '' && d["AGRUPACION"];})
+            .filter(function(d){return d["DEPARTAMENTO"] != '' && d["DEPARTAMENTO"];});
+
         var nest = d3.nest()
             .key(function(d) {return d["DEPARTAMENTO"];})
             .rollup(function(leaves) {return leaves.length;})
         ;
+
+        $scope.$apply(function(){
+            $scope.filters = {
+                agrupacion: {
+                    selected: null,
+                    values: sortKeysByValue(d3.nest()
+                        .key(function (d) {return d["AGRUPACION"];})
+                        .rollup(function(leaves) {return d3.sum(leaves, function(d){return parseFloat(d["IMPORTE"]);});})
+                        .map(mainData, d3.map), d3.descending)
+                }
+            };
+        });
 
         var filter = function(d){return true};
 
@@ -33,11 +55,11 @@ $(function () {
         var scale = d3.scale.log()
             .range([0,colors.length-1]);
 
-        d3.select('#legend')
+        var legendBox = d3.select('#legend')
             .append('ul')
             .attr('class', 'list-inline');
 
-        var legend = d3.selectAll('#legend li.key')
+        var legend = legendBox.selectAll('li.key')
             .data(colors)
             .enter().append('li')
             .attr('class', 'key')
@@ -64,8 +86,7 @@ $(function () {
             .attr("d", path);
 
         function render() {
-            var data = nest.map(aportes
-                .filter(function(d){return d["DEPARTAMENTO"] != '' && d["DEPARTAMENTO"];})
+            var data = nest.map(mainData
                 .filter(filter)
             , d3.map);
 
@@ -97,18 +118,17 @@ $(function () {
             render();
         });
 
-        $(".filter[data-field]").on("change", "input", function(){
-            var field = $(this).closest(".filter").data("field").toUpperCase();
-            var value = $(this).data("value").toUpperCase();
+        for(var field in $scope.filters) {
+            $scope.$watch('filters.' + field + '.selected', function(selected) {
+                if (selected) {
+                    filter = function (d) {return d[field.toUpperCase()] == selected.toUpperCase();};
+                } else {
+                    filter = function (d) {return true;};
+                }
 
-            if (value == "ALL") {
-                filter = function (d) {return true;};
-            } else {
-                filter = function (d) {return d[field] == value;};
-            }
-
-            render();
-        });
+                render();
+            });
+        }
 
         render();
     }
