@@ -44,11 +44,18 @@ angular.module('app', ['localytics.directives'])
                         .key(function (d) {return d["AGRUPACION"];})
                         .rollup(function(leaves) {return d3.sum(leaves, function(d){return parseFloat(d["IMPORTE"]);});})
                         .map(mainData, d3.map), d3.descending)
+                },
+                edad: {
+                    selected: null,
+                    values: d3.nest()
+                        .key(function (d) {return d["EDAD"];})
+                        .rollup(function(leaves) {return d3.sum(leaves, function(d){return parseFloat(d["IMPORTE"]);});})
+                        .map(mainData, d3.map).keys().sort()
                 }
             };
         });
 
-        var filter = function(d){return true};
+        var filters = {};
 
         var colors = colorbrewer.Blues[9];
 
@@ -86,9 +93,13 @@ angular.module('app', ['localytics.directives'])
             .attr("d", path);
 
         function render() {
-            var data = nest.map(mainData
-                .filter(filter)
-            , d3.map);
+            var _data = mainData;
+
+            for (var i in filters) {
+                _data = _data.filter(filters[i]);
+            }
+
+            var data = nest.map(_data, d3.map);
 
             scale.domain([d3.min(data.values())+1, d3.max(data.values())]);
 
@@ -119,15 +130,15 @@ angular.module('app', ['localytics.directives'])
         });
 
         for(var field in $scope.filters) {
-            $scope.$watch('filters.' + field + '.selected', function(selected) {
+            $scope.$watch('filters.' + field + '.selected', function(field){return function(selected) {
                 if (selected) {
-                    filter = function (d) {return d[field.toUpperCase()] == selected.toUpperCase();};
+                    filters[field] = function (d) {return d[field] == selected.toUpperCase();};
                 } else {
-                    filter = function (d) {return true;};
+                    delete filters[field];
                 }
 
                 render();
-            });
+            }}(field.toUpperCase()));
         }
 
         render();
