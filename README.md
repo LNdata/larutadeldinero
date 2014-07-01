@@ -1,12 +1,14 @@
 Financiamiento de campañas
 ==========================
 
-Si queres bajar el código fuente y mirarlo en tu maquina:
+Si queres, podes bajar el código fuente y mirarlo en tu maquina. Para correrlo:
 
-    desde el directorio donde esta el index.html
+desde el directorio donde esta el index.html (inicias el servidor web)
+
     python -m SimpleHTTPServer
     
-    desde el navegador:
+desde el navegador lo accedes
+
     http://localhost:8000/
 
 Si lo queres ver directamente desde la web.
