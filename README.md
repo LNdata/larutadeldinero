@@ -1,7 +1,18 @@
 Financiamiento de campañas
 ==========================
 
+Si queres bajar el código fuente y mirarlo en tu maquina:
 
+    desde el directorio donde esta el index.html
+    python -m SimpleHTTPServer
+    
+    desde el navegador:
+    http://localhost:8000/
+
+Si lo queres ver directamente desde la web.
+
+    http://gabelula.github.io/larutadeldinero/
+    
 
 Proyectos similares en Argentina
 
