@@ -1,6 +1,21 @@
-angular.module('app', ['localytics.directives'])
+angular.module('app', ['ngRoute','localytics.directives','controller-treemap'])
 
-.controller("ProtoController", function ($scope, $q) {
+.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/treemap', {
+        templateUrl: 'static/partials/treemap.html',
+        controller: 'TreeMapCtrl'
+      }).
+      when('/map', {
+        templateUrl: 'static/partials/map.html',
+        controller: 'MapCtrl'
+      }).
+      otherwise({
+        redirectTo: '/treemap'
+      });
+}])
+.controller("MapCtrl", function ($scope, $q) {
     $scope.aportantes = [
         {
             DOCUMENTO: "904794",
@@ -9,4 +24,5 @@ angular.module('app', ['localytics.directives'])
             APELLIDO: "Ramirez"
         }
     ];
-});
+})
+;

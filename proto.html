@@ -17,18 +17,18 @@
 </head>
 <body>
 
-<div class="container" ng-controller="ProtoController">
+<div class="container">
     <div class="page-header">
       <h1>Aportes a Campañas 2013</h1>
     </div>
     <div class="row">
         <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#">TreeMap</a></li>
-                <li><a href="#">Mapa</a></li>
-                <li><a href="#">Mapa coroplético</a></li>
-                <li><a href="#">Barras - Aportantes por partido</a></li>
-                <li><a href="#">Barras - Aportantes por provincia</a></li>
+                <li class="active"><a href="#/treemap" data-target="#" data-toggle="tab">TreeMap</a></li>
+                <li><a href="#/map" data-target="#" data-toggle="tab">Mapa</a></li>
+                <li><a href="#" data-target="#" data-toggle="tab">Mapa coroplético</a></li>
+                <li><a href="#" data-target="#" data-toggle="tab">Barras - Aportantes por partido</a></li>
+                <li><a href="#" data-target="#" data-toggle="tab">Barras - Aportantes por provincia</a></li>
             </ul>
         </div>
         <div class="col-md-7 text-center">
@@ -43,8 +43,7 @@
                 </div>
             </div>
             <div id="main" class="tab-content">
-                <div class="tab-pane active" id="graph">
-                    <img src="http://placehold.it/653x600">
+                <div class="tab-pane active" id="graph" ng-view>
                 </div>
                 <div class="tab-pane" id="data">
                     <div class="input-group">
@@ -141,6 +140,8 @@
 <script type='text/javascript' src="static/js/queue.min.js"></script>
 <script type='text/javascript' src="static/js/topojson.min.js"></script>
 <script type='text/javascript' src="static/js/angular.min.js"></script>
+<script type='text/javascript' src="static/js/angular-route.min.js"></script>
+<script type='text/javascript' src="static/js/controller-treemap.js"></script>
 <script type='text/javascript' src="static/js/chosen.jquery.min.js"></script>
 <script type='text/javascript' src="static/js/chosen-directive.js"></script>
 
