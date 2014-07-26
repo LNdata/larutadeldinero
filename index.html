@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="es">
-  <head>
+<html lang="es" ng-app="app">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,78 +10,117 @@
 
     <title>Aportes de Campaña 2013</title>
 
-    <link type='text/css' rel='stylesheet' href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic'>
-
     <link type='text/css' rel="stylesheet" href="static/css/bootstrap.min.css"/>
+    <link type='text/css' rel="stylesheet" href="static/css/chosen.min.css"/>
 
-    <link rel="stylesheet" href="//libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <link type='text/css' rel="stylesheet" href="static/css/main.css"/>
+</head>
+<body>
 
-    <link type="text/css" rel="stylesheet" href="static/css/map.css">
-    <link type="text/css" rel="stylesheet" href="static/css/main.css">
-
-  </head>
-  <body>
-
-
-    <div class="container">
-
-      <h1>Aportes a Campañas 2013 <small><a href="index_alt.html">Version alternativa</a></small></h1>
-
-      <div id="container-map">
-          <div id="map"></div>
-          <div id="map-info" class="cartodb-infobox">
-              <h4>Aportes privados en<br>elecciones primarias</h4>
-              <h3>2013</h3>
-              <img src="static/img/aportes2013escala.png">
-          </div>
-          <div id="layer_selector" class="cartodb-infobox">
-            <ul>
-              <li class="selected">Todas las agrupaciones</li>
-              <li data="0"><font color="#386cb0">Frente para la victoria</font></li>
-              <li data="1"> <font color="018571">Frente Renovador,<br>Unión por Córdoba,<br>Unidos por la Libertad</font></li>
-              <li data="2"><font color="#d7191c">Frente Progresista,<br>Cívico y Social, UNEN,<br>Unión Cívica Radical</font></li>
-              <li data="3"><font color="#868a08">Pro - Unión Pro-PD,<br>Santa Fe Federal</font></li>
-            </ul>
-          </div>
-      </div>
-
-      <p><em><a href="https://docs.google.com/spreadsheets/d/1e21bVCjchhMoUfwxosVDGnzGpe5CyuSlE7FYVJ27pxo/edit?usp=sharing" target="_blank">Datos para descargar</a></em><p>
-
-      <input id="fullTableFilter" type="text" placeholder="filter by.."></input>
-      <div id="fullTable"></div>
-
+<div class="container">
+    <div class="page-header">
+      <h1>Aportes a Campañas 2013</h1>
     </div>
+    <div class="row">
+        <div class="col-md-2">
+            <h3>Visualizaciones</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#/map" data-target="#" data-toggle="tab">Mapa coroplético</a></li>
+            </ul>
+        </div>
+        <div class="col-md-7 text-center">
+            <div>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active" data-target="#graph" data-toggle="tab">
+                        <input type="radio" name="options" checked> Grafico
+                    </label>
+                    <label class="btn btn-default" data-target="#data" data-toggle="tab">
+                        <input type="radio" name="options"> Datos
+                    </label>
+                </div>
+            </div>
+            <div id="main" class="tab-content">
+                <div class="tab-pane active" id="graph" ng-view>
+                </div>
+                <div class="tab-pane" id="data">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                    </div>
+                    <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Documento</th>
+                            <th>CUIT</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="aportante in aportantes | limitTo: 50">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ aportante.DOCUMENTO }}</td>
+                            <td>{{ aportante["CUIT/L"] }}</td>
+                            <td>{{ aportante.NOMBRE }}</td>
+                            <td>{{ aportante.APELLIDO }}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div ng-controller="FiltersCtrl">
+                <div id="aggregation">
+                    <h3>Agrupar por</h3>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="aggregation" data-field="count" checked>
+                            Por aporte
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="aggregation" data-field="importe">
+                            Por cantidad de aportantes
+                        </label>
+                    </div>
+                </div>
+                <h3>Filtros</h3>
+                <div ng-repeat="(field, filter) in filters" data-field="{{ field }}">
+                    <div class="form-group">
+                        <label for="{{ field }}">{{ field | uppercase }}</label>
+                        <select id="{{ field }}" chosen ng-model="filter.selected" ng-options="value for value in filter.values" class="form-control chosen-single chosen-default">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script type='text/javascript' src="static/js/jquery.min.js"></script>
+<script type='text/javascript' src="static/js/bootstrap.min.js"></script>
+<script type='text/javascript' src="static/js/d3.min.js"></script>
+<script type='text/javascript' src="static/js/colorbrewer.js"></script>
+<script type='text/javascript' src="static/js/queue.min.js"></script>
+<script type='text/javascript' src="static/js/topojson.min.js"></script>
+<script type='text/javascript' src="static/js/angular.min.js"></script>
+<script type='text/javascript' src="static/js/angular-route.min.js"></script>
+<script type='text/javascript' src="static/js/chosen.jquery.min.js"></script>
+<script type='text/javascript' src="static/js/chosen-directive.js"></script>
 
-    <script id="fullTable" type="text/html">
-      <table class="table table-striped">
-
-        <tr>
-          <th>Elecciones</th>
-          <th>Aportante</th>
-          <th>Documento</th>
-          <th>Importe</th>
-          <th>Agrupación</th>
-          <th>Distrito</th>
-        </tr>
-
-          {{#rows}}
-                 <tr><td>{{elecciones}}</td><td>{{nombre}}</td><td>{{documento}}</td><td>{{importe}}</td><td>{{agrupacion}}</td><td>{{distrito}}</td></tr>
-
-          {{/rows}}
-
-      </table>
-    </script>
-
-    <script type='text/javascript' src='static/js/jquery.min.js'></script>
-    <script type='text/javascript' src='static/js/bootstrap.min.js'></script>
-    <script type='text/javascript' src='static/js/tabletop1.3.5.js'></script>
-    <script type='text/javascript' src='static/js/sheetsee.js'></script>
-
-    <script type='text/javascript' src='http://libs.cartocdn.com/cartodb.js/v3/cartodb.js'></script>
-
-    <script type='text/javascript' src='static/js/map.js'></script>
-    <script type='text/javascript' src='static/js/main.js'></script>
-
-  </body>
+<script type='text/javascript' src="static/js/app.js"></script>
+</body>
 </html>
