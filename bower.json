@@ -1,0 +1,17 @@
+{
+  "name": "larutadeldinero",
+  "version": "0.0.0",
+  "homepage": "https://github.com/gabelula/larutadeldinero",
+  "authors": [
+    "Gaba <gabelula@gmail.com>"
+  ],
+  "description": "financiación de campaña electoral en Argentina",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

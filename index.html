@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="aportesApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="static/assets/ico/favicon.ico">
+
+    <title>Aportes de Campaña</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link type='text/css' rel="stylesheet" href="static/css/estilos.css"/>
+
+</head>
+<body>
+
+ <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <p class="navbar-brand">Aportes de Campaña en Argentina</p>
+    </div>
+  </nav>
+
+  <!-- Begin page content -->
+  <div class="container">
+    <div class="row"  ng-controller="TabsCtrl">
+      <div class="col-sm-3 col-md-2 sidebar">
+
+        <ul class="nav nav-pills nav-stacked">
+          <li ng-click="open('treemap')" id="treemap" class="active"><a href="#">Treemap</a></li>
+          <li ng-click="open('mapa')" id="mapa"><a href="#">Mapa</a></li>
+          <li ng-click="open('graficos')" id="graficos"><a href="#">Gráficos</a></li>
+          <li ng-click="open('agrupaciones')" id="agrupaciones"><a href="#">Agrupaciones</a></li>
+        </ul>
+
+      </div>
+
+      <!-- ////// VISUALIZACIONES ////// -->
+      <div class="col-md-8">
+        <div collapse="workspaces['treemap'].collapsed">Treemap</div>
+        <div collapse="workspaces['mapa'].collapsed">Mapa</div>
+        <div collapse="workspaces['graficos'].collapsed">Graficos</div>
+        <div collapse="workspaces['agrupaciones'].collapsed">Boletas</div>
+      </div>
+
+      <!-- ///// FILTROS ///// -->
+      <div class="col-md-2">
+        <div class="row">
+          <div class="col-md-2">
+            <h4>Agrupar por</h4>
+            aporte <input type="checkbox" ng-model="aporte" name="aporte" ng-true-value="True" ng-false-value="False" ng-change="agrupar_por">
+            cantidad de aportantes <input type="checkbox" ng-model="cantidad_aportes" name="cantidad_aportes" ng-true-value="False" ng-false-value="True" ng-change="agrupar_por">
+          </div>
+        </div>
+        <div class="row" ng-controller="FiltrosCtrl">
+          <div class="col-md-2">
+            <h4>Filtros</h4>
+            Ciclos
+            <select multiple ng-model="ciclo" ng-options="o for o in ciclos">
+              <option value="''">elegir un ciclo</option>
+            </select>
+            Elecciones
+            <select multiple ng-model="eleccion" ng-options="o for o in elecciones">
+              <option value="''">elegir una provincia</option>
+            </select>
+            Agrupación Politica
+            <select ng-model="partido" ng-options="o for o in partidos">
+              <option value="''">elegir una provincia</option>
+            </select>
+            Distrito
+            <select ng-model="aprovincia" ng-options="p for p in provincias">
+              <option value="''">elegir una provincia</option>
+            </select>
+            Grupo de Edad
+            Persona Juridica/Fisica
+            Sexo
+            Cargo partidario
+            Contrato
+            Designación
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      Buscar: <input ng-model="query">
+      <div class="col-md-12" ng-controller="PaginationCtrl">
+
+        <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" previous-text="Anterior" next-text="Siguiente" first-text="Primero" last-text="Último"></pagination>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Ciclo</th>
+              <th>Elecciones</th>
+              <th>Nombre</th>
+              <th>Documento</th>
+              <th>Importe</th>
+              <th>Agrupación</th>
+              <th>Distrito</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="aporte in aportes | filter:query | limitTo:100">
+              <td>{{ aporte.CICLO }}</td>
+              <td>{{ aporte.ELECCIONES }}</td>
+              <td><a href="#/aportes/{{aporte.DOCUMENTO}}">{{ aporte.NOMBRE }}</a></td>
+              <td>{{ aporte.DOCUMENTO }}</td>
+              <td>{{ aporte.IMPORTE }}</td>
+              <td>{{ aporte.AGRUPACION }}</td>
+              <td>{{ aporte.DISTRITO }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <p class="text-muted">¿Qué es este sitio web? | Preguntas Frecuentes | Datos | Sobre el equipo</p>
+    </div>
+  </div>
+
+<!-- ==================== JAVASCRIPTS =============== -->
+
+<script type='text/javascript' src="static/js/jquery.min.js"></script>
+<script type='text/javascript' src="static/js/bootstrap.min.js"></script>
+<script type='text/javascript' src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="static/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script src="static/js/oboe-browser.js"></script>
+<script src="static/js/angular_resource.js"></script>
+
+<script type='text/javascript' src='static/js/controllers.js'></script>
+
+</body>
+</html>
