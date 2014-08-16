@@ -68,7 +68,7 @@
       <file leaf-file-name="map.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/viz1/scripts/map.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="1" selection-start="343" selection-end="343" vertical-scroll-proportion="0.65909094" vertical-offset="203" max-vertical-offset="795">
+            <state line="28" column="26" selection-start="341" selection-end="341" vertical-scroll-proportion="0.61647725" vertical-offset="203" max-vertical-offset="795">
               <folding />
             </state>
           </provider>
@@ -505,7 +505,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/viz1/scripts/map.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="1" selection-start="343" selection-end="343" vertical-scroll-proportion="0.65909094" vertical-offset="203" max-vertical-offset="795">
+        <state line="28" column="26" selection-start="341" selection-end="341" vertical-scroll-proportion="0.61647725" vertical-offset="203" max-vertical-offset="795">
           <folding />
         </state>
       </provider>
