@@ -67,5 +67,16 @@ aportesAppControllers.controller('TabsCtrl', function($scope) {
       setAllInactive();
       $scope.workspaces[workspace].collapsed = false;
       document.getElementById(workspace).className = "active";
+      console.log(workspace);
+      // depending on the workspace, we enable filters or not
+      if (workspace == "treemap") {
+        console.log('Deshabilitando filtros');
+        // disable filters
+        $scope.isFiltersDisable = true
+      }
+      else {
+        console.log('Habilitando filtros');
+        $scope.isFiltersDisable = false
+      }
     };
 });

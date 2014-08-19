@@ -26,7 +26,7 @@
 
   <!-- Begin page content -->
   <div class="container">
-    <div class="row"  ng-controller="TabsCtrl">
+    <div class="row"  ng-controller="TabsCtrl" ng-init="isFiltersDisable=true">
 
       <!-- ///// TABS ///// -->
       <div class="col-sm-3 col-md-2 sidebar">
@@ -62,20 +62,20 @@
         <div class="row" ng-controller="FiltrosCtrl">
           <div class="col-md-2">
             <h4>Filtros</h4>
-            Ciclos
-            <select multiple ng-model="ciclo" ng-options="o for o in ciclos">
+            Año electoral
+            <select multiple ng-model="ciclo" ng-options="o for o in ciclos" ng-disabled="isFiltersDisable">
               <option value="''">elegir un ciclo</option>
             </select>
             Elecciones
-            <select multiple ng-model="eleccion" ng-options="o for o in elecciones">
+            <select multiple ng-model="eleccion" ng-options="o for o in elecciones" ng-disabled="isFiltersDisable">
               <option value="''">elegir una provincia</option>
             </select>
             Agrupación Politica
-            <select ng-model="partido" ng-options="o for o in partidos">
+            <select ng-model="partido" ng-options="o for o in partidos" ng-disabled="isFiltersDisable">
               <option value="''">elegir una provincia</option>
             </select>
             Distrito
-            <select ng-model="aprovincia" ng-options="p for p in provincias">
+            <select ng-model="aprovincia" ng-options="p for p in provincias" ng-disabled="isFiltersDisable">
               <option value="''">elegir una provincia</option>
             </select>
             Grupo de Edad
