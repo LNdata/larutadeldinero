@@ -1,6 +1,7 @@
-var aportesApp = angular.module('aportesApp', ['ui.bootstrap']);
+var aportesAppControllers = angular.module('aportesAppControllers', []);
 
-aportesApp.controller('PaginationCtrl', function ($scope, $http) {
+// Controlador para la tabla de datos
+aportesAppControllers.controller('TablaDatosCtrl', function ($scope, $http) {
   console.log('setting up the controller for pagination')
 
   /// Getting the json file data ///
@@ -9,22 +10,24 @@ aportesApp.controller('PaginationCtrl', function ($scope, $http) {
           $scope.aportes = data;
         });
 
-//   $scope.setPage = function (pageNo) {
-//     $scope.currentPage = pageNo;
-//   };
-//
-//   $scope.pageChanged = function() {
-//     console.log('Page changed to: ' + $scope.currentPage);
-//   };
-//
-//   $scope.totalItems = 100;//$scope.aportes.length;
-//   $scope.currentPage = 1;
-//   $scope.maxSize = 5;
-//   $scope.bigTotalItems = 175;
-//   $scope.bigCurrentPage = 1;
+  $scope.setPage = function (pageNo) {
+    $scope.currentPage = pageNo;
+  };
+
+  $scope.pageChanged = function() {
+    console.log('Page changed to: ' + $scope.currentPage);
+  };
+
+  //$scope.totalItems = $scope.aportes.length;
+  //console.log('Total of items', $scope.totalItems);
+  $scope.currentPage = 1;
+  $scope.maxSize = 5;
+  $scope.bigTotalItems = 175;
+  $scope.bigCurrentPage = 1;
 });
 
-aportesApp.controller('FiltrosCtrl', function ($scope) {
+// Controlador para los filtros
+aportesAppControllers.controller('FiltrosCtrl', ['$scope', function ($scope) {
 
   $scope.ciclos = [2007,2009,2011,2013];
 
@@ -33,13 +36,17 @@ aportesApp.controller('FiltrosCtrl', function ($scope) {
   $scope.dprovincia = '';//$scope.provincias[1];
   $scope.aprovincia = '';//$scope.provincias[1];
 
-  $scope.partidos = ["partido1", "partido2", "partido3"];
+  //Agrupaciones.then(function(data){
+  //  $scope.partidos = data;
+  //});
+
+  //$scope.partidos = ["partido1", "partido2", "partido3"];
 
   $scope.elecciones = ["Primarias", "Generales"];
-});
+}]);
 
-
-aportesApp.controller('TabsCtrl', function($scope) {
+// Este controlador maneja las tabs para las diferentes visualizaciones
+aportesAppControllers.controller('TabsCtrl', function($scope) {
 
     $scope.workspaces =
     {

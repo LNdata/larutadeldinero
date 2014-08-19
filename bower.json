@@ -1,12 +1,16 @@
 {
   "name": "larutadeldinero",
+  "description": "La ruta del dinero en la campaña electoral argentino",
   "version": "0.0.0",
   "homepage": "https://github.com/gabelula/larutadeldinero",
   "authors": [
     "Gaba <gabelula@gmail.com>"
   ],
-  "description": "financiación de campaña electoral en Argentina",
   "license": "MIT",
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x"
+  },
   "ignore": [
     "**/.*",
     "node_modules",

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" ng-app="aportesApp">
+<html lang="es" data-ng-app="aportesApp">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link type='text/css' rel="stylesheet" href="static/css/estilos.css"/>
+    <link type='text/css' rel="stylesheet" href="static/css/treemap.css"/>
 
 </head>
 <body>
@@ -26,6 +27,8 @@
   <!-- Begin page content -->
   <div class="container">
     <div class="row"  ng-controller="TabsCtrl">
+
+      <!-- ///// TABS ///// -->
       <div class="col-sm-3 col-md-2 sidebar">
 
         <ul class="nav nav-pills nav-stacked">
@@ -39,14 +42,15 @@
 
       <!-- ////// VISUALIZACIONES ////// -->
       <div class="col-md-8">
-        <div collapse="workspaces['treemap'].collapsed">Treemap</div>
-        <div collapse="workspaces['mapa'].collapsed">Mapa</div>
-        <div collapse="workspaces['graficos'].collapsed">Graficos</div>
-        <div collapse="workspaces['agrupaciones'].collapsed">Boletas</div>
+        <div collapse="workspaces['treemap'].collapsed" ng-include="'views/treemap.html'"></div>
+        <div collapse="workspaces['mapa'].collapsed" ng-include="'views/map.html'">Mapa</div>
+        <div collapse="workspaces['graficos'].collapsed" ng-include="'views/graficos.html'">Graficos</div>
+        <div collapse="workspaces['agrupaciones'].collapsed" ng-include="'views/agrupaciones.html'">Boletas</div>
       </div>
 
       <!-- ///// FILTROS ///// -->
       <div class="col-md-2">
+
         <div class="row">
           <div class="col-md-2">
             <h4>Agrupar por</h4>
@@ -54,6 +58,7 @@
             cantidad de aportantes <input type="checkbox" ng-model="cantidad_aportes" name="cantidad_aportes" ng-true-value="False" ng-false-value="True" ng-change="agrupar_por">
           </div>
         </div>
+
         <div class="row" ng-controller="FiltrosCtrl">
           <div class="col-md-2">
             <h4>Filtros</h4>
@@ -80,13 +85,17 @@
             Contrato
             Designación
           </div>
-        </div>
-      </div>
-    </div>
+        </div> <!-- Aca termina el controlador de filtros -->
 
+      </div> <!-- Columna de filtros -->
+
+    </div> <!-- Aca termina el controlador de tabs -->
+
+
+    <!-- ///// TABLA DE DATOS ///// -->
     <div class="row">
-      Buscar: <input ng-model="query">
-      <div class="col-md-12" ng-controller="PaginationCtrl">
+      Buscar: <input ng-model="query" placeholder="filtrar por..">
+      <div class="col-md-12" ng-controller="TablaDatosCtrl">
 
         <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" previous-text="Anterior" next-text="Siguiente" first-text="Primero" last-text="Último"></pagination>
 
@@ -114,9 +123,11 @@
             </tr>
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
+
+      </div> <!-- Aca termina el controlador de tabla datos -->
+    </div> <!-- Row de la tabla de datos -->
+
+  </div> <!-- Fin contenido -->
 
   <!-- Footer -->
   <div class="footer">
@@ -128,14 +139,21 @@
 <!-- ==================== JAVASCRIPTS =============== -->
 
 <script type='text/javascript' src="static/js/jquery.min.js"></script>
-<script type='text/javascript' src="static/js/bootstrap.min.js"></script>
-<script type='text/javascript' src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="static/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
-<script src="static/js/oboe-browser.js"></script>
-<script src="static/js/angular_resource.js"></script>
+<script type='text/javascript' src="static/js/jquery.csv-0.71.js"></script>
 
+<script type='text/javascript' src="bower_components/angular/angular.js"></script>
+<script type='text/javascript' src="bower_components/angular-route/angular-route.js"></script>
+
+<script type='text/javascript' src="static/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script type='text/javascript' src="static/js/angular_resource.js"></script>
+
+
+<script type='text/javascript' src="static/js/d3.js"></script>
+<script type='text/javascript' src="static/js/colorbrewer.js"></script>
+
+<script type='text/javascript' src='static/js/app.js'></script>
 <script type='text/javascript' src='static/js/controllers.js'></script>
+<script type='text/javascript' src="static/js/treemap.js"></script>
 
 </body>
 </html>
