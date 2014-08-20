@@ -1,21 +1,19 @@
 {
-  "name": "larutadeldinero",
-  "description": "La ruta del dinero en la campaña electoral argentino",
+  "name": "rutadinero",
   "version": "0.0.0",
-  "homepage": "https://github.com/gabelula/larutadeldinero",
-  "authors": [
-    "Gaba <gabelula@gmail.com>"
-  ],
-  "license": "MIT",
   "dependencies": {
-    "angular": "1.2.x",
-    "angular-route": "1.2.x"
+    "angular": "~1.2.0",
+    "json3": "~3.2.4",
+    "es5-shim": "~2.1.0",
+    "jquery": "~1.10.2",
+    "sass-bootstrap": "~3.0.0",
+    "angular-resource": "~1.2.0",
+    "angular-cookies": "~1.2.0",
+    "angular-sanitize": "~1.2.0",
+    "angular-route": "~1.2.0"
   },
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
+  "devDependencies": {
+    "angular-mocks": "~1.2.0",
+    "angular-scenario": "~1.2.0"
+  }
 }

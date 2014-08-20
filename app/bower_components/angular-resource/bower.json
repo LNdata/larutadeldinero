@@ -1,0 +1,8 @@
+{
+  "name": "angular-resource",
+  "version": "1.2.23-build.380+sha.ed56872",
+  "main": "./angular-resource.js",
+  "dependencies": {
+    "angular": "1.2.23-build.380+sha.ed56872"
+  }
+}

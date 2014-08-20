@@ -1,0 +1,12 @@
+/* Styles go here */
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.html-back{
+    background : #eee no-repeat center;
+
+}
+
+.insideSplitter{
+    padding: 10px;
+}
