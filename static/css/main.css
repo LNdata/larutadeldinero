@@ -1,8 +1,33 @@
-#Pagination {border-top: 1px solid #efefef; margin: 10px 0px; padding-top: 10px; display: inline-block;}
-#Pagination a {cursor: hand;}
-.no-pag {color: #acacac; border: none;}
-.no-pag:hover {color: #acacac;}
-input {border: none; border-bottom: 1px solid #333;margin: 10px 0px; width: 200px; font-size: 16px; padding-bottom: 6px;}
-.tHeader {padding: 8px; font-family: Helvetica Neue; Helvetica, Arial, sans-serif; cursor: hand;}
-.photo {display: inline-block; float: left; width: 100px;}
-#photogrid {overflow: auto;}
+#main {
+    margin-top: 20px;
+}
+
+.departamentos {
+  stroke: #ddd;
+  stroke-width: 1px;
+  fill: none;
+}
+
+.provincias {
+  stroke: #ddd;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}
+
+#legend {
+    margin: 1.5em;
+}
+
+li.key {
+    border-top-width: 15px;
+    border-top-style: solid;
+    font-size: .75em;
+    width: 11%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.filter {
+    vertical-align: top;
+}

@@ -1,33 +1,27 @@
-var aportesApp = angular.module('aportesApp', [
-  'ui.bootstrap',
-  'ngRoute',
-  'aportesAppControllers'
-]);
+function sortKeysByValue(_a, cmp) {
+    return _a.keys().sort(function(a,b){return cmp(_a.get(a),_a.get(b));});
+}
 
-// aportesApp.config(['$routeProvider',
-//   function($routeProvider) {
-//     $routeProvider.
-//       when('/', {
-//         templateUrl: 'partials/aportes.html',
-//         controller: 'TablaDatosCtrl'
-//       }).
-//       when('/aportes', {
-//         templateUrl: 'partials/phone-list.html',
-//         controller: 'TablaDatosCtrl'
-//       }).
-//       when('/aportes/:aporteId', {
-//         templateUrl: 'partials/phone-detail.html',
-//         controller: 'TablaDatosCtrl'
-//       }).
-//       when('/aportantes', {
-//         templateUrl: 'partials/phone-list.html',
-//         controller: 'TablaDatosCtrl'
-//       }).
-//       when('/aportantes/:aportanteId', {
-//         templateUrl: 'partials/phone-list.html',
-//         controller: 'TablaDatosCtrl'
-//       }).
-//       otherwise({
-//         redirectTo: '/'
-//       });
-//   }]);
+angular
+    .module('aportesApp', ['ngRoute','aportesAppControllers', 'localytics.directives'])
+    .filter('offset', function() {
+        return function(input, start) {
+            if (input) {
+                start = parseInt(start, 10);
+                return input.slice(start);
+            }
+        };
+    })
+    .config(['$routeProvider',
+        function($routeProvider) {
+            $routeProvider.
+                when('/map', {
+                    templateUrl: 'static/partials/map.html',
+                    controller: 'MapCtrl'
+                }).
+                otherwise({
+                    redirectTo: '/map'
+                });
+        }
+    ])
+;
