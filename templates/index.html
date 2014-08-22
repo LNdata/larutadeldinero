@@ -77,18 +77,17 @@
             </select>
         </div> <!-- Aca termina el controlador de filtros -->
 
-        <button type="submit" class="btn btn-default btn-group-lg">Filtrar</button>
+        <button type="submit" class="btn btn-primary btn-group-lg btn-block">Filtrar</button>
+      </div>
     </div> <!-- Aca termina el controlador de tabs -->
 
     <!-- ///// TABLA DE DATOS ///// -->
     <div class="row">
-
       <div class="col-md-12" ng-controller="TablaDatosCtrl">
 
         {% if aportes %}
           {{ pagination.links|safe }}
-          <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover table-responsive">
               <thead>
                 <tr>
                   <th>Año</th>
@@ -114,7 +113,7 @@
                 {% endfor %}
               </tbody>
             </table>
-          </div>
+            {{ pagination.links|safe }}
         {% endif %}
 
       </div> <!-- Aca termina el controlador de tabla datos -->
