@@ -19,6 +19,10 @@ angular
                     templateUrl: 'static/partials/map.html',
                     controller: 'MapCtrl'
                 }).
+                when('/treemap', {
+                    templateUrl: 'static/partials/treemap.html',
+                    controller: 'TreeMapCtrl'
+                }).
                 otherwise({
                     redirectTo: '/map'
                 });
