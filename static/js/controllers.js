@@ -281,8 +281,8 @@ angular.module('aportesAppControllers', [])
 
             var _data = d3.nest()
                 .key(function(d) {return d["ELECCIONES"];})
-                .key(function(d) {return d["DEPARTAMENTO"];})
-                .key(function(d) {return d["PARTIDO"];})
+                .key(function(d) {return d["DISTRITO"];})
+                .key(function(d) {return d["AGRUPACION"];})
                 .key(function(d) {return d["TIPO"];})
                 .rollup(function(leaves) {return leaves.length;})
                 .entries($scope.aportantes);
@@ -329,7 +329,7 @@ angular.module('aportesAppControllers', [])
                 var g = g1.selectAll("g")
                     .data(d.values)
                     .enter().append("g");
-                
+
                 function transition(d) {
                     if (transitioning || !d) return;
                     transitioning = true;
