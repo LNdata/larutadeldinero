@@ -1,28 +1,32 @@
-{% extends "bootstrap/base.html" %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Primera Aplicación de Noticias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='prettify.css') }}" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+    <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2"></script>
+</head>
+<body>
+    <div id="map" style="width:100%; height:300px;"></div>
 
+    <h1>Incendio en {{ object['COMUNIDAD'].decode('UTF-8') }}, {{ object['PROVINCIA'].decode('UTF-8') }}, {{ object['COMARCA'].decode('UTF-8') }}, {{ object['MUNICIPIO'].decode('UTF-8') }} detectado el {{ object['FECHA'] }}</h1>
 
-{% block title %}
-  Aporte de {{ object['NOMBRE'].decode('UTF-8') }}
-{% endblock %}
+    <p>Superficie quemada de {{ object['SUPQUEMADA'] }}. Han habido {{ object['MUERTOS'] }} muertos y {{ object['HERIDOS'] }} heridos. El fuego se ha logrado controlar en {{ object['TIME_CTRL'] }} minutos. Para extingirlo se han necesitado {{ object['PERSONAL'] }} personas, {{ object['PESADOS'] }} vehiculos pesados y {{ object['AEREOS'] }} medios aereos.</p>
 
-{% block navbar %}
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container">
-  <ul class="nav nav-pills nav-justified">
-    <li><a href="#">Aportes</a></li>
-  </ul>
-  </div>
-</nav>
-{% endblock %}
+    <p>La causa del incendio ha sido <b>{{ object['CAUSA'].decode('UTF-8') }}</b>.</p>
 
-{% block content %}
-<div class="jumbotron">
-  <div class="container">
-    <h1>Aporte de {{ object['NOMBRE'].decode('UTF-8') }}</h1>
-  </div>
-</div>
+    <script type="text/javascript">
+        var map = L.map('map').setView([{{ object['LATITUD'] }}, {{ object['LONGITUD'] }}], 16);
 
-<p>  #"ELECCIONES","CARGO","CODDISTRITO","DISTRITO","NUM","AGRUPACION","LISTA","NOMBRE","APELLIDO","DOCUMENTO","CUIT/L","DOMICILIO","FECHA","TIPO","IMPORTE","APORTE","CODLISTA","NUMCUIT","CUIT"</p>
+        var mapquestLayer = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>,<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.',
+            subdomains: ['otile1','otile2','otile3','otile4']
+        });
+        map.addLayer(mapquestLayer);
 
-
-{% endblock %}
+        var marker = L.marker([{{ object['LATITUD'] }}, {{ object['LONGITUD'] }}]).addTo(map);
+    </script>
+</body>
+</html>

@@ -1,31 +1,5 @@
 var aportesAppControllers = angular.module('aportesAppControllers', []);
 
-// Controlador para la tabla de datos
-aportesAppControllers.controller('TablaDatosCtrl', function ($scope, $http) {
-  console.log('setting up the controller for pagination')
-
-  /// Getting the json file data ///
-  $http.get('data/aportes_con_nombre.json')
-       .success(function(data){
-          $scope.aportes = data;
-        });
-
-  $scope.setPage = function (pageNo) {
-    $scope.currentPage = pageNo;
-  };
-
-  $scope.pageChanged = function() {
-    console.log('Page changed to: ' + $scope.currentPage);
-  };
-
-  //$scope.totalItems = $scope.aportes.length;
-  //console.log('Total of items', $scope.totalItems);
-  $scope.currentPage = 1;
-  $scope.maxSize = 5;
-  $scope.bigTotalItems = 175;
-  $scope.bigCurrentPage = 1;
-});
-
 // Controlador para los filtros
 aportesAppControllers.controller('FiltrosCtrl', ['$scope', function ($scope) {
 
