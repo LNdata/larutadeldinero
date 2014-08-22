@@ -46,8 +46,10 @@ grandparent.append("text")
     .attr("y", 10 - margin.top)
     .attr("dy", ".90em");
 
+//var json = $.getJSON("static/data/treemap_data_andy.json");
+//var root = eval(json.responseText);
 
-var root={ "name": " Elecciones ", "children": [  { "name": " GENERALES ", "children": [  { "name": " Buenos Aires ", "children": [  { "name": " FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES ", "children": [  { "name": " Público ", "children": [  { "name": " Impresión de boletas  ", "children": [  { "name": " Total (1) ", "value": 1284404  }  ]  },
+var root = { "name": " Elecciones ", "children": [  { "name": " GENERALES ", "children": [  { "name": " Buenos Aires ", "children": [  { "name": " FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES ", "children": [  { "name": " Público ", "children": [  { "name": " Impresión de boletas  ", "children": [  { "name": " Total (1) ", "value": 1284404  }  ]  },
                { "name": " Aporte público  ", "children": [  { "name": " Total (1) ", "value": 1376226  }  ]  }  ]  }  ]  },
          { "name": " FRENTE PARA LA VICTORIA ", "children": [  { "name": " Aporte Privado - Diputados ", "children": [  { "name": " Aporte privado ", "children": [  { "name": " $10.001 - $20.000 (340) ", "value": 3534000  },
                   { "name": " $2.001 - $5.000 (388) ", "value": 1536900  },
