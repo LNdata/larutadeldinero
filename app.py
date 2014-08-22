@@ -1,50 +1,99 @@
-import csv
-from flask import Flask
-from flask import render_template
-from flask_bootstrap import Bootstrap
-from flask_wtf import Form
-from wtforms.validators import DataRequired
-from wtforms import TextField, TextAreaField, HiddenField, ValidationError, RadioField,\
-    BooleanField, SubmitField, IntegerField, FormField, validators
+from __future__ import unicode_literals
+
+from flask import Flask, render_template, request, g, current_app
+from flask.ext.paginate import Pagination
+
+import sqlite3
+
 
 app = Flask(__name__)
-Bootstrap(app)
-app.config['SECRET_KEY'] = 'development'
+app.config['PER_PAGE'] = 10
+app.config['LINK_SIZE'] = 'lg'
+app.config['CSS_FRAMEWORK'] = 'bootstrap3'
 
-csv_path = './data/aportes_2013.csv'
-#"ELECCIONES","CARGO","CODDISTRITO","DISTRITO","NUM","AGRUPACION","LISTA","NOMBRE","APELLIDO","DOCUMENTO","CUIT/L","DOMICILIO","FECHA","TIPO","IMPORTE","APORTE","CODLISTA","NUMCUIT","CUIT"
-
-csv_obj = csv.DictReader(open(csv_path, 'r'))
-csv_list = list(csv_obj)
-
-csv_dict = dict([ [o['DOCUMENTO'], o] for o in csv_list])
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Users/gaba/Code/opennews/rutadeldinero_elecciones/larutadeldinero/data/laruta.db'
 
 
-class SearchForm(Form):
-  nombre = TextField('Nombre', validators=[DataRequired()], description='Nombre y apellido de quien aporta')
+@app.before_request
+def before_request():
+  g.conn = sqlite3.connect('data/laruta.db')
+  g.conn.row_factory = sqlite3.Row
+  g.cur = g.conn.cursor()
 
-# PASAR A BASE DE DATOS Y HACERLO EFICIENTEMENTE
-def search(nombre):
-  result_list = []
-  for o in csv_list:
-    if (o['NOMBRE'].lower() == nombre or o['APELLIDO'].lower() == nombre):
-      result_list.append(o)
-  return result_list
 
-@app.route("/",methods=('GET', 'POST'))
+@app.teardown_request
+def teardown(error):
+  if hasattr(g, 'conn'):
+    g.conn.close()
+
+# def get_aportes():
+#   APORTES_FILE = './data/aportes_con_nombre.json'
+#   with open(APORTES_FILE) as json_data:
+#     aportes = json.load(json_data)['aportes']
+#
+#   return aportes
+
+@app.route("/")
 def index():
-    form = SearchForm()
-    if form.validate_on_submit():
-      result_list = search(form.nombre.data.lower())
+  g.cur.execute('select count(*) from aportes')
+  total = g.cur.fetchone()[0]
+  page, per_page, offset = get_page_items()
+  #filters = get_filters()
 
-      return render_template('index.html', object_list=result_list, form=form)
-    return render_template('index.html',
-                           object_list=csv_list, form=form)
+  sql = 'select CICLO, ELECCIONES, NOMBRE, DOCUMENTO, IMPORTE, AGRUPACION, DISTRITO from aportes order by CICLO limit {}, {}'\
+        .format(offset, per_page)
 
-@app.route('/<documento>/')
-def detail(documento):
-    return render_template('detail.html',
-                            object=csv_dict[documento],)
+  g.cur.execute(sql)
+
+  aportes = g.cur.fetchall()
+  pagination = get_pagination(page=page,
+                              per_page=per_page,
+                              total=total,
+                              record_name='aportes',
+                              )
+
+  return render_template('index.html', aportes=aportes,
+                                        page=page,
+                                        per_page=per_page,
+                                        pagination=pagination,
+                                      )
+
+def get_css_framework():
+  return current_app.config.get('CSS_FRAMEWORK', 'bootstrap3')
+
+def get_link_size():
+  return current_app.config.get('LINK_SIZE', 'sm')
+
+def get_page_items():
+  page = int(request.args.get('page', 1))
+  per_page = request.args.get('per_page')
+  if not per_page:
+    per_page = current_app.config.get('PER_PAGE', 10)
+  else:
+    per_page = int(per_page)
+
+  offset = (page - 1) * per_page
+  return page, per_page, offset
+
+def get_pagination(**kwargs):
+  kwargs.setdefault('record_name', 'records')
+
+  return Pagination(css_framework=get_css_framework(),
+                    link_size=get_link_size(),
+                    **kwargs
+                    )
+#
+# @app.route('/filter', methods=['GET', 'POST'])
+# def filter():
+#   form = FilterForm()
+#   if form.validate_on_submit():
+#     filter
+#   return redirect(url_for('index'))
+
+
+@app.route('/aportante/<document>')
+def aportante(document):
+    return render_template('aportante.html')
 
 
 if __name__ == '__main__':
