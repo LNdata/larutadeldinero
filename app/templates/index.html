@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" data-ng-app="aportesApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="static/assets/ico/favicon.ico">
+
+    <title>Aportes de Campaña de Elecciones en Argentina</title>
+
+    <link type='text/css' rel="stylesheet" href="static/css/bootstrap.css">
+    <link type='text/css' rel="stylesheet" href="static/css/estilos.css"/>
+    <link type='text/css' rel="stylesheet" href="static/css/treemap.css"/>
+
+</head>
+<body>
+
+ <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <p class="navbar-brand">Aportes de Campaña en Argentina</p>
+    </div>
+  </nav>
+
+  <!-- Begin page content -->
+  <div class="container">
+    <div class="row"  ng-controller="TabsCtrl" ng-init="isFiltersDisable=true">
+
+      <!-- ///// TABS ///// -->
+      <div class="col-sm-2 col-md-2 sidebar">
+
+        <ul class="nav nav-pills nav-stacked">
+          <li ng-click="open('treemap')" id="treemap" class="active"><a href="#">Treemap</a></li>
+          <li ng-click="open('mapa')" id="mapa"><a href="#">Mapa</a></li>
+          <li ng-click="open('graficos')" id="graficos"><a href="#">Gráficos</a></li>
+          <li ng-click="open('agrupaciones')" id="agrupaciones"><a href="#">Agrupaciones</a></li>
+        </ul>
+
+      </div>
+
+      <!-- ////// VISUALIZACIONES ////// -->
+      <div class="col-md-8">
+        <div collapse="workspaces['treemap'].collapsed">{% include 'treemap.html' %}</div>
+        <div collapse="workspaces['mapa'].collapsed">{% include 'map.html' %}</div>
+        <div collapse="workspaces['graficos'].collapsed">{% include 'graficos.html' %}</div>
+        <div collapse="workspaces['agrupaciones'].collapsed">{% include 'agrupaciones.html' %}</div>
+      </div>
+
+      <!-- ///// FILTROS ///// -->
+      <div class="col-md-2">
+
+        <div class="row">
+            <h3>Agrupar por</h3>
+            <div class="radio"><input type="radio" ng-model="aporte" name="aporte" ng-true-value="True" ng-false-value="False" ng-change="agrupar_por"> Aporte</div>
+            <div class="radio"><input type="radio" ng-model="aporte" name="aporte" ng-true-value="False" ng-false-value="True" ng-change="agrupar_por"> Cantidad de aportantes</div>
+        </div>
+
+        <div class="row" ng-controller="FiltrosCtrl">
+            <h3>Filtros</h3>
+            <h4>Año electoral</h4>
+            <select multiple ng-model="ciclo" ng-options="o for o in ciclos" ng-disabled="isFiltersDisable">
+              <option value="''">elegir un ciclo</option>
+            </select>
+            <h4>Elecciones</h4>
+            <select multiple ng-model="eleccion" ng-options="o for o in elecciones" ng-disabled="isFiltersDisable">
+              <option value="''">elegir una provincia</option>
+            </select>
+            <h4>Agrupación Politica</h4>
+            <select ng-model="partido" ng-options="o for o in partidos" ng-disabled="isFiltersDisable">
+              <option value="''">elegir una provincia</option>
+            </select>
+            <h4>Distrito</h4>
+            <select ng-model="aprovincia" ng-options="p for p in provincias" ng-disabled="isFiltersDisable">
+              <option value="''">elegir una provincia</option>
+            </select>
+        </div> <!-- Aca termina el controlador de filtros -->
+        <div class="clearfix">
+          <button type="submit" class="btn btn-primary btn-group-lg btn-block">Filtrar</button>
+        </div>
+      </div>
+    </div> <!-- Aca termina el controlador de tabs -->
+
+    <!-- ///// TABLA DE DATOS ///// -->
+    <div class="row">
+      <div class="col-md-12" ng-controller="TablaDatosCtrl">
+
+        {% if aportes %}
+            <table class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th>Año</th>
+                  <th>Elecciones</th>
+                  <th>Nombre</th>
+                  <th>DNI</th>
+                  <th>Importe</th>
+                  <th>Agrupación</th>
+                  <th>Distrito</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for aporte in aportes.items %}
+                  <tr>
+                    <td>{{ aporte.ciclo }}</td>
+                    <td>{{ aporte.eleccion }}</td>
+                    <td>{{ aporte.aportante.nombre }}</td>
+                    <td>{{ aporte.aportante.documento }}</td>
+                    <td>{{ aporte.importe }}</td>
+                    <td>{{ aporte.agrupacion.nombre }}</td>
+                    <td>{{ aporte.distrito }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if aportes.has_prev %}
+              <a href="{{ url_for('index', page = aportes.prev_num) }}"><< Menos </a>
+              {% else %}
+                << Menos
+              {% endif %} |
+              {% if aportes.has_next %}
+                <a href="{{ url_for('index', page = aportes.next_num) }}">Más >></a>
+              {% else %}
+                Más >>
+              {% endif %}
+        {% endif %}
+
+      </div> <!-- Aca termina el controlador de tabla datos -->
+    </div> <!-- Row de la tabla de datos -->
+
+  </div> <!-- Fin contenido -->
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <p class="text-muted">¿Qué es este sitio web? | Preguntas Frecuentes | Datos | Sobre el equipo</p>
+    </div>
+  </div>
+
+<!-- ==================== JAVASCRIPTS =============== -->
+<!-- AngularJS -->
+<script type='text/javascript' src="static/js/angular.min.js"></script>
+<script type='text/javascript' src="static/js/jquery.min.js"></script>
+<script type='text/javascript' src="static/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+
+<script type='text/javascript' src="static/js/d3.js"></script>
+<script type='text/javascript' src="static/js/colorbrewer.js"></script>
+
+<script type='text/javascript' src='static/js/app.js'></script>
+<script type='text/javascript' src='static/js/controllers.js'></script>
+
+<script type='text/javascript' src='static/js/treemap.js'></script>
+
+</body>
+</html>

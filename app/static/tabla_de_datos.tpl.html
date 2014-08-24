@@ -1,0 +1,30 @@
+Buscar: <input ng-model="query">
+<div class="col-md-12" ng-controller="PaginationCtrl">
+
+  <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" previous-text="Anterior" next-text="Siguiente" first-text="Primero" last-text="Último"></pagination>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Ciclo</th>
+        <th>Elecciones</th>
+        <th>Nombre</th>
+        <th>Documento</th>
+        <th>Importe</th>
+        <th>Agrupación</th>
+        <th>Distrito</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="aporte in aportes | filter:query | limitTo:100">
+        <td>{{ aporte.CICLO }}</td>
+        <td>{{ aporte.ELECCIONES }}</td>
+        <td><a href="#/aportes/{{aporte.DOCUMENTO}}">{{ aporte.NOMBRE }}</a></td>
+        <td>{{ aporte.DOCUMENTO }}</td>
+        <td>{{ aporte.IMPORTE }}</td>
+        <td>{{ aporte.AGRUPACION }}</td>
+        <td>{{ aporte.DISTRITO }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
