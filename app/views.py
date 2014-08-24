@@ -15,9 +15,8 @@ from app.models import Aporte, Aportante, Agrupacion
 @app.route("/", methods = ['GET', 'POST'])
 def index():
   params = request.args.to_dict()
-  page = 1
-  if params.has_key('page'):
-    page = int(params['page'])
+  page = request.args.get('page', 1, type=int)
+
   per_page = app.config.get('PER_PAGE', 10)
 
   form = FilterForm()
