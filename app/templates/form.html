@@ -5,16 +5,16 @@
   <div class="row-fluid" ng-controller="FiltrosCtrl">
       <h3>Filtros</h3>
 
-      <h4>{{ form.ciclos.label }}</h4>
+      <h4>{{ form.ciclo.label }}</h4>
        {{ form.ciclo(rows=3, multiple=True) }}
 
-      <h4>{{ form.elecciones.label }}</h4>
+      <h4>{{ form.eleccion.label }}</h4>
       {{ form.eleccion(rows=2, multiple=True) }}
 
-      <h4>{{ form.agrupaciones.label }}</h4>
+      <h4>{{ form.agrupacion.label }}</h4>
       {{ form.agrupacion(rows=10, multiple=True, style="width:200px;" ) }}
 
-      <h4>{{ form.distritos.label }}</h4>
+      <h4>{{ form.distrito.label }}</h4>
       {{ form.distrito(rows=5, multiple=True) }}
 
   </div> <!-- Aca termina el controlador de filtros -->
