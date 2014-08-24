@@ -69,4 +69,4 @@ class Aporte(db.Model):
     self.agrupacion = Agrupacion.query.filter_by(nombre=agrupacion_name).first()
 
   def __repr__(self):
-    return '<Aporte %r>' % self.agrupacion
+    return '<Aporte %r>' % self.importe
