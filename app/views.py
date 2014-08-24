@@ -25,8 +25,6 @@ def index():
 
   aportes = Aporte.query.paginate(page, per_page, False)
   form = FilterForm()
-  if form.validate_on_submit():
-    import pdb;pdb.set_trace()
 
   return render_template('index.html', aportes=aportes, form=form)
 
