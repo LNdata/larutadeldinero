@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from flask_wtf import Form
-from wtforms import SelectMultipleField
+from wtforms import SelectField
 from app import db
 from app.models import Aporte, Agrupacion
 
@@ -12,10 +12,10 @@ AGRUPACIONES = [ (agrup.id, agrup.nombre) for agrup in Agrupacion.query.all()]
 DISTRITOS = [(x[0],x[0]) for x in db.session.query(Aporte.distrito.distinct()).order_by(Aporte.distrito).all()]
 
 class FilterForm(Form):
-    ciclo     = SelectMultipleField('Año Electoral'.decode('utf-8'), choices=CICLOS, coerce=int)
-    eleccion  = SelectMultipleField('Elecciones', choices=ELECCIONES)
-    agrupacion = SelectMultipleField('Agrupación Politica'.decode('utf-8'), choices=AGRUPACIONES)
-    distrito    = SelectMultipleField('Distrito', choices=DISTRITOS)
+    ciclo     = SelectField('Año Electoral'.decode('utf-8'), choices=CICLOS, coerce=int)
+    eleccion  = SelectField('Elecciones', choices=ELECCIONES)
+    agrupacion = SelectField('Agrupación Politica'.decode('utf-8'), choices=AGRUPACIONES)
+    distrito    = SelectField('Distrito', choices=DISTRITOS)
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)

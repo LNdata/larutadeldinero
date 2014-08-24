@@ -20,11 +20,11 @@ def index():
     page = int(params['page'])
   per_page = app.config.get('PER_PAGE', 10)
 
-  #aportes_filtered = db.session(Aporte).filter()
-  #aportes = aportes_filtered.paginate(page, per_page, False)
-
-  aportes = Aporte.query.paginate(page, per_page, False)
   form = FilterForm()
+  if form.validate():
+    aportes = get_aportes_filtrados(form.data).paginate(page, per_page, False)
+  else:
+    aportes = get_aportes_filtrados(params).paginate(page, per_page, False)
 
   return render_template('index.html', aportes=aportes, form=form)
 
@@ -34,25 +34,7 @@ def aportante(document):
     aportante = Aportante.query.filter_by(documento=documento).first_or_404()
     return render_template('aportante.html', aportante=aportante)
 
-def get_filtros(params):
-  filtros = {}
-  if params.has_key('ciclo'):
-    filtros['ciclo'] = params['ciclo']
-  if params.has_key('eleccion'):
-    filtros['eleccion'] = params['eleccion']
-  if params.has_key('agrupacion'):
-    filtros['agrupacion'] = params['agrupacion']
-  if params.has_key('distrito'):
-    filtros['distrito'] = params['distrito']
-  return filtros
-
-@app.route('/api/aportes', methods=['GET'])
-def get_aportes():
-
-  params = request.args.to_dict()
-
-  aportes_json = { 'aportes': [] }
-
+def get_aportes_filtrados(params):
   aportes = Aporte.query
   for filtro in params.keys():
     if filtro == 'ciclo':
@@ -63,8 +45,17 @@ def get_aportes():
       aportes = aportes.filter_by(agrupacion = params[filtro])
     elif filtro == 'distrito':
       aportes = aportes.filter_by(distrito = params[filtro])
+  return aportes
 
-  aportes = aportes.all()
+@app.route('/api/aportes', methods=['GET'])
+def get_aportes():
+
+
+  aportes_json = { 'aportes': [] }
+
+  aportes = get_aportes_filtrados(request.args.to_dict()).all()
+
+  #aportes = aportes.all()
   #aportes = Aporte.query.filter_by(ciclo=filtros['ciclo']).all()
 
   for aporte in aportes:
