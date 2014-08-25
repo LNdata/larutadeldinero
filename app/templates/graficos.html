@@ -1,1 +1,6 @@
-Graficos
+<div id="aportantes" ng-show="agrupar_por">
+  {% include 'charts-aportantes.html' %}
+</div>
+<div id="aportes" ng-hide="agrupar_por">
+  {% include 'charts-aportes.html' %}
+</div>

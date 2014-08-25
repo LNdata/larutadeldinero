@@ -1,3 +1,15 @@
+<div class="row" ng-show="mostrar_agrupar_por" ng-init="agrupar_por = 'true'">
+  <h3>Agrupar por</h3>
+  <div class="input-group">
+    <input type="radio" name="agrupar_por" id="aportantes" ng-model="agrupar_por" value=true>
+    Aportantes
+  </div><!-- /input-group -->
+  <div class="input-group">
+    <input type="radio" name="agrupar_por" id="aportes" ng-model="agrupar_por" value=false>
+    Aportes
+  </div><!-- /input-group -->
+</div>
+
 <form method="POST" action="/">
 
   {{ form.hidden_tag() }}

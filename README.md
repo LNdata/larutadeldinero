@@ -2,21 +2,23 @@ Financiamiento de campañas
 ==========================
 
 
+Si queres, podes bajar el código fuente y mirarlo en tu maquina. Para correrlo:
+
+
 Crear virtualenv
 
-Si queres, podes bajar el código fuente y mirarlo en tu maquina. Para correrlo:
+  virtualenv env
+  . env/bin/activate
+
+Crear base de datos y setear DATABASE_URL
 
 desde el directorio donde esta el index.html (inicias el servidor web)
 
-    python app.py
+    python run.py
 
 desde el navegador lo accedes
 
-    http://localhost:8000/
-
-Si lo queres ver directamente desde la web.
-
-    http://dineroelectoral.herokuapp.com
+    http://localhost:8080/
 
 
 Proyectos similares en Argentina

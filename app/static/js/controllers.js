@@ -39,18 +39,34 @@ aportesAppControllers.controller('TabsCtrl', function($scope) {
 
     $scope.open = function(workspace) {
       setAllInactive();
+
       $scope.workspaces[workspace].collapsed = false;
       document.getElementById(workspace).className = "active";
+
       console.log(workspace);
-      // depending on the workspace, we enable filters or not
-      if (workspace == "treemap") {
-        console.log('Deshabilitando filtros');
-        // disable filters
-        $scope.isFiltersDisable = true
-      }
-      else {
-        console.log('Habilitando filtros');
-        $scope.isFiltersDisable = false
-      }
+      console.log("WHAAAAT");
+
+      switch(workspace) {
+          case "treemap":
+            console.log("entro ent reeemap-----");
+            $scope.isFiltersDisable = true;
+            $scope.mostrar_agrupar_por = false;
+            break;
+          case "graficos":
+            console.log("entro en graficos ------");
+            $scope.isFiltersDisable = false;
+            $scope.mostrar_agrupar_por = true;
+            break;
+          case "mapa":
+            console.log("entro en mapa -----");
+            $scope.isFiltersDisable = false;
+            $scope.mostrar_agrupar_por = false;
+            break;
+          case "agrupaciones":
+            console.log("entro en agrupaciones ------");
+            $scope.isFiltersDisable = false;
+            $scope.mostrar_agrupar_por = false;
+            break;
+      };
     };
 });
