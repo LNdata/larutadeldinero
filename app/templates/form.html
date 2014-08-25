@@ -6,16 +6,16 @@
       <h3>Filtros</h3>
 
       <h4>{{ form.ciclo.label }}</h4>
-       {{ form.ciclo(rows=3, multiple=True) }}
+       {{ form.ciclo(rows=3) }}
 
       <h4>{{ form.eleccion.label }}</h4>
-      {{ form.eleccion(rows=2, multiple=True) }}
+      {{ form.eleccion(rows=2) }}
 
       <h4>{{ form.agrupacion.label }}</h4>
-      {{ form.agrupacion(rows=10, multiple=True, style="width:200px;" ) }}
+      {{ form.agrupacion(rows=10, style="width:200px;" ) }}
 
       <h4>{{ form.distrito.label }}</h4>
-      {{ form.distrito(rows=5, multiple=True) }}
+      {{ form.distrito(rows=5) }}
 
   </div> <!-- Aca termina el controlador de filtros -->
 

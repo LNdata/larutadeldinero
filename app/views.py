@@ -19,7 +19,9 @@ def index():
 
   per_page = app.config.get('PER_PAGE', 10)
 
-  form = FilterForm()
+  # TO DO - REFACTORING
+  form = FilterForm(request.form, params)
+
   if form.validate():
     aportes = get_aportes_filtrados(form.data).paginate(page, per_page, False)
   else:
@@ -37,13 +39,17 @@ def get_aportes_filtrados(params):
   aportes = Aporte.query
   for filtro in params.keys():
     if filtro == 'ciclo':
-      aportes = aportes.filter_by(ciclo = params[filtro])
+      if params[filtro] != 0:
+        aportes = aportes.filter_by(ciclo = params[filtro])
     elif filtro == 'eleccion':
-      aportes = aportes.filter_by(eleccion = params[filtro])
+      if params[filtro] != 'todas':
+        aportes = aportes.filter_by(eleccion = params[filtro].upper())
     elif filtro == 'agrupacion':
-      aportes = aportes.filter_by(agrupacion = params[filtro])
+      if params[filtro] != 0:
+        aportes = Agrupacion.query.filter_by(id=params[filtro]).first().aportes
     elif filtro == 'distrito':
-      aportes = aportes.filter_by(distrito = params[filtro])
+      if params[filtro] != 'todas':
+        aportes = aportes.filter_by(distrito = params[filtro].upper())
   return aportes
 
 @app.route('/api/aportes', methods=['GET'])
