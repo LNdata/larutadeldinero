@@ -6,16 +6,15 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 
+from app import models
+
+# This will create the database file using SQLAlchemy
+#db.create_all()
+#db.session.commit()
+
 # HTTP error handling
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
 
-#import ruta.views
-#import ruta.models
-
-from app import views, models
-
-# Build the database:
-# This will create the database file using SQLAlchemy
-#db.create_all()
+from app import views

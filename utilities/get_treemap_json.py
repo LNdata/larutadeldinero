@@ -23,16 +23,12 @@ def get_importe(ciclo, eleccion, distrito, agrupacion):
 def get_distrito(ciclo, eleccion, distrito):
   nuevo_distrito = {"name": distrito, "children": []}
 
-  query_agrupaciones = "SELECT AGRUPACION FROM aportes WHERE CICLO = '%s' AND ELECCIONES = '%s' AND DISTRITO = '%s'" % (ciclo, eleccion, distrito)
+  query_agrupaciones = "SELECT DISTINCT AGRUPACION FROM aportes WHERE CICLO = '%s' AND ELECCIONES = '%s' AND DISTRITO = '%s'" % (ciclo, eleccion, distrito)
   agrupaciones = [x[0] for x in query(query_agrupaciones)]
 
   for agrupacion in agrupaciones:
-    nueva_agrupacion = {"name": agrupacion, "children": []}
-
     importe_total = get_importe(ciclo, eleccion, distrito, agrupacion)
-    nuevo_importe = {"name": "Total", "value": importe_total}
-    nueva_agrupacion["children"].append(nuevo_importe)
-
+    nueva_agrupacion = {"name": agrupacion, "value": importe_total}
     nuevo_distrito["children"].append(nueva_agrupacion)
 
   return nuevo_distrito
@@ -43,18 +39,23 @@ def main():
 
   query_ciclos = "SELECT DISTINCT CICLO FROM aportes"
   ciclos = [x[0] for x in query(query_ciclos)]
+  # CICLO ------
   for ciclo in ciclos:
     nuevo_ciclo = {"name": ciclo, "children": []}
     query_elecciones = "SELECT DISTINCT ELECCIONES as eleccion FROM aportes WHERE CICLO = '%s'" % ciclo
     elecciones = [x[0] for x in query(query_elecciones)]
+    # ELECCION ------
     for eleccion in elecciones:
       nueva_eleccion = {"name": eleccion, "children": []}
       query_distritos = "SELECT DISTINCT DISTRITO FROM aportes WHERE CICLO = '%s' AND ELECCIONES = '%s'" % (ciclo, eleccion)
       distritos = [x[0] for x in query(query_distritos)]
+      # DISTRITO ------
       for distrito in distritos:
         nuevo_distrito = get_distrito(ciclo, eleccion, distrito)
         nueva_eleccion["children"].append(nuevo_distrito)
       nuevo_ciclo["children"].append(nueva_eleccion)
+      # AGRUPACION ------
+        # IMPORTE ------
     print nuevo_ciclo
     results["children"].append(nuevo_ciclo)
 

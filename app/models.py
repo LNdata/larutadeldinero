@@ -52,17 +52,19 @@ class Aporte(db.Model):
   eleccion = db.Column(db.String(80))
   distrito = db.Column(db.String(80))
   lista = db.Column(db.String(80))
+  codlista = db.Column(db.Integer)
   importe = db.Column(db.Float)
   fecha = db.Date()
   aportante_id = db.Column(db.Integer, db.ForeignKey('aportantes.id'))
   agrupacion_id = db.Column(db.Integer, db.ForeignKey('agrupaciones.id'))
 
-  def __init__(self, ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_name, lista):
+  def __init__(self, ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_name, codlista, lista):
     self.ciclo  = ciclo
     self.cargo   = cargo
     self.eleccion = eleccion
     self.distrito = distrito
     self.lista = lista
+    self.codlista = codlista
     self.importe  = importe
     self.fecha    = fecha
     self.aportante  = Aportante.query.filter_by(documento=documento).first()

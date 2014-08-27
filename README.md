@@ -10,7 +10,8 @@ Crear virtualenv
   virtualenv env
   . env/bin/activate
 
-Crear base de datos y setear DATABASE_URL
+Crear base de datos y setear variable de ambiente DATABASE_URL
+El script import_data.py importa los registros a la base de datos.
 
 desde el directorio donde esta el index.html (inicias el servidor web)
 

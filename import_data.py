@@ -52,7 +52,8 @@ def import_aportantes():
 
 def import_aportes():
   # aportes
-#CICLO,CARGO,ELECCIONES,PERSONA,CODDISTRITO,DISTRITO,NUM,AGRUPACION,LISTA,DOCUMENTO,FECHA,IMPORTE,CODLISTA,COLOR
+#CICLO,CARGO,ELECCIONES,CODDISTRITO,DISTRITO,AGRUPACION,LISTA,DOCUMENTO,,FECHA,IMPORTE,CODLISTA,COLOR
+#"2013.00,Diputados,PRIMARIAS,04,CORDOBA,FRENTE PARA LA VICTORIA,(Dip.) LISTA 2  (LETRA: K),16907588.00,-        -,6/8/2013 00:00:00,2400.00,50104,386cb0"
   with open('data/aportes.csv','r') as f:
     data = f.readlines()[1:]
     for line in data:
@@ -61,26 +62,28 @@ def import_aportes():
         ciclo = int(float(data[0]))
         cargo = data[1]
         eleccion = data[2]
-        persona = data[3]
-        coddistrito = data[4]
-        distrito = data[5]
-        num = int(data[6]) if data[6] else 0
-        agrupacion_nombre = data[7]
-        lista = data[8]
-        documento = data[9].split('.')[0]
-        fecha = strftime(data[10], gmtime()) #datetime.datetime.strftime(data[10], gmtime()).date() #'6/8/2013 00:00:00'
+        #persona = data[3]
+        coddistrito = data[3]
+        distrito = data[4]
+        #num = int(data[5]) if data[5] else 0
+        agrupacion_nombre = data[5]
+        lista = data[6]
+        documento = data[7].split('.')[0]
+        fecha = strftime(data[9], gmtime()) #datetime.datetime.strftime(data[10], gmtime()).date() #'6/8/2013 00:00:00'
 
-        importe = float(data[11])
-        codlista = int(data[12]) if data[12] else 0
-        color = data[13]
-      except:
-          print "Problema con row de documento %s." % data[9]
-          continue
-      aporte = Aporte(ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_nombre, lista)
+        importe = float(data[10])
+        codlista = int(data[11]) if data[11] else 0
+        color = data[12]
+      except Exception as exception:
+        import pdb;pdb.set_trace()
+        print "Problema con row de documento %s." % data[9]
+        continue
+      print documento
+      aporte = Aporte(ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_nombre, codlista, lista)
       db.session.add(aporte)
     db.session.commit()
 
 if __name__ == '__main__':
-  import_agrupaciones()
-  import_aportantes()
+  #import_agrupaciones()
+  #import_aportantes()
   import_aportes()

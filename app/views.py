@@ -11,9 +11,9 @@ from app import db
 from app.forms import FilterForm
 from app.models import Aporte, Aportante, Agrupacion
 
-
 @app.route("/", methods = ['GET', 'POST'])
-def index():
+@app.route("/viz/<viz>", methods = ['GET', 'POST'])
+def index(viz='treemap'):
   params = request.args.to_dict()
   page = request.args.get('page', 1, type=int)
 
@@ -22,18 +22,43 @@ def index():
   # TO DO - REFACTORING
   form = FilterForm(request.form, params)
 
-  if form.validate():
-    aportes = get_aportes_filtrados(form.data).paginate(page, per_page, False)
+  aportes = get_aportes_filtrados(form.data)
+  aportes_paginados = aportes.paginate(page, per_page, False)
+
+  if (viz == 'mapa'):
+    #http://andytow.cartodb.com/api/v2/sql?q=SELECT * FROM public.larutaelectoral
+    query = "select * from larutaelectoral where elecciones='GENERALES'"
+    return render_template('mapa_b.html', aportes=aportes_paginados, form=form, query=query)
+  elif (viz == 'graficos'):
+    cantidad_aportantes_por_sexo = aportantes_por_sexo(params)
+    return render_template('graficos_b.html', aportes=aportes_paginados, form=form, cantidad_aportantes_por_sexo=cantidad_aportantes_por_sexo)
   else:
-    aportes = get_aportes_filtrados(params).paginate(page, per_page, False)
+    return render_template('treemap_b.html', aportes=aportes_paginados, form=form) # los aportantes para graficos
+    #para boletas = get_boletas_filtradas(aportes)
 
-  return render_template('index.html', aportes=aportes, form=form)
-
-
-@app.route('/aportante/<document>')
-def aportante(document):
+@app.route('/aportante/<documento>')
+def aportante(documento):
     aportante = Aportante.query.filter_by(documento=documento).first_or_404()
     return render_template('aportante.html', aportante=aportante)
+
+
+# devolver sexo de aportantes para grafico
+def aportantes_por_sexo(filtros):
+  # ciclo, agrupacion, eleccion, distrito
+  #Aportante.query.count(Aportante.sexo)
+  # SELECT aportantes.SEXO, COUNT(aportantes.SEXO) AS CuentaDeSEXO FROM (SELECT aportantes.SEXO, aportes.DOCUMENTO
+  # FROM aportantes INNER JOIN aportes ON aportantes.DOCUMENTO = aportes.DOCUMENTO
+  # WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES") AND ((aportantes.PERSONA)="FISICA"))
+  # GROUP BY aportantes.SEXO, aportes.DOCUMENTO) GROUP BY aportantes.SEXO;
+
+  cantidad_aportantes_por_sexo = { 'F': 775, 'M': 1722 } # {'F': N, 'M': N}
+  return cantidad_aportantes_por_sexo
+
+
+def get_boletas_filtradas(aportes):
+  boletas = [] # { codlista: NN, ciclo: NNNN}
+  boletas = [{'codlista': x.codlista, 'ciclo': x.ciclo} for x in aportes.distinct(Aporte.codlista)]
+  return boletas
 
 def get_aportes_filtrados(params):
   aportes = Aporte.query

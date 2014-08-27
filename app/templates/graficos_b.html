@@ -1,0 +1,42 @@
+{% extends 'basic.html' %}
+{% block title %} Treemap {% endblock %}
+
+{% block head %}
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+  <script type='text/javascript' src="{{ url_for('static', filename='js/graficos_aportantes_sexo.js') }}"></script>
+
+{% endblock %}
+
+
+{% block content %}
+  <!-- ///// TABS ///// -->
+  <div class="col-sm-2 col-md-2 sidebar">
+
+    <ul class="nav nav-pills nav-stacked">
+      <li id="treemap"><a href="{{ url_for('index', viz='treemap') }}">Treemap</a></li>
+      <li id="mapa"><a href="{{ url_for('index', viz='mapa') }}">Mapa</a></li>
+      <li id="graficos" class="active"><a href="{{ url_for('index', viz='graficos') }}">Gráficos</a></li>
+    </ul>
+
+  </div>
+
+  <!-- ////// VISUALIZACIONES ////// -->
+
+  <div class="col-md-8">
+    <div id="aportantes" ng-show="agrupar_por">
+      {% include 'charts-aportantes.html' %}
+    </div>
+    <div id="aportes" ng-hide="agrupar_por">
+    </div>
+  </div>
+
+  <!-- ///// FILTROS ///// -->
+  <div class="col-md-2">
+
+    {% include 'form.html' %}
+
+  </div>
+
+{% endblock %}

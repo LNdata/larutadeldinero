@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="static/assets/ico/favicon.ico">
+
+    <title>Aportes de Campaña de Elecciones en Argentina </title>
+
+    <link type='text/css' rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link type='text/css' rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}"/>
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+ <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Aportes de Campaña en Argentina</a>
+    </div>
+  </nav>
+
+  <!-- Begin page content -->
+  <div class="container">
+
+    <div class="row"  ng-controller="TabsCtrl" ng-init="isFiltersDisable=true">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- ///// TABLA DE DATOS ///// -->
+    <div class="row">
+      <div class="col-md-12" ng-controller="TablaDatosCtrl">
+
+        {% if aportes %}
+            <table class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th>Año</th>
+                  <th>Elecciones</th>
+                  <th>Nombre</th>
+                  <th>DNI</th>
+                  <th>Importe</th>
+                  <th>Agrupación</th>
+                  <th>Distrito</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for aporte in aportes.items %}
+                  <tr>
+                    <td>{{ aporte.ciclo }}</td>
+                    <td>{{ aporte.eleccion }}</td>
+                    <td><a href="{{ url_for('aportante', documento = aporte.aportante.documento) }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
+                    <td>{{ aporte.aportante.documento }}</td>
+                    <td>{{ aporte.importe }}</td>
+                    <td>{{ aporte.agrupacion.nombre }}</td>
+                    <td>{{ aporte.distrito }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if aportes.has_prev %}
+              <a href="{{ url_for('index', page = aportes.prev_num) }}"><< Menos </a>
+              {% else %}
+                << Menos
+              {% endif %} |
+              {% if aportes.has_next %}
+                <a href="{{ url_for('index', page = aportes.next_num) }}">Más >></a>
+              {% else %}
+                Más >>
+              {% endif %}
+        {% endif %}
+
+      </div> <!-- Aca termina el controlador de tabla datos -->
+    </div> <!-- Row de la tabla de datos -->
+
+  </div> <!-- Fin contenido -->
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <p class="text-muted"><a href="{{ url_for('static', filename='html/') }}">¿Qué es este sitio web?</a> | <a href="{{ url_for('static', filename='html/') }}">Preguntas Frecuentes</a> | <a href="{{ url_for('static', filename='html/') }}">Datos</a> | <a href="{{ url_for('static', filename='html/') }}">Sobre el equipo</a></p>
+    </div>
+  </div>
+
+<!-- ==================== JAVASCRIPTS =============== -->
+
+<script type='text/javascript' src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type='text/javascript' src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</body>
+</html>
