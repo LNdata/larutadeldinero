@@ -21,7 +21,7 @@
  <!-- Fixed navbar -->
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
-      <a class="navbar-brand" href="{{ url_for('index') }}">Aportes de Campaña en Argentina</a>
+      <a class="navbar-brand" href="{{ url_for('index') }}">La Ruta Electoral</a>
     </div>
   </nav>
 
@@ -29,61 +29,45 @@
   <div class="container">
 
     <div class="row"  ng-controller="TabsCtrl" ng-init="isFiltersDisable=true">
+
+      <!-- ///// TABS ///// -->
+      <div class="col-sm-2 col-md-2 sidebar">
+
+        <ul class="nav nav-pills nav-stacked">
+          <li id="treemap"><a href="{{ url_for('index', viz='treemap') }}">Treemap</a></li>
+          <li id="mapa"><a href="{{ url_for('index', viz='mapa') }}">Mapa</a></li>
+          <li id="graficos"><a href="{{ url_for('index', viz='graficos') }}">Gráficos</a></li>
+          <li id="tabla"><a href="{{ url_for('index', viz='tabla') }}">Tabla</a></li>
+        </ul>
+
+      </div>
+
       {% block content %}{% endblock %}
     </div>
-
-    <!-- ///// TABLA DE DATOS ///// -->
-    <div class="row">
-      <div class="col-md-12" ng-controller="TablaDatosCtrl">
-
-        {% if aportes %}
-            <table class="table table-hover table-responsive">
-              <thead>
-                <tr>
-                  <th>Año</th>
-                  <th>Elecciones</th>
-                  <th>Nombre</th>
-                  <th>DNI</th>
-                  <th>Importe</th>
-                  <th>Agrupación</th>
-                  <th>Distrito</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for aporte in aportes.items %}
-                  <tr>
-                    <td>{{ aporte.ciclo }}</td>
-                    <td>{{ aporte.eleccion }}</td>
-                    <td><a href="{{ url_for('aportante', documento = aporte.aportante.documento) }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
-                    <td>{{ aporte.aportante.documento }}</td>
-                    <td>{{ aporte.importe }}</td>
-                    <td>{{ aporte.agrupacion.nombre }}</td>
-                    <td>{{ aporte.distrito }}</td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            {% if aportes.has_prev %}
-              <a href="{{ url_for('index', page = aportes.prev_num) }}"><< Menos </a>
-              {% else %}
-                << Menos
-              {% endif %} |
-              {% if aportes.has_next %}
-                <a href="{{ url_for('index', page = aportes.next_num) }}">Más >></a>
-              {% else %}
-                Más >>
-              {% endif %}
-        {% endif %}
-
-      </div> <!-- Aca termina el controlador de tabla datos -->
-    </div> <!-- Row de la tabla de datos -->
 
   </div> <!-- Fin contenido -->
 
   <!-- Footer -->
   <div class="footer">
     <div class="container">
-      <p class="text-muted"><a href="{{ url_for('static', filename='html/') }}">¿Qué es este sitio web?</a> | <a href="{{ url_for('static', filename='html/') }}">Preguntas Frecuentes</a> | <a href="{{ url_for('static', filename='html/') }}">Datos</a> | <a href="{{ url_for('static', filename='html/') }}">Sobre el equipo</a></p>
+      <div class="row">
+        <a href="{{ url_for('about') }}">Sobre el sitio</a> | <a href="{{ url_for('faq') }}">Preguntas frecuentes</a> | <a href="{{ url_for('team') }}">El equipo</a>
+      </div>
+
+<!--      <div class="row text-center">
+        <a href="http://hackslabs.org/" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/hackslabs.png')}}"></a>
+
+         <a href="http://www.icfj.org/" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/ICFJ.png')}}"></a>
+
+         <a href="http://wbi.worldbank.org/wbi/" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/WBI.png')}}"></a>
+       </div>
+       <div class="row text-center">
+         <a href="http://lanacion.com.ar" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/lndata.png')}}"></a>
+         <a href="http://lanacion.com.ar" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/poderciudadano.png')}}"></a>
+         <a href="http://lanacion.com.ar" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/cippec.png')}}"></a>
+         <a href="http://www.opennews.org" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/opennews.png')}}"></a>
+         <a href="http://www.andytow.com" target="_blank" class="img-thumbnail"><img src="{{ url_for('static', filename='img/icons/blogdeandytow.png')}}"></a>
+       </div>-->
     </div>
   </div>
 

@@ -12,7 +12,20 @@
 
     <link type='text/css' rel="stylesheet" href="static/css/bootstrap.css">
     <link type='text/css' rel="stylesheet" href="static/css/estilos.css"/>
-    <link type='text/css' rel="stylesheet" href="static/css/treemap.css"/>
+    <!--<link type='text/css' rel="stylesheet" href="static/css/treemap.css"/>-->
+    <!--<style>
+      #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+    </style>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+-->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+  <script type='text/javascript' src='static/js/graficos_aportantes_sexo.js'></script>
 
 </head>
 <body>
@@ -35,17 +48,17 @@
           <li ng-click="open('treemap')" id="treemap" class="active"><a href="#">Treemap</a></li>
           <li ng-click="open('mapa')" id="mapa"><a href="#">Mapa</a></li>
           <li ng-click="open('graficos')" id="graficos"><a href="#">Gráficos</a></li>
-          <li ng-click="open('agrupaciones')" id="agrupaciones"><a href="#">Agrupaciones</a></li>
+          <li ng-click="open('agrupaciones')" id="agrupaciones"></li>
         </ul>
 
       </div>
 
       <!-- ////// VISUALIZACIONES ////// -->
       <div class="col-md-8">
-        <div collapse="workspaces['treemap'].collapsed">{% include 'treemap.html' %}</div>
-        <div collapse="workspaces['mapa'].collapsed">{% include 'mapa.html' %}</div>
+        <div id="treemap" collapse="workspaces['treemap'].collapsed">{% include 'treemap.html' %}</div>
+        <div collapse="workspaces['mapa'].collapsed"></div>
         <div collapse="workspaces['graficos'].collapsed">{% include 'graficos.html' %}</div>
-        <div collapse="workspaces['agrupaciones'].collapsed">{% include 'agrupaciones.html' %}</div>
+        <!--<div collapse="workspaces['agrupaciones'].collapsed">{% include 'boletas.html' %}</div>-->
       </div>
 
       <!-- ///// FILTROS ///// -->
@@ -113,18 +126,18 @@
 
 <!-- ==================== JAVASCRIPTS =============== -->
 <!-- AngularJS -->
+
 <script type='text/javascript' src="static/js/angular.min.js"></script>
 <script type='text/javascript' src="static/js/jquery.min.js"></script>
 <script type='text/javascript' src="static/js/ui-bootstrap-tpls-0.11.0.min.js"></script>
 
-<script type='text/javascript' src="static/js/d3.js"></script>
-<script type='text/javascript' src="static/js/colorbrewer.js"></script>
+<!--<script type='text/javascript' src='static/js/d3.js'></script>-->
+<!--<script type='text/javascript' src='static/js/colorbrewer.js'></script>-->
 
 <script type='text/javascript' src='static/js/app.js'></script>
 <script type='text/javascript' src='static/js/controllers.js'></script>
 
 <script type='text/javascript' src='static/js/treemap.js'></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 </body>
 </html>

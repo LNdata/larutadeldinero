@@ -30,8 +30,9 @@ def index(viz='treemap'):
     query = "select * from larutaelectoral where elecciones='GENERALES'"
     return render_template('mapa_b.html', aportes=aportes_paginados, form=form, query=query)
   elif (viz == 'graficos'):
-    cantidad_aportantes_por_sexo = aportantes_por_sexo(params)
-    return render_template('graficos_b.html', aportes=aportes_paginados, form=form, cantidad_aportantes_por_sexo=cantidad_aportantes_por_sexo)
+    return render_template('graficos_b.html', aportes=aportes_paginados, form=form, cantidad_aportantes_por_sexo=aportantes_por_sexo(params))
+  elif (viz == 'tabla'):
+    return render_template('tabla_datos.html', aportes=aportes_paginados, form=form)
   else:
     return render_template('treemap_b.html', aportes=aportes_paginados, form=form) # los aportantes para graficos
     #para boletas = get_boletas_filtradas(aportes)
@@ -44,16 +45,33 @@ def aportante(documento):
 
 # devolver sexo de aportantes para grafico
 def aportantes_por_sexo(filtros):
-  # ciclo, agrupacion, eleccion, distrito
-  #Aportante.query.count(Aportante.sexo)
-  # SELECT aportantes.SEXO, COUNT(aportantes.SEXO) AS CuentaDeSEXO FROM (SELECT aportantes.SEXO, aportes.DOCUMENTO
-  # FROM aportantes INNER JOIN aportes ON aportantes.DOCUMENTO = aportes.DOCUMENTO
-  # WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES") AND ((aportantes.PERSONA)="FISICA"))
-  # GROUP BY aportantes.SEXO, aportes.DOCUMENTO) GROUP BY aportantes.SEXO;
+  # filtros = ciclo, agrupacion, eleccion, distrito
+  #aportantes_filtrados = get_aportantes_filtrados(filtros)
 
-  cantidad_aportantes_por_sexo = { 'F': 775, 'M': 1722 } # {'F': N, 'M': N}
-  return cantidad_aportantes_por_sexo
+  amount_by_sexo_f =Aportante.query.filter(Aportante.sexo == 'F').count()
+  amount_by_sexo_m = Aportante.query.filter(Aportante.sexo == 'M').count()
 
+  return { 'F': amount_by_sexo_f, 'M': amount_by_sexo_m }
+
+# devuelve grupos de edad
+def aportantes_por_edad(filtros):
+  # filtros = ciclo, agrupacion, eleccion, distrito
+  # SELECT aportes.GRUPOEDAD, COUNT(aportes.GRUPOEDAD) AS CuentaDeGRUPOEDAD FROM (SELECT aportes.GRUPOEDAD, aportantes.DOCUMENTO
+  # FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
+  # WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
+  # GROUP BY aportes.GRUPOEDAD, aportantes.DOCUMENTO
+  # HAVING ((Not (aportes.GRUPOEDAD) Is Null))) GROUP BY aportes.GRUPOEDAD;
+  pass
+
+def aportantes_por_agrupaciones(filtros):
+  # filtros = ciclo, agrupacion, eleccion, distrito
+
+
+  # SELECT aportes.AGRUPACION, aportes.COLOR, COUNT(aportes.AGRUPACION) AS CuentaDeAGRUPACION FROM (SELECT aportes.AGRUPACION, aportes.COLOR, aportantes.DOCUMENTO
+  # FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
+  # WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
+  # GROUP BY aportes.AGRUPACION, aportes.COLOR, aportantes.DOCUMENTO) GROUP BY aportes.AGRUPACION, aportes.COLOR ORDER BY COUNT(aportes.AGRUPACION) DESC;
+  pass
 
 def get_boletas_filtradas(aportes):
   boletas = [] # { codlista: NN, ciclo: NNNN}
@@ -77,16 +95,29 @@ def get_aportes_filtrados(params):
         aportes = aportes.filter_by(distrito = params[filtro].upper())
   return aportes
 
+def get_aportantes_filtrados(params):
+  aportes_filtrados = get_aportes_filtrados(params)
+  return [aporte.aportante for aporte in aportes_filtrados]
+
+@app.route('/about')
+def about():
+  return render_template('sitio.html')
+
+@app.route('/faq')
+def faq():
+  return render_template('faq.html')
+
+@app.route('/team')
+def team():
+  return render_template('equipo.html')
+
+
+# ######## API
+
 @app.route('/api/aportes', methods=['GET'])
 def get_aportes():
-
-
   aportes_json = { 'aportes': [] }
-
   aportes = get_aportes_filtrados(request.args.to_dict()).all()
-
-  #aportes = aportes.all()
-  #aportes = Aporte.query.filter_by(ciclo=filtros['ciclo']).all()
 
   for aporte in aportes:
     try:

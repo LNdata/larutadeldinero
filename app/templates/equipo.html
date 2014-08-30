@@ -1,38 +1,23 @@
-<html>
+{% extends 'basic.html' %}
+{% block content %}{% endblock %}
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Equipo</title>
-</head>
+	<h3>Equipo</h3>
 
-<body>
 
-		<h3>Equipo</h3>
-		<table border="0" cellspace="5" cellspacing="10">
-			<tr>
-				<td>
-				<a href="http://blogs.lanacion.com.ar/data/" target="_blank">
-				<img src="http://www.andytow.com/scripts/larutaelectoral/img/icons/lndata.png"></a>
-				</td>
-				<td>
-				<a href="http://www.cippec.org/" target="_blank">
-				<img src="http://www.andytow.com/scripts/larutaelectoral/img/icons/cippec.png"></a>
-				</td>
-				<td>
-				<a href="http://www.poderciudadano.org" target="_blank">
-				<img src="http://www.andytow.com/scripts/larutaelectoral/img/icons/poderciudadano.png"></a>
-				</td>
-				<td><a href="http://andytow.com/blog/" target="_blank">
-				<img src="http://www.andytow.com/scripts/larutaelectoral/img/icons/blogdeandytow.png"></a>
-				</td>
-			</tr>	
-		</table>
+	<h4>Sponsors</h4>
+	<ul>
+		<ol><a href="http://blogs.lanacion.com.ar/data/" target="_blank"><img src="{{ url_for('static', filename('/img/icons/lndata.png')) }}"></a></ol>
+		<ol><a href="http://www.cippec.org/" target="_blank"><img src="http://www.andytow.com/scripts/larutaelectoral/img/icons/cippec.png"></a></ol>
+		<ol><a href="http://www.poderciudadano.org" target="_blank"><img src="/img/icons/poderciudadano.png"></a></ol>
+		<ol><a href="http://andytow.com/blog/" target="_blank"><img src="http://www.andytow.com/scripts/larutaelectoral/img/icons/blogdeandytow.png"></a></ol>
+	</ul>
+
 		<p><b>Desarrollo: </b><a target="_blank" href="https://twitter.com/andy_tow">
-		Andy Tow</a>,<a target="_blank" href="https://twitter.com/gaba"> 
-		Gabriela Rodriguez</a>, <a href="https://twitter.com/momiperalta">Momi 
+		Andy Tow</a>,<a target="_blank" href="https://twitter.com/gaba">
+		Gabriela Rodriguez</a>, <a href="https://twitter.com/momiperalta">Momi
 		Peralta Ramos</a>, <a target="_blank" href="https://twitter.com/rgbrom">
 		Ricardo Brom</a>,
-		<a target="_blank" href="https://twitter.com/aaizemberg">Ariel Aizemberg</a>, 
+		<a target="_blank" href="https://twitter.com/aaizemberg">Ariel Aizemberg</a>,
 		Francisco Facioni</p>
 		<p><b>Colaboradores: </b>
 		<a target="_blank" href="https://twitter.com/juliapomares">Julia Pomares</a>,
@@ -40,10 +25,9 @@
 		<a target="_blank" href="https://twitter.com/ropavese">
 		Rosario Pavese</a>,
 		<a target="_blank" href="https://twitter.com/pablosecchi">Pablo Secchi</a>,
-		<a target="_blank" href="https://twitter.com/juanibelbis">Juan Ignacio 
+		<a target="_blank" href="https://twitter.com/juanibelbis">Juan Ignacio
 		Belbis</a>, <a target="_blank" href="https://twitter.com/fcoel">
 		Florencia Coelho</a>,
 		<a target="_blank" href="https://twitter.com/colmanromi">Romina Colman</a>
 
-</body>
-</html>
+{% endblock %}
