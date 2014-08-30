@@ -26,10 +26,12 @@ def import_aportantes():
       nombre = data[2]
       apellido = data[3]
       persona = data[4]
-      sexo = data[5]
-      if not sexo in ['M', 'F', '']:
+      #import pdb;pdb.set_trace()
+      if not data[5] in ['M', 'F']:
         print "Problem with row, document %s." % documento
-        continue
+      else:
+        sexo = data[5]
+      print data
       clase = int(float(data[6])) if data[6] else 0
       # designaciones = data[7]
       # contrato = data[8]
@@ -84,6 +86,6 @@ def import_aportes():
     db.session.commit()
 
 if __name__ == '__main__':
-  #import_agrupaciones()
+  import_agrupaciones()
   #import_aportantes()
   import_aportes()
