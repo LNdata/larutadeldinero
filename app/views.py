@@ -109,7 +109,7 @@ def faq():
 
 @app.route('/team')
 def team():
-  return render_template('equipo.html')
+  return render_template('team.html')
 
 
 # ######## API
