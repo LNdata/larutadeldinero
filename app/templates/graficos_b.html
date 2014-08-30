@@ -3,7 +3,10 @@
 
 {% block head %}
 
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <link type='text/css' rel="stylesheet" href="{{ url_for('static', filename='css/nv.d3.min.css') }}">
+
+  <script type='text/javascript' src="{{ url_for('static', filename='js/d3.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/nv.d3.min.js') }}"></script>
 
 {% endblock %}
 

@@ -3,88 +3,41 @@
     var cantidad_aportantes_M = parseInt('{{ cantidad_aportantes_por_sexo['M'] }}');
 </script>
 
-<h4>SEXO</h4>
+<h4>Aportantes por Sexo</h4>
 
-<div id="_chart_div_SEXO"></div>
+<div id="chart_sexo">
+  <svg style="height:300px;width:300px;"></svg>
+</div>
 
 <script>
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
+  //Regular pie chart example
+  nv.addGraph(function() {
+    var chart = nv.models.pieChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .showLabels(true);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['CUENTADESEXO','F','M'],
-          ['', cantidad_aportantes_F, cantidad_aportantes_M],
-        ]);
+      d3.select("#chart_sexo svg")
+          .datum(exampleData())
+          .transition().duration(350)
+          .call(chart);
 
-        var options = {
-          legend: {position: 'none'},
-          fontName: ['Lucida Sans Unicode'],
-          colors: ['#81BEF7','#08298A']
-        };
+    return chart;
+  });
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_SEXO'));
-
-        chart.draw(data, options);
-      }
+  function exampleData() {
+    return  [
+        {
+          "label": "Femenino",
+          "value" : cantidad_aportantes_F
+        } ,
+        {
+          "label": "Masculino",
+          "value" : cantidad_aportantes_M
+        } ]
+      };
 </script>
 
 <hr>
 
-<h4>GRUPOS DE EDAD</h4>
-<div id="_chart_div_GRUPOSEDAD"></div>
-<script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-    ['','29 o menos','30-39','40-49','50-59','60-69','70 y más'],
-    ['',219,709,711,523,277,44],
-        ]);
-
-        var options = {
-
-      legend: {position: 'none'},
-      bar: {groupWidth: '100%'},
-      fontName: ['Lucida Sans Unicode'],
-      colors: ['#CEE3F6','#A9D0F5','#81BEF7','#58ACFA','#2E9AFE','#0174DF']
-
-
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_GRUPOSEDAD'));
-
-        chart.draw(data, options);
-      }
-</script>
-
-<hr>
-
-<h4>AGRUPACIONES</h4>
-<div id="_chart_div_AGRUPACIONES"></div>
-<script type="text/javascript">
-  google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-['','FRENTE PARA LA VICTORIA','FRENTE RENOVADOR','UNIDOS POR LA LIBERTAD Y EL TRABAJO','NUEVO BUENOS AIRES'],
-['',1628,722,147,1],
-    ]);
-
-    var options = {
-
-  legend: {position: 'none'},
-  bar: {groupWidth: '100%'},
-  fontName: ['Lucida Sans Unicode'],
-  colors: ['#386cb0','#018571','#018571','#61380b']
-
-
-    };
-
-    var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_AGRUPACIONES'));
-
-    chart.draw(data, options);
-  }
-</script>
+<h4></h4>
