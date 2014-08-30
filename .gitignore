@@ -4,3 +4,4 @@ dist
 .sass-cache:
 venv
 *.pyc
+.DS_Store

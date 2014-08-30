@@ -1,0 +1,85 @@
+{% extends 'basic.html' %}
+{% block title %} Tabla de Datos {% endblock %}
+
+    {% block head %}
+    {% endblock %}
+
+{% block content %}
+
+<div class="col-md-8">
+
+<!-- ///// TABLA DE DATOS ///// -->
+
+    {% if aportes %}
+        <table class="table table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Año</th>
+              <th>Elecciones</th>
+              <th>Nombre</th>
+              <th>DNI</th>
+              <th>Importe</th>
+              <th>Agrupación</th>
+              <th>Distrito</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for aporte in aportes.items %}
+              <tr>
+                <td>{{ aporte.ciclo }}</td>
+                <td>{{ aporte.eleccion }}</td>
+                <td><a href="{{ url_for('aportante', documento = aporte.aportante.documento) }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
+                <td>{{ aporte.aportante.documento }}</td>
+                <td>{{ aporte.importe }}</td>
+                <td>{{ aporte.agrupacion.nombre }}</td>
+                <td>{{ aporte.distrito }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% if aportes.has_prev %}
+          <a href="{{ url_for('index', viz='tabla', page = aportes.prev_num) }}"><< Menos </a>
+          {% else %}
+            << Menos
+          {% endif %} |
+          {% if aportes.has_next %}
+            <a href="{{ url_for('index', viz='tabla', page = aportes.next_num) }}">Más >></a>
+          {% else %}
+            Más >>
+          {% endif %}
+    {% endif %}
+
+</div>
+
+<!-- ///// FILTROS ///// -->
+<div class="col-md-2">
+
+  <form method="POST" action="/viz/tabla">
+
+    {{ form.hidden_tag() }}
+
+    <div class="row-fluid" ng-controller="FiltrosCtrl">
+        <h3>Filtros</h3>
+
+        <h4>{{ form.ciclo.label }}</h4>
+         {{ form.ciclo(rows=3) }}
+
+        <h4>{{ form.eleccion.label }}</h4>
+        {{ form.eleccion(rows=2) }}
+
+        <h4>{{ form.agrupacion.label }}</h4>
+        {{ form.agrupacion(rows=10, style="width:200px;" ) }}
+
+        <h4>{{ form.distrito.label }}</h4>
+        {{ form.distrito(rows=5) }}
+
+    </div> <!-- Aca termina el controlador de filtros -->
+
+    <button type="submit" class="btn btn-primary btn-group-lg btn-block">Filtrar</button>
+
+  </form>
+
+</div>
+
+
+{% endblock %}

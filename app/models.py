@@ -1,6 +1,5 @@
 from app import db
 from app import app
-from enum import Enum
 
 class Aportante(db.Model):
   __tablename__ = 'aportantes'
@@ -10,7 +9,7 @@ class Aportante(db.Model):
   nombre = db.Column(db.String(80))
   apellido = db.Column(db.String(80))
   persona = db.Column(db.String(50))
-  sexo = Enum('F', 'M')
+  sexo = db.Column(db.Enum('F', 'M', name='sexo_types'))
   clase = db.Column(db.Integer)
   lat = db.Column(db.String(50))
   lon = db.Column(db.String(50))

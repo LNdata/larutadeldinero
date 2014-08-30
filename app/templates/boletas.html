@@ -1,0 +1,15 @@
+<div class="row">
+{% for boleta in boletas %}
+  <div class="col-xs-6 col-md-3">
+  {% if boleta['codlista'] == 0 %}
+    <a href="#" class="thumbnail">
+      <img data-src="http://andytow.com/scripts/larutaelectoral/img/{{ boleta['ciclo'] }}/0000000-3.jpg" alt="Boleta">
+    </a>
+  {% else%}
+    <a href="#" class="thumbnail">
+      <img src="http://andytow.com/scripts/larutaelectoral/img/{{ boleta['ciclo'] }}/{{ boleta['codlista'] }}-3.jpg">
+    </a>
+  {% endif %}
+  </div>
+{% endfor %}
+</div>

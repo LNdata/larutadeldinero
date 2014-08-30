@@ -9,8 +9,8 @@ db = SQLAlchemy(app)
 from app import models
 
 # This will create the database file using SQLAlchemy
-#db.create_all()
-#db.session.commit()
+db.create_all()
+db.session.commit()
 
 # HTTP error handling
 @app.errorhandler(404)
