@@ -32,6 +32,6 @@ CSRF_SESSION_KEY = "secret"
 SECRET_KEY = "secret"
 
 # Pagination Config
-PER_PAGE = 50
+PER_PAGE = 10
 LINK_SIZE = 'lg'
 CSS_FRAMEWORK = 'bootstrap3'
