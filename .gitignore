@@ -5,3 +5,4 @@ dist
 venv
 *.pyc
 .DS_Store
+config.py
