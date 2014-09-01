@@ -9,6 +9,18 @@
   <svg style="height:300px;width:300px;"></svg>
 </div>
 
+<hr>
+
+<h4>Aportantes por Agrupaciones</h4>
+
+<div id="chart_agrupaciones">
+  <svg style="height:400px;width:400px;"></svg>
+</div>
+
+<hr>
+
+<h4>
+
 <script>
   //Regular pie chart example
   nv.addGraph(function() {
@@ -18,14 +30,14 @@
         .showLabels(true);
 
       d3.select("#chart_sexo svg")
-          .datum(exampleData())
+          .datum(datosSexo())
           .transition().duration(350)
           .call(chart);
 
     return chart;
   });
 
-  function exampleData() {
+  function datosSexo() {
     return  [
         {
           "label": "Femenino",
@@ -38,6 +50,40 @@
       };
 </script>
 
-<hr>
+<script>
+  //Regular pie chart example
+  nv.addGraph(function() {
+    var chart = nv.models.pieChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .showLabels(true);
 
-<h4></h4>
+      d3.select("#chart_agrupaciones svg")
+          .datum(datosAgrupaciones())
+          .transition().duration(350)
+          .call(chart);
+
+    return chart;
+  });
+
+  function datosAgrupaciones() {
+    return  [
+        {
+          "label": "Frente para la victoria",
+          "value" : 300
+        } ,
+        {
+          "label": "Frente Renovador",
+          "value" : 200
+        },
+        {
+          "label": "Unidos pora la libertad y el trabajo",
+          "value" : 300
+        } ,
+        {
+          "label": "Nuevo Buenos Aires",
+          "value" : 300
+        }
+        ]
+      };
+</script>
