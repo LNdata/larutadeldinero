@@ -21,238 +21,301 @@
 	<!--<script src="http://geosprocket.com/assets/leaflet/dist/leaflet.js"></script>-->
 
   <!-- include cartodb.js library -->
-  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+  <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+   <script type="text/javascript">
 
 
-<script type="text/javascript">
+	//Funcion Inicial
+	function main(){
+		//Dibujo el query por default al comenzar
+		draw("AND true");
+	}
 
-  function main() {
+	//Cuando la DOM esté lista, arranco la app
+	$( document ).ready(function() {
 
-    var map = L.map('map', {
-      zoomControl: false,
-      center: [-40, -60],
-      zoom: 5
-    });
+		//Atacheo al cambio de cualquier filtro un update del mapa
+		$('#filtros select').change(function(){
 
-    // add a nice baselayer from OpenStreetMap
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'OpenStreetMap <a href="http://openstreetmap.org" target="_blank">Terms &amp; Feedback</a>'
-    }).addTo(map);
+			//Comienzo con un predicado vacio
+			var cond = "";
 
-    cartodb.createLayer(map, {
-        user_name: 'andytow',
-        type: 'cartodb',
-        sublayers: [{
-          sql: "{{ query }}  AND color = '018571'",
-          layer_name: "larutaelectoral",
-          cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #018571; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-          interactivity: "cartodb_id"
-        }]
-      })
-      .addTo(map)
-      .done(function(lyr) {
-          var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+			$('#filtros select').each(function(){
 
-          infowindow.model.set('template', function(data) {
-              return _.template($('#infowindow_template').html())(data);
+				//Filtro valores por default, habría que hacer algo más lindo acá
+				if (this.value == "Todos" || this.value == "todas" || this.value == "todos" || this.value == 0){
+					cond = cond;
+				}
+				//Para el selector "eleccion" corrijo el nombre de la tabla, seria bueno que el selector se llame igual que la tabla para hacer más simpe
+				else if (this.id == 'eleccion'){
+					cond = cond + " AND elecciones = '" + this.value + "'";
+				}
+				//Para el selector agrupación, tengo que levantar el texto de la selección, porque el ID no esta en CartoDB
+				else if (this.id == "agrupacion") {
+					cond = cond + " AND " + this.id + " = '" + document.getElementById('agrupacion').options[document.getElementById('agrupacion').selectedIndex].innerHTML + "'";
+				} else {
+					//Si todo saliera bien, solo estaría esta linea
+					cond = cond + " AND " + this.id + " = '" + this.value + "'";
+				}
+			});
+
+			//Dibujo el mapa
+			draw(cond);
+		});
+
+		//Arranco
+		main();
+
+	});
+
+	//Esta funcion construye queries sql
+	function querybuild(cond,color){
+		sql = "select * from larutaelectoral where "+cond+" and color = '"+color+"'";
+		console.log(sql);
+		return sql;
+	}
+
+	//Esta funcion vacia la DOM para que se pueda armar un nuevo mapa
+	function clearMap(){
+
+		$('#map').detach();
+		$('#canvas').append('<div id="map"></div>');
+	}
+
+
+	//Esta función dibuja el mapa
+	function draw(conds){
+
+		//Borro el mapa anterior
+		clearMap();
+
+		//Creo un objeto mapa
+        var map = L.map('map', {
+          //zoomControl: false,
+          center: [-40, -60],
+          zoom: 4
+        });
+
+		//Armo el predicado de condiciones
+		cond = "true "+conds;
+
+        // add a nice baselayer from OpenStreetMap
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'OpenStretMap <a href="http://openstreetmap.org" target="_blank">Terms &amp; Feedback</a>'
+      }).addTo(map);
+
+
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'018571'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #018571; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
+
+          }).on('error', function() {
+            console.log("some error occurred");
           });
 
-          console.log("It lodead everyting");
 
-        }).on('error', function() {
-          console.log("some error occurred");
-      });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'386cb0'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #386cb0; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = '386cb0'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #386cb0; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'50103'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #50103; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = '50103'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #50103; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'50214'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #50214; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = '50214'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #50214; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'61380b'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #61380b; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = '61380b'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #61380b; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'969696'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #969696; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = '969696'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #969696; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'868a08'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #868a08; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = '868a08'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #868a08; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'bf5b17'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #bf5b17; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = 'bf5b17'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #bf5b17; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
+        cartodb.createLayer(map, {
+          user_name: 'andytow',
+          type: 'cartodb',
+          sublayers: [{
+            sql: querybuild(cond,'d7191c'),
+            layer_name: "larutaelectoral",
+            cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #d7191c; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
+            interactivity: "cartodb_id"
+          }]
+        })
+          .addTo(map)
+        .done(function(lyr) {
+            var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
+            infowindow.model.set('template', function(data) {
+                return _.template($('#infowindow_template').html())(data);
+            });
 
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
+          }).on('error', function() {
+            console.log("some error occurred");
+          });
 
-    cartodb.createLayer(map, {
-      user_name: 'andytow',
-      type: 'cartodb',
-      sublayers: [{
-        sql: "{{ query }}  AND color = 'd7191c'",
-        layer_name: "larutaelectoral",
-        cartocss: "#larutaelectoral { marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-placement: point; marker-multi-policy: largest; marker-type: ellipse; marker-fill: #d7191c; marker-allow-overlap: true; marker-clip: false;} #larutaelectoral [ sumadeimporte <= 150000] { marker-width: 40.0; } #larutaelectoral [ sumadeimporte <= 100000] {  marker-width: 30.0; } #larutaelectoral [ sumadeimporte <= 50000] {  marker-width: 25.0; } #larutaelectoral [ sumadeimporte <= 10000] {  marker-width: 20.0; } #larutaelectoral [ sumadeimporte <= 5000] { marker-width: 15.0; } #larutaelectoral [ sumadeimporte <= 1000] {  marker-width: 10.0; } #larutaelectoral [ sumadeimporte <= 500] {  marker-width: 5.0; }",
-        interactivity: "cartodb_id"
-      }]
-    })
-      .addTo(map)
-    .done(function(lyr) {
-        var infowindow = cdb.vis.Vis.addInfowindow(map, lyr.getSubLayer(0), ['codlista', 'ciclo', 'sumadeimporte', 'agrupacion', 'elecciones', 'clase', 'cargo', 'sexo', 'apellido', 'nombres']);
+      }
 
-        infowindow.model.set('template', function(data) {
-            return _.template($('#infowindow_template').html())(data);
-        });
-
-      }).on('error', function() {
-        console.log("some error occurred");
-      });
-
-
-  }; // end main function
-
-
-  window.onload = main;
-
-</script>
+    </script>
 
 {% endblock %}
 
 
 {% block content %}
+
   <!-- ////// VISUALIZACIONES ////// -->
 
   <div class="col-md-8">
-    <div id="map"></div>
+	<div id="canvas">
+    	<div id="map"></div>
+	</div>
 
     <script type="infowindow/html" id="infowindow_template">
       <div class="cartodb-popup v2">
@@ -260,7 +323,7 @@
       <div class="cartodb-popup-content-wrapper">
         <div class="cartodb-popup-content">
       <div align="center">
-      <img src="http://www.andytow.com/scripts/larutaelectoral/img/<%= content.data.ciclo %>/<%= content.data.codlista %>-3.jpg" width="40%">
+      <img src="http://www.andytow.com/scripts/larutaelectoral/img/<%= content.data.ciclo %>/<%= content.data.codlista %>.jpg" width="40%">
       <img src="http://www.andytow.com/scripts/larutaelectoral/img/icons/<%= content.data.sexo %>.png">
       <br><b><%= content.data.nombres %> <%= content.data.apellido %>
       <br><b>Clase <%= content.data.clase %></b>
@@ -272,8 +335,6 @@
       <div class="cartodb-popup-tip-container"></div>
       </div>
     </script>
-
-    this is the query {{ query }}
   </div>
 
   <!-- ///// FILTROS ///// -->
