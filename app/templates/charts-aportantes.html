@@ -5,7 +5,8 @@
 									{ "key": "monotributistas", 
 									  "values": [ 
 													{"label": "Monotributo", "value": 3400},
-													{"label": "Ganancias", "value": 4343} 
+													{"label": "Ganancias", "value": 4343},
+													{"label": "IVA", "value": 43343} 
 												]
 									}
 								];
@@ -14,7 +15,7 @@
 <h4>Aportantes por Sexo</h4>
 
 <div id="chart_sexo">
-  <svg style="height:300px;width:300px;"></svg>
+  <svg style="height:200px;width:200px;"></svg>
 </div>
 
 <hr>
@@ -22,7 +23,7 @@
 <h4>Aportantes por Agrupaciones</h4>
 
 <div id="chart_agrupaciones">
-  <svg style="height:400px;width:400px;"></svg>
+  <svg style="height:200px;width:200px;"></svg>
 </div>
 
 <hr>
@@ -35,9 +36,9 @@
     var chart = nv.models.discreteBarChart()
         .x(function(d) { return d.label })
         .y(function(d) { return d.value })
-        .staggerLabels(true)
-        .tooltips(false)        //Don't show tooltips
-        .showValues(true)       //...instead, show the bar value right on top of each bar.
+        .staggerLabels(false)
+        .tooltips(true)        //Don't show tooltips
+        .showValues(false)       //...instead, show the bar value right on top of each bar.
         .transitionDuration(350)		
 
       d3.select("#chart_sexo svg")
@@ -51,9 +52,9 @@
     var chart = nv.models.discreteBarChart()
         .x(function(d) { return d.label })    //Specify the data accessors.
         .y(function(d) { return d.value })
-        .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-        .tooltips(false)        //Don't show tooltips
-        .showValues(true)       //...instead, show the bar value right on top of each bar.
+        .staggerLabels(false)    //Too many bars and not enough room? Try staggering labels.
+        .tooltips(true)        //Don't show tooltips
+        .showValues(false)       //...instead, show the bar value right on top of each bar.
         .transitionDuration(350)
         ;
 
