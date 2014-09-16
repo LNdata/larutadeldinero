@@ -74,7 +74,7 @@ def import_aportes():
         fecha = strftime(data[9], gmtime()) #datetime.datetime.strftime(data[10], gmtime()).date() #'6/8/2013 00:00:00'
 
         importe = float(data[10])
-        codlista = int(data[11]) if data[11] else 0
+        codlista = data[11]
         color = data[12]
       except Exception as exception:
         import pdb;pdb.set_trace()
@@ -87,5 +87,5 @@ def import_aportes():
 
 if __name__ == '__main__':
   import_agrupaciones()
-  #import_aportantes()
+  import_aportantes()
   import_aportes()
