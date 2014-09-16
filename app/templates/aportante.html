@@ -1,6 +1,33 @@
 {% extends 'basic.html' %}
 
 {% block content %}
-  {{ aportante.nombre }}
-  {{ aportante.apellido }}
+  <h3>{{ aportante.nombre }} {{ aportante.apellido }} - DNI {{ aportante.documento }}</h3>
+
+
+  <table class="table table-hover table-responsive">
+    <thead>
+      <tr>
+        <th>Año</th>
+        <th>Elección</th>
+        <th>Importe</th>
+        <th>Agrupación</th>
+        <th>Lista</th>
+        <th>Distrito</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for aporte in aportante.aportes %}
+        <tr>
+          <td>{{ aporte.ciclo }}</td>
+          <td>{{ aporte.eleccion }}</td>
+          <td>{{ aporte.importe }}</td>
+          <td>{{ aporte.agrupacion.nombre }}</td>
+          <td>{{ aporte.codlista }}</td>
+          <td>{{ aporte.distrito }}</td>
+          <td>{{ aporte.fecha }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock%}
