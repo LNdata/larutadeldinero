@@ -11,6 +11,8 @@ from app import db
 from app.forms import FilterForm
 from app.models import Aporte, Aportante, Agrupacion
 
+from sqlalchemy import func
+
 @app.route("/", methods = ['GET', 'POST'])
 @app.route("/viz/<viz>", methods = ['GET', 'POST'])
 def index(viz='treemap'):
@@ -30,7 +32,7 @@ def index(viz='treemap'):
     query = "select * from larutaelectoral where elecciones='GENERALES'"
     return render_template('mapa_b.html', aportes=aportes_paginados, form=form, query=query)
   elif (viz == 'graficos'):
-    return render_template('graficos_b.html', aportes=aportes_paginados, form=form, cantidad_aportantes_por_sexo=aportantes_por_sexo(params))
+    return render_template('graficos_b.html', aportes=aportes_paginados, form=form, cantidad_aportantes_por_sexo=aportantes_por_sexo(params), cantidad_aportantes_por_agrupaciones=aportantes_por_agrupaciones(params))
   elif (viz == 'tabla'):
     return render_template('tabla_datos.html', aportes=aportes_paginados, form=form)
   else:
@@ -48,10 +50,20 @@ def aportantes_por_sexo(filtros):
   # filtros = ciclo, agrupacion, eleccion, distrito
   #aportantes_filtrados = get_aportantes_filtrados(filtros)
 
-  amount_by_sexo_f =Aportante.query.filter(Aportante.sexo == 'F').count()
+  amount_by_sexo_f = Aportante.query.filter(Aportante.sexo == 'F').count()
   amount_by_sexo_m = Aportante.query.filter(Aportante.sexo == 'M').count()
 
-  return { 'F': amount_by_sexo_f, 'M': amount_by_sexo_m }
+  #session.query(func.count(Aportante.id)).group_by(Aportante.sexo)
+
+  return [
+      {
+        "label": "Femenino",
+        "value" : amount_by_sexo_f
+      } ,
+      {
+        "label": "Masculino",
+        "value" : amount_by_sexo_m
+      } ]
 
 # devuelve grupos de edad
 def aportantes_por_edad(filtros):
@@ -64,14 +76,43 @@ def aportantes_por_edad(filtros):
   pass
 
 def aportantes_por_agrupaciones(filtros):
+  # cantidad de aportantes por cada agrupacon
   # filtros = ciclo, agrupacion, eleccion, distrito
 
+  #query = db.session.query(func.count(Aporte.aportante), Aporte.agrupacion.nombre).group_by(Aporte.agrupacion_id)
 
-  # SELECT aportes.AGRUPACION, aportes.COLOR, COUNT(aportes.AGRUPACION) AS CuentaDeAGRUPACION FROM (SELECT aportes.AGRUPACION, aportes.COLOR, aportantes.DOCUMENTO
-  # FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-  # WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-  # GROUP BY aportes.AGRUPACION, aportes.COLOR, aportantes.DOCUMENTO) GROUP BY aportes.AGRUPACION, aportes.COLOR ORDER BY COUNT(aportes.AGRUPACION) DESC;
-  pass
+  query = "select count(aportante_id), agrupaciones.nombre from aportes inner join agrupaciones on agrupacion_id = agrupaciones.id group by agrupaciones.nombre"
+  values = db.session.execute(query).fetchall()
+
+  print values
+  
+  return [ {
+    'key'    : 'Agrupaciones',
+    'values' : [ {"label": y, "value": int(x) } for (x,y) in values ]
+    }
+  ]
+
+  # return [ {
+  #  'key': 'Agrupaciones',
+  #  'values': [
+  #    {
+  #      "label": "Frente para la victoria",
+  #      "value" : 300
+  #    } ,
+  #    {
+  #      "label": "Frente Renovador",
+  #      "value" : 200
+  #    },
+  #    {
+  #      "label": "Unidos pora la libertad y el trabajo",
+  #      "value" : 300
+  #    } ,
+  #    {
+  #      "label": "Nuevo Buenos Aires",
+  #      "value" : 300
+  #    }
+  #    ]
+  #  }]
 
 def get_boletas_filtradas(aportes):
   boletas = [] # { codlista: NN, ciclo: NNNN}

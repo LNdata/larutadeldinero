@@ -1,6 +1,9 @@
 from app import db
 from app import app
 
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship, backref
+
 class Aportante(db.Model):
   __tablename__ = 'aportantes'
   id = db.Column(db.Integer, primary_key=True)
@@ -14,8 +17,6 @@ class Aportante(db.Model):
   lat = db.Column(db.String(50))
   lon = db.Column(db.String(50))
   #designaciones, contrato, autoridad, candidatura, mandato_dip, mandato_sen, imp_ganancias, imp_iva, monotributo, integrante_soc, empleador, actividad_monotributo
-
-  aportes =  db.relationship('Aporte', backref = 'aportante', lazy = 'dynamic')
 
   def __init__(self, documento, cuit, nombre, apellido, persona, sexo, clase, lat, lon):
     self.documento  = documento
@@ -35,7 +36,6 @@ class Agrupacion(db.Model):
   __tablename__ = 'agrupaciones'
   id = db.Column(db.Integer, primary_key=True)
   nombre = db.Column(db.String(80), unique=True)
-  aportes =  db.relationship('Aporte', backref = 'agrupacion', lazy = 'dynamic')
 
   def __init__(self, nombre):
     self.nombre  = nombre
@@ -54,8 +54,12 @@ class Aporte(db.Model):
   codlista = db.Column(db.Integer)
   importe = db.Column(db.Float)
   fecha = db.Date()
+
   aportante_id = db.Column(db.Integer, db.ForeignKey('aportantes.id'))
   agrupacion_id = db.Column(db.Integer, db.ForeignKey('agrupaciones.id'))
+
+  aportante = db.relationship("Aportante", backref=backref('aportes', order_by=id))
+  agrupacion = db.relationship("Agrupacion", backref=backref('aportes', order_by=id))
 
   def __init__(self, ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_name, codlista, lista):
     self.ciclo  = ciclo

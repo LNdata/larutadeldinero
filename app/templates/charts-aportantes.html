@@ -1,6 +1,6 @@
 <script>
-    var cantidad_aportantes_F = parseInt('{{ cantidad_aportantes_por_sexo['F'] }}');
-    var cantidad_aportantes_M = parseInt('{{ cantidad_aportantes_por_sexo['M'] }}');
+    var datos_por_sexo = {{ cantidad_aportantes_por_sexo|tojson }};
+    var datos_agrupaciones = {{ cantidad_aportantes_por_agrupaciones|tojson }};
 </script>
 
 <h4>Aportantes por Sexo</h4>
@@ -30,60 +30,29 @@
         .showLabels(true);
 
       d3.select("#chart_sexo svg")
-          .datum(datosSexo())
+          .datum(datos_por_sexo)
           .transition().duration(350)
           .call(chart);
 
     return chart;
   });
 
-  function datosSexo() {
-    return  [
-        {
-          "label": "Femenino",
-          "value" : cantidad_aportantes_F
-        } ,
-        {
-          "label": "Masculino",
-          "value" : cantidad_aportantes_M
-        } ]
-      };
-</script>
-
-<script>
-  //Regular pie chart example
   nv.addGraph(function() {
-    var chart = nv.models.pieChart()
-        .x(function(d) { return d.label })
+    var chart = nv.models.discreteBarChart()
+        .x(function(d) { return d.label })    //Specify the data accessors.
         .y(function(d) { return d.value })
-        .showLabels(true);
+        .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
+        .tooltips(false)        //Don't show tooltips
+        .showValues(true)       //...instead, show the bar value right on top of each bar.
+        .transitionDuration(350)
+        ;
 
-      d3.select("#chart_agrupaciones svg")
-          .datum(datosAgrupaciones())
-          .transition().duration(350)
-          .call(chart);
+    d3.select('#chart_agrupaciones svg')
+        .datum(datos_agrupaciones)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
 
     return chart;
   });
-
-  function datosAgrupaciones() {
-    return  [
-        {
-          "label": "Frente para la victoria",
-          "value" : 300
-        } ,
-        {
-          "label": "Frente Renovador",
-          "value" : 200
-        },
-        {
-          "label": "Unidos pora la libertad y el trabajo",
-          "value" : 300
-        } ,
-        {
-          "label": "Nuevo Buenos Aires",
-          "value" : 300
-        }
-        ]
-      };
 </script>

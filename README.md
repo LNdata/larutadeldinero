@@ -38,3 +38,6 @@ Webs de donde se tomaron datos
 Realizado en Hackaton La Ruta del Dinero en 2014, organizado por Hack/Hackers Buenos Aires.
 
 Original privado en https://github.com/rbrom/la-ruta-del-dinero
+
+
+Procesos en manejo de los datos: http://blog.apps.npr.org/2014/09/02/reusable-data-processing.html
