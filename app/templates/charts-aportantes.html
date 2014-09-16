@@ -1,7 +1,15 @@
 <script>
     var datos_por_sexo = {{ cantidad_aportantes_por_sexo|tojson }};
     var datos_agrupaciones = {{ cantidad_aportantes_por_agrupaciones|tojson }};
-</script>
+	var datos_monotributistas = [
+									{ "key": "monotributistas", 
+									  "values": [ 
+													{"label": "Monotributo", "value": 3400},
+													{"label": "Ganancias", "value": 4343} 
+												]
+									}
+								];
+</script> 
 
 <h4>Aportantes por Sexo</h4>
 
@@ -24,14 +32,16 @@
 <script>
   //Regular pie chart example
   nv.addGraph(function() {
-    var chart = nv.models.pieChart()
+    var chart = nv.models.discreteBarChart()
         .x(function(d) { return d.label })
         .y(function(d) { return d.value })
-        .showLabels(true);
+        .staggerLabels(true)
+        .tooltips(false)        //Don't show tooltips
+        .showValues(true)       //...instead, show the bar value right on top of each bar.
+        .transitionDuration(350)		
 
       d3.select("#chart_sexo svg")
           .datum(datos_por_sexo)
-          .transition().duration(350)
           .call(chart);
 
     return chart;
@@ -48,7 +58,7 @@
         ;
 
     d3.select('#chart_agrupaciones svg')
-        .datum(datos_agrupaciones)
+        .datum(datos_monotributistas)
         .call(chart);
 
     nv.utils.windowResize(chart.update);

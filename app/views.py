@@ -55,15 +55,21 @@ def aportantes_por_sexo(filtros):
 
   #session.query(func.count(Aportante.id)).group_by(Aportante.sexo)
 
-  return [
-      {
+
+  return [ {
+	'key'    : 'Sexo',
+    'values' :
+	  [
+	  {
         "label": "Femenino",
         "value" : amount_by_sexo_f
       } ,
       {
         "label": "Masculino",
         "value" : amount_by_sexo_m
-      } ]
+      } 
+	  ]}
+	]
 
 # devuelve grupos de edad
 def aportantes_por_edad(filtros):
