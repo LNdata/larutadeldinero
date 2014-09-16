@@ -6,4 +6,5 @@ venv
 *.pyc
 .DS_Store
 config.py
-env\
+env
+migrations
