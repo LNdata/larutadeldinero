@@ -51,7 +51,19 @@ def aportantes_por_edad(filtros):
 # it returns amount of donors per party filtered by filters
 def donors_per_party(filters):
 
-  query = "select count(aportante_id), agrupaciones.nombre from aportes inner join agrupaciones on agrupacion_id = agrupaciones.id group by agrupaciones.nombre"
+  if filters:
+    where_clause = " and ". join([ "%s = '%s'" % (key,filters[key]) for key in filters.keys()])
+    query = "select count(aportante_id), agrupaciones.nombre \
+             from aportes inner join agrupaciones \
+             on agrupacion_id = agrupaciones.id \
+             where %s \
+             group by agrupaciones.nombre" % where_clause
+  else:
+    query = "select count(aportante_id), agrupaciones.nombre \
+             from aportes inner join agrupaciones \
+             on agrupacion_id = agrupaciones.id \
+             group by agrupaciones.nombre"
+
   values = db.session.execute(query).fetchall()
 
   return [ {
