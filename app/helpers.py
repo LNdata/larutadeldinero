@@ -5,7 +5,13 @@ from app.models import Aporte, Aportante, Agrupacion
 
 from sqlalchemy import func
 
-
+def get_filters(params):
+  filters = {}
+  for key in params:
+    if (params[key] != 0) and (params[key] != 'todas'):
+      filters[key] = params[key]
+  return filters
+  
 # it returns the amount of donors per sex filtered by filters
 def donors_per_sex(filters):
   query_join = db.session.query(Aportante).join(Aporte)
@@ -51,6 +57,9 @@ def aportantes_por_edad(filtros):
 # it returns amount of donors per party filtered by filters
 def donors_per_party(filters):
 
+  if filters.has_key('agrupacion'):
+    filters['agrupacion_id'] = filters.pop('agrupacion')
+
   if filters:
     where_clause = " and ". join([ "%s = '%s'" % (key,filters[key]) for key in filters.keys()])
     query = "select count(aportante_id), agrupaciones.nombre \
@@ -91,10 +100,3 @@ def get_donations_by_filter(filters):
     elif key == 'distrito':
       aportes = aportes.filter_by(distrito = filters[key])
   return aportes
-
-def get_filters(params):
-  filters = {}
-  for key in params:
-    if (params[key] != 0) and (params[key] != 'todas'):
-      filters[key] = params[key]
-  return filters
