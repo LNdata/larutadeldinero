@@ -51,9 +51,12 @@ class Aporte(db.Model):
   eleccion = db.Column(db.String(80))
   distrito = db.Column(db.String(80))
   lista = db.Column(db.String(80))
-  codlista = db.Column(db.Integer)
+  codlista = db.Column(db.String(20))
   importe = db.Column(db.Float)
   fecha = db.Date()
+  color        = db.Column(db.String(50))
+  grupo_edad   = db.Column(db.String(80))
+  grupo_aporte = db.Column(db.String(80))
 
   aportante_id = db.Column(db.Integer, db.ForeignKey('aportantes.id'))
   agrupacion_id = db.Column(db.Integer, db.ForeignKey('agrupaciones.id'))
@@ -61,7 +64,7 @@ class Aporte(db.Model):
   aportante = db.relationship("Aportante", backref=backref('aportes', order_by=id))
   agrupacion = db.relationship("Agrupacion", backref=backref('aportes', order_by=id))
 
-  def __init__(self, ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_name, codlista, lista):
+  def __init__(self, ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_name, codlista, lista, color, grupo_edad, grupo_aporte):
     self.ciclo  = ciclo
     self.cargo   = cargo
     self.eleccion = eleccion
@@ -70,6 +73,9 @@ class Aporte(db.Model):
     self.codlista = codlista
     self.importe  = importe
     self.fecha    = fecha
+    self.color        = color
+    self.grupo_edad   = grupo_edad
+    self.grupo_aporte = grupo_aporte
     self.aportante  = Aportante.query.filter_by(documento=documento).first()
     self.agrupacion = Agrupacion.query.filter_by(nombre=agrupacion_name).first()
 

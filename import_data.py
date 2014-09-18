@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 from app import db
 from app.models import Agrupacion, Aportante, Aporte
 import datetime
@@ -54,8 +57,8 @@ def import_aportantes():
 
 def import_aportes():
   # aportes
-#CICLO,CARGO,ELECCIONES,CODDISTRITO,DISTRITO,AGRUPACION,LISTA,DOCUMENTO,,FECHA,IMPORTE,CODLISTA,COLOR
-#"2013.00,Diputados,PRIMARIAS,04,CORDOBA,FRENTE PARA LA VICTORIA,(Dip.) LISTA 2  (LETRA: K),16907588.00,-        -,6/8/2013 00:00:00,2400.00,50104,386cb0"
+  # CICLO,CARGO,ELECCIONES,CODDISTRITO,DISTRITO,AGRUPACION,LISTA,DOCUMENTO,CUIT/L,FECHA,IMPORTE,CODLISTA,COLOR,GRUPOEDAD,GRUPOAPORTE
+  # 2009.00,Legislativa,GENERALES,01,CAPITAL FEDERAL,ACUERDO CIVICO Y SOCIAL,,22362.00,27-00022362-5,28/5/2009 00:00:00,1000.00,54801-3,d7191c,70 y más,$500 - $1.999
   with open('data/aportes.csv','r') as f:
     data = f.readlines()[1:]
     for line in data:
@@ -64,24 +67,24 @@ def import_aportes():
         ciclo = int(float(data[0]))
         cargo = data[1]
         eleccion = data[2]
-        #persona = data[3]
         coddistrito = data[3]
         distrito = data[4]
-        #num = int(data[5]) if data[5] else 0
         agrupacion_nombre = data[5]
         lista = data[6]
         documento = data[7].split('.')[0]
+        cuit = data[8]
         fecha = strftime(data[9], gmtime()) #datetime.datetime.strftime(data[10], gmtime()).date() #'6/8/2013 00:00:00'
-
         importe = float(data[10])
         codlista = data[11]
         color = data[12]
+        grupo_edad = data[13]
+        grupo_aporte = data[14]
       except Exception as exception:
         import pdb;pdb.set_trace()
         print "Problema con row de documento %s." % data[9]
         continue
-      print documento
-      aporte = Aporte(ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_nombre, codlista, lista)
+      aporte = Aporte(ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_nombre, codlista, lista, color, grupo_edad, grupo_aporte)
+
       db.session.add(aporte)
     db.session.commit()
 
