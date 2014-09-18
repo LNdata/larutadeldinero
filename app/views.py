@@ -37,8 +37,11 @@ def index(viz='treemap'):
     return render_template('graficos_b.html', \
             aportes=aportes_paginados, form=form,\
             cantidad_aportantes_por_sexo=donors_per_sex(filters),\
-            cantidad_aportantes_por_edad=donors_per_age(filters),
-            cantidad_aportantes_por_agrupaciones=donors_per_party(filters)\
+            cantidad_aportantes_por_edad=donors_per_age(filters), \
+            cantidad_aportantes_por_agrupaciones=donors_per_party(filters), \
+            suma_aportes_por_sexo=import_per_sex(filters), \
+            suma_aportes_por_edad=import_per_age(filters), \
+            suma_aportes_por_agrupaciones=import_per_party(filters) \
             )
 
   elif (viz == 'tabla'):

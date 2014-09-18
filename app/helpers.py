@@ -48,19 +48,29 @@ def donors_per_sex(filters):
 def donors_per_age(filters):
   # filtros = ciclo, agrupacion, eleccion, distrito
 
-  query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
-             FROM ( \
-                    SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
-                    FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
-                    WHERE (     (aportes.CICLO=2013) \
-                            AND (aportes.CARGO='Diputados') \
-                            AND (aportes.ELECCION='GENERALES') \
-                            AND (aportes.DISTRITO='BUENOS AIRES') \
-                            ) \
-                   GROUP BY aportes.grupo_edad, aportantes.documento \
-                   HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
-                   ) AS T \
-             GROUP BY grupo_edad"""
+  if filters.has_key('agrupacion'):
+    filters['agrupacion_id'] = filters.pop('agrupacion')
+
+  if filters:
+    where_clause = " and ". join([ "%s = '%s'" % (key,filters[key]) for key in filters.keys()])
+    query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
+               FROM ( \
+                      SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
+                      FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
+                      WHERE %s
+                     GROUP BY aportes.grupo_edad, aportantes.documento \
+                     HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                     ) AS T \
+               GROUP BY grupo_edad"""  % where_clause
+  else:
+    query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
+               FROM ( \
+                      SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
+                      FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
+                     GROUP BY aportes.grupo_edad, aportantes.documento \
+                     HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                     ) AS T \
+               GROUP BY grupo_edad"""
 
   values = db.session.execute(query).fetchall()
 
@@ -96,6 +106,43 @@ def donors_per_party(filters):
     'values' : [ {"label": y, "value": int(x) } for (x,y) in values ]
     }
   ]
+
+def import_per_sex(filters):
+  query_join = db.session.query(Aporte,func.sum(Aporte.importe))
+
+  for key in filters:
+    if key == 'agrupacion':
+      query_join = query_join.filter(Aporte.agrupacion.has(id = filters[key]))
+    elif key == 'ciclo':
+      query_join = query_join.filter_by(ciclo = filters[key])
+    elif key == 'eleccion':
+      query_join = query_join.filter_by(eleccion = filters[key])
+    elif key == 'distrito':
+      query_join = query_join.filter_by(distrito = filters[key])
+
+  import_by_sex_f = query_join.filter(Aporte.aportante.has(Aportante.sexo=='F')).distinct().all()[0][1]
+  import_by_sex_m = query_join.filter(Aporte.aportante.has(Aportante.sexo=='M')).distinct().all()[0][1]
+
+  return [ {
+  'key'    : 'Sexo',
+    'values' :
+    [
+    {
+        "label": "Femenino",
+        "value" : import_by_sex_f
+      } ,
+      {
+        "label": "Masculino",
+        "value" : import_by_sex_m
+      }
+    ]}
+  ]
+
+def import_per_age(filters):
+  return []
+
+def import_per_party(filters):
+  return []
 
 def get_boletas_filtradas(aportes):
   boletas = [] # { codlista: NN, ciclo: NNNN}

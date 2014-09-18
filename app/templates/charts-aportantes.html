@@ -1,8 +1,8 @@
 <script>
-    var datos_por_sexo = {{ cantidad_aportantes_por_sexo|tojson }};
-    var datos_por_edad = {{ cantidad_aportantes_por_edad|tojson }};
-    var datos_agrupaciones = {{ cantidad_aportantes_por_agrupaciones|tojson }};
-  	var datos_monotributistas = [
+    var count_aportantes_por_sexo = {{ cantidad_aportantes_por_sexo|tojson }};
+    var count_aportantes_por_edad = {{ cantidad_aportantes_por_edad|tojson }};
+    var count_aportantes_agrupaciones = {{ cantidad_aportantes_por_agrupaciones|tojson }};
+  	var count_aportantes_monotributistas = [
   									{ "key": "monotributistas",
   									  "values": [
   													{"label": "Monotributo", "value": 3400},
@@ -15,25 +15,22 @@
 
 <h4>Aportantes por Sexo</h4>
 
-<div id="chart_sexo">
+<div id="chart_count_sexo">
   <svg style="height:200px;width:200px;"></svg>
 </div>
 
 <h4>Aportantes por Edad</h4>
 
-<div id="chart_edad">
+<div id="chart_count_edad">
   <svg style="height:200px;width:200px;"></svg>
 </div>
 
 <h4>Aportantes por Agrupaciones</h4>
 
-<div id="chart_agrupaciones">
+<div id="chart_count_agrupaciones">
   <svg style="height:200px;width:200px;"></svg>
 </div>
 
-<hr>
-
-<h4>
 
 <script>
   //Regular pie chart example
@@ -46,8 +43,8 @@
         .showValues(false)       //...instead, show the bar value right on top of each bar.
         .transitionDuration(350)
 
-      d3.select("#chart_sexo svg")
-          .datum(datos_por_sexo)
+      d3.select("#chart_count_sexo svg")
+          .datum(count_aportantes_por_sexo)
           .call(chart);
 
     return chart;
@@ -63,8 +60,8 @@
         .transitionDuration(350)
         ;
 
-    d3.select('#chart_edad svg')
-        .datum(datos_por_edad)
+    d3.select('#chart_count_edad svg')
+        .datum(count_aportantes_por_edad)
         .call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -82,8 +79,8 @@
         .transitionDuration(350)
         ;
 
-    d3.select('#chart_agrupaciones svg')
-        .datum(datos_agrupaciones)
+    d3.select('#chart_count_agrupaciones svg')
+        .datum(count_aportantes_agrupaciones)
         .call(chart);
 
     nv.utils.windowResize(chart.update);

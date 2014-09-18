@@ -14,35 +14,35 @@
 {% block content %}
   <!-- ////// VISUALIZACIONES ////// -->
 
-  <div class="col-md-8">
+  <div class="col-md-8" ng-init="agrupar_por='true'">
     <div id="aportantes" ng-show="agrupar_por">
       {% include 'charts-aportantes.html' %}
     </div>
     <div id="aportes" ng-hide="agrupar_por">
-      <!--{% include 'charts-aportes.html' %}-->
+      {% include 'charts-aportes.html' %}
     </div>
   </div>
 
   <!-- ///// FILTROS ///// -->
   <div class="col-md-2">
 
-    <div class="row" ng-show="mostrar_agrupar_por" ng-init="agrupar_por = 'true'">
+    <div class="row">
       <h3>Agrupar por</h3>
       <div class="input-group">
-        <input type="radio" name="agrupar_por" id="aportantes" ng-model="agrupar_por" value=true>
+        <input type="radio" name="agrupar_por" ng-model="agrupar_por" value="true">
         Aportantes
-      </div><!-- /input-group -->
+      </div>
       <div class="input-group">
-        <input type="radio" name="agrupar_por" id="aportes" ng-model="agrupar_por" value=false>
+        <input type="radio" name="agrupar_por" id="aportes" ng-model="agrupar_por" value="false">
         Aportes
-      </div><!-- /input-group -->
+      </div>
     </div>
 
     <form method="POST" action="/viz/graficos">
 
       {{ form.hidden_tag() }}
 
-      <div class="row-fluid" ng-controller="FiltrosCtrl">
+      <div class="row-fluid">
           <h3>Filtros</h3>
 
           <h4>{{ form.ciclo.label }}</h4>
@@ -59,7 +59,7 @@
 
       </div> <!-- Aca termina el controlador de filtros -->
 
-      <button type="submit" class="btn btn-primary btn-group-lg btn-block">Filtrar</button>
+      <button type="submit" class="btn btn-primary btn-group-lg btn-block btn-filter">Filtrar</button>
 
     </form>
 

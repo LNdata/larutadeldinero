@@ -16,7 +16,7 @@
     {% block head %}
     {% endblock %}
 </head>
-<body>
+<body ng-app="ngRuta">
 
  <!-- Fixed navbar -->
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -28,7 +28,7 @@
   <!-- Begin page content -->
   <div class="container">
 
-    <div class="row"  ng-controller="TabsCtrl" ng-init="isFiltersDisable=true">
+    <div class="row">
 
       <!-- ///// TABS ///// -->
       <div class="col-sm-2 col-md-2 sidebar">
@@ -72,9 +72,16 @@
   </div>
 
 <!-- ==================== JAVASCRIPTS =============== -->
-
 <script type='text/javascript' src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script type='text/javascript' src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+<script type='text/javascript' src="{{ url_for('static', filename='js/angular.min.js')}}"></script>
+<script type='text/javascript' src="{{ url_for('static', filename='js/angular_resource.js')}}"></script>
+<script type='text/javascript' src="{{ url_for('static', filename='js/angular-route.min.js')}}"></script>
+
+<script>
+  var app = angular.module('ngRuta', ['ngRoute']);
+</script>
 
 </body>
 </html>

@@ -1,213 +1,41 @@
-<script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-		['SUMADEIMPORTE','F','M'],
-		['',cantidad_aportantes_F,cantidad_aportantes_M],
-        ]);
-
-        var options = {
-		  vAxis: {format: '$#.#'},
-		  legend: {position: 'none'},
-
-		  fontName: ['Lucida Sans Unicode'],
-		  colors: ['#81BEF7','#08298A']
-
-
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_SEXO'));
-	    var formatter = new google.visualization.NumberFormat({pattern:'$#.#'});
-		formatter.format(data, 1);
-		formatter.format(data, 2);
-
-        chart.draw(data, options);
-      }
+<script>
+    var sum_importe_por_sexo = {{ suma_aportes_por_sexo|tojson }};
+    var sum_importe_por_edad = {{ suma_aportes_por_edad|tojson }};
+    var sum_importe_agrupaciones = {{ suma_aportes_por_agrupaciones|tojson }};
 </script>
 
-<script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
+<h4>Importe por Sexo</h4>
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-		['','29 o menos','30-39','40-49','50-59','60-69','70 y más'],
-['',1094050,5484200,5924699.93,4777978,2512498,450100],
-        ]);
+<div id="chart_sum_sexo">
+  <svg style="height:200px;width:200px;"></svg>
+</div>
 
-        var options = {
-		  vAxis: {format: '$#.#'},
-		  legend: {position: 'none'},
-		  bar: {groupWidth: '100%'},
-		  fontName: ['Lucida Sans Unicode'],
-		  colors: ['#CEE3F6','#A9D0F5','#81BEF7','#58ACFA','#2E9AFE','#0174DF']
+<h4>Importe por Edad</h4>
 
+<div id="chart_sum_edad">
+  <svg style="height:200px;width:200px;"></svg>
+</div>
 
-        };
+<h4>Importe por Agrupaciones</h4>
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_GRUPOSEDAD'));
+<div id="chart_sum_agrupaciones">
+  <svg style="height:200px;width:200px;"></svg>
+</div>
 
-        chart.draw(data, options);
-      }
-    </script>
+<script>
+  nv.addGraph(function() {
+    var chart = nv.models.discreteBarChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .staggerLabels(false)
+        .tooltips(true)        //Don't show tooltips
+        .showValues(false)       //...instead, show the bar value right on top of each bar.
+        .transitionDuration(350)
 
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
+      d3.select("#chart_sum_sexo svg")
+          .datum(sum_importe_por_sexo)
+          .call(chart);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-		['','FRENTE PARA LA VICTORIA','FRENTE RENOVADOR','UNIDOS POR LA LIBERTAD Y EL TRABAJO','NUEVO BUENOS AIRES'],
-		['',13585800,5701827.93,1080000,1898],
-        ]);
-
-        var options = {
-          vAxis: {format: '$#.#'},
-		  legend: {position: 'none'},
-		  bar: {groupWidth: '100%'},
-		  fontName: ['Lucida Sans Unicode'],
-		  colors: ['#386cb0','#018571','#018571','#61380b']
-
-
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_AGRUPACIONES'));
-
-        chart.draw(data, options);
-      }
-    </script>
-
-<script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-		['','Ganancias','IVA','Monotributo','Integra Sociedades','Empleador'],
-		['',3671500,1474500,7502850,24000,624700],
-        ]);
-
-        var options = {
-		  vAxis: {format: '$#.#'},
-		  legend: {position: 'none'},
-		  bar: {groupWidth: '100%'},
-		  fontName: ['Lucida Sans Unicode'],
-		  colors: ['#CEE3F6','#A9D0F5','#81BEF7','#58ACFA','#2E9AFE','#0174DF']
-
-
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_AFIP'));
-
-        chart.draw(data, options);
-      }
+    return chart;
+  });
 </script>
-
-<script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-		['','Designaciones','Contrato','Autoridad','Candidatura','Mandato Diputado', 'Mandato Senador'],
-		['',2670000,0,566698,925700,422000,35000],
-        ]);
-
-        var options = {
-		  vAxis: {format: '$#.#'},
-		  legend: {position: 'none'},
-		  bar: {groupWidth: '100%'},
-		  fontName: ['Lucida Sans Unicode'],
-		  colors: ['#CEE3F6','#A9D0F5','#81BEF7','#58ACFA','#2E9AFE','#0174DF','#0174DF']
-
-
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('_chart_div_DIRIGENTES'));
-
-        chart.draw(data, options);
-      }
-</script>
-
-<b>SEXO</b>
-
-<div id="_chart_div_SEXO" style="width: 480px; height: 240px; position: relative;"></div>
-
-<pre>
-SELECT aportantes.SEXO, Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportantes INNER JOIN aportes ON aportantes.DOCUMENTO = aportes.DOCUMENTO
-WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES") AND ((aportantes.PERSONA)="FISICA"))
-GROUP BY aportantes.SEXO;
-</pre>
-<hr>
-<b>GRUPOS DE EDAD</b>
-<div id="_chart_div_GRUPOSEDAD" style="width: 480px; height: 240px; position: relative;"></div>
-<pre>
-SELECT aportes.GRUPOEDAD, Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes
-WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-GROUP BY aportes.GRUPOEDAD
-HAVING ((Not (aportes.GRUPOEDAD) Is Null));
-</pre>
-<hr>
-<b>AGRUPACIONES</b>
-<div id="_chart_div_AGRUPACIONES" style="width: 480px; height: 240px; position: relative;"></div>
-<pre>
-SELECT aportes.AGRUPACION, aportes.COLOR, Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes
-WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-GROUP BY aportes.AGRUPACION, aportes.COLOR
-ORDER BY Sum(aportes.IMPORTE) DESC;
-</pre>
-<hr>
-<b>INSCRIPCION FISCAL</b>
-<div id="_chart_div_AFIP" style="width: 480px; height: 240px; position: relative;"></div>
-GANANCIAS: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[IMP GANANCIAS])="AC") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-IVA: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[IMP IVA])="AC") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-MONOTRIBUTO: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.MONOTRIBUTO)<>"NI") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES")) OR ((Not (aportantes.MONOTRIBUTO) Is Null) AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-INTEGRA SOCIEDADES: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[INTEGRANTE SOC])="S") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-EMPLEADOR: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.EMPLEADOR)="S") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-<hr>
-<b>DIRIGENTES</b>
-<div id="_chart_div_DIRIGENTES" style="width: 480px; height: 240px; position: relative;"></div>
-DESIGNACIONES: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[DESIGNACIONES])="1") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-CONTRATO: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[CONTRATO])="1") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-AUTORIDAD: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[AUTORIDAD])="1") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-CANDIDATURA: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[CANDIDATURA])="1") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-MANDATO DIPUTADO: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[MANDATO-DIP])="1") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
-MANDATO SENADOR: <pre>SELECT Sum(aportes.IMPORTE) AS SumaDeIMPORTE
-FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-WHERE (((aportantes.[MANDATO-SEN])="1") AND ((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-ORDER BY Sum(aportes.IMPORTE) DESC;</pre>
