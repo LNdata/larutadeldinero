@@ -11,6 +11,11 @@ Crear virtualenv
   . env/bin/activate
 
 Crear base de datos y setear variable de ambiente DATABASE_URL
+
+Para migrar la base de datos usar
+
+    python manage.py db init
+
 El script import_data.py importa los registros a la base de datos.
 
 desde el directorio donde esta el index.html (inicias el servidor web)

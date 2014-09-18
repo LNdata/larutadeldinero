@@ -1,16 +1,17 @@
 <script>
     var datos_por_sexo = {{ cantidad_aportantes_por_sexo|tojson }};
+    var datos_por_edad = {{ cantidad_aportantes_por_edad|tojson }};
     var datos_agrupaciones = {{ cantidad_aportantes_por_agrupaciones|tojson }};
-	var datos_monotributistas = [
-									{ "key": "monotributistas", 
-									  "values": [ 
-													{"label": "Monotributo", "value": 3400},
-													{"label": "Ganancias", "value": 4343},
-													{"label": "IVA", "value": 43343} 
-												]
-									}
-								];
-</script> 
+  	var datos_monotributistas = [
+  									{ "key": "monotributistas",
+  									  "values": [
+  													{"label": "Monotributo", "value": 3400},
+  													{"label": "Ganancias", "value": 4343},
+  													{"label": "IVA", "value": 43343}
+  												]
+  									}
+  								];
+</script>
 
 <h4>Aportantes por Sexo</h4>
 
@@ -18,7 +19,11 @@
   <svg style="height:200px;width:200px;"></svg>
 </div>
 
-<hr>
+<h4>Aportantes por Edad</h4>
+
+<div id="chart_edad">
+  <svg style="height:200px;width:200px;"></svg>
+</div>
 
 <h4>Aportantes por Agrupaciones</h4>
 
@@ -39,7 +44,7 @@
         .staggerLabels(false)
         .tooltips(true)        //Don't show tooltips
         .showValues(false)       //...instead, show the bar value right on top of each bar.
-        .transitionDuration(350)		
+        .transitionDuration(350)
 
       d3.select("#chart_sexo svg")
           .datum(datos_por_sexo)
@@ -58,8 +63,27 @@
         .transitionDuration(350)
         ;
 
+    d3.select('#chart_edad svg')
+        .datum(datos_por_edad)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.discreteBarChart()
+        .x(function(d) { return d.label })    //Specify the data accessors.
+        .y(function(d) { return d.value })
+        .staggerLabels(false)    //Too many bars and not enough room? Try staggering labels.
+        .tooltips(true)        //Don't show tooltips
+        .showValues(false)       //...instead, show the bar value right on top of each bar.
+        .transitionDuration(350)
+        ;
+
     d3.select('#chart_agrupaciones svg')
-        .datum(datos_monotributistas)
+        .datum(datos_agrupaciones)
         .call(chart);
 
     nv.utils.windowResize(chart.update);

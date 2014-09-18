@@ -26,7 +26,7 @@ def index(viz='treemap'):
   form = FilterForm(request.form, params)
   filters = get_filters(form.data)
 
-  aportes = get_donations_by_filter(filters)
+  aportes = get_donations(filters)
   aportes_paginados = aportes.paginate(page, per_page, False)
 
   if (viz == 'mapa'):
@@ -37,6 +37,7 @@ def index(viz='treemap'):
     return render_template('graficos_b.html', \
             aportes=aportes_paginados, form=form,\
             cantidad_aportantes_por_sexo=donors_per_sex(filters),\
+            cantidad_aportantes_por_edad=donors_per_age(filters),
             cantidad_aportantes_por_agrupaciones=donors_per_party(filters)\
             )
 
@@ -70,7 +71,7 @@ def team():
 @app.route('/api/aportes', methods=['GET'])
 def get_aportes():
   aportes_json = { 'aportes': [] }
-  aportes = get_donations_by_filter(get_filters(request.args.to_dict())).all()
+  aportes = get_donations(get_filters(request.args.to_dict())).all()
 
   for aporte in aportes:
     try:

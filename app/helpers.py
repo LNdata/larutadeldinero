@@ -11,7 +11,7 @@ def get_filters(params):
     if (params[key] != 0) and (params[key] != 'todas'):
       filters[key] = params[key]
   return filters
-  
+
 # it returns the amount of donors per sex filtered by filters
 def donors_per_sex(filters):
   query_join = db.session.query(Aportante).join(Aporte)
@@ -44,15 +44,31 @@ def donors_per_sex(filters):
     ]}
   ]
 
-# devuelve grupos de edad
-def aportantes_por_edad(filtros):
+# it returns the amount of donors per age range filtered by filters
+def donors_per_age(filters):
   # filtros = ciclo, agrupacion, eleccion, distrito
-  # SELECT aportes.GRUPOEDAD, COUNT(aportes.GRUPOEDAD) AS CuentaDeGRUPOEDAD FROM (SELECT aportes.GRUPOEDAD, aportantes.DOCUMENTO
-  # FROM aportes INNER JOIN aportantes ON aportes.DOCUMENTO = aportantes.DOCUMENTO
-  # WHERE (((aportes.CICLO)=2013) AND ((aportes.CARGO)="Diputados") AND ((aportes.ELECCIONES)="GENERALES") AND ((aportes.DISTRITO)="BUENOS AIRES"))
-  # GROUP BY aportes.GRUPOEDAD, aportantes.DOCUMENTO
-  # HAVING ((Not (aportes.GRUPOEDAD) Is Null))) GROUP BY aportes.GRUPOEDAD;
-  pass
+
+  query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
+             FROM ( \
+                    SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
+                    FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
+                    WHERE (     (aportes.CICLO=2013) \
+                            AND (aportes.CARGO='Diputados') \
+                            AND (aportes.ELECCION='GENERALES') \
+                            AND (aportes.DISTRITO='BUENOS AIRES') \
+                            ) \
+                   GROUP BY aportes.grupo_edad, aportantes.documento \
+                   HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                   ) AS T \
+             GROUP BY grupo_edad"""
+
+  values = db.session.execute(query).fetchall()
+
+  return [ {
+    'key'    : 'Edades',
+    'values' : [ {"label": x, "value": int(y) } for (x,y) in values ]
+    }
+  ]
 
 # it returns amount of donors per party filtered by filters
 def donors_per_party(filters):
@@ -86,7 +102,7 @@ def get_boletas_filtradas(aportes):
   boletas = [{'codlista': x.codlista, 'ciclo': x.ciclo} for x in aportes.distinct(Aporte.codlista)]
   return boletas
 
-def get_donations_by_filter(filters):
+def get_donations(filters):
   aportes = Aporte.query
 
   for key in filters:
