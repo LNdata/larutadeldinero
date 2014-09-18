@@ -12,13 +12,15 @@ Crear virtualenv
 
 Crear base de datos y setear variable de ambiente DATABASE_URL
 
+Copiar config.py.psql o config.py.mysql a config.py dependiendo de si usan postgresql o mysql.
+
 Para migrar la base de datos usar
 
     python manage.py db init
 
 El script import_data.py importa los registros a la base de datos.
 
-desde el directorio donde esta el index.html (inicias el servidor web)
+desde el directorio raíz (inicias el servidor web)
 
     python run.py
 
