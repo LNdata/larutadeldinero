@@ -8,3 +8,6 @@ venv
 config.py
 env
 migrations
+*.iml
+*.ipr
+*.iws
