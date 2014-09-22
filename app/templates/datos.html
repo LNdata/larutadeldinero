@@ -8,69 +8,83 @@
 <body>
 
 <h3>Datos</h3>
-<p>La información contenida en este sitio no constituye información oficial. En ocasiones puede haber errores o modificaciones involuntarias durante el proceso de obtención y procesamiento 
+<p><b>Aviso preliminar. </b>La información contenida en este sitio no constituye información oficial. En ocasiones puede haber errores o modificaciones involuntarias durante el proceso de obtención y procesamiento 
 de los datos. Recomendamos en todos los casos remitirse a las fuentes 
 originales para corroborarlos.</p>
-<p>La <a target="_blank" href="http://poderciudadano.org/">Fundación
+<p><b>Financiamiento. </b>La <a target="_blank" href="http://poderciudadano.org/">Fundación
 Poder Ciudadano</a> 
-facilitó los datos de financiamiento electoral correspondientes a las elecciones de 2007, 2009 y 2011, 
-publicadas en su sitio <a target="_blank" href="http://dineroypolitica.org/">
+facilitó los datos de financiamiento electoral correspondientes a las elecciones de 2007 
+y 2009, 
+publicados en su sitio <a target="_blank" href="http://dineroypolitica.org/">
 Dinero y Política</a>. Los datos de las elecciones de 2013 fueron obtenidos de las
 <a target="_blank" href="http://www.electoral.gov.ar/financiamientoconsolidado.php">
 planillas ExcelOnline</a> publicadas por la
-<a target="_blank" href="http://www.electoral.gov.ar/">Cámara Nacional Electoral</a>.</p>
-	<p><a target="_blank" href="http://buscardatos.com">Buscar Datos</a> y <a href="http://cuitonline.com">
+<a target="_blank" href="http://www.electoral.gov.ar/">Cámara Nacional Electoral</a> 
+y los de 2011 fueron extraídos de los documentos PDF de los informes de las 
+agrupaciones políticas.</p>
+	<p><b>Domicilio</b>. <a target="_blank" href="http://buscardatos.com">Buscar Datos</a> y <a href="http://cuitonline.com">
 	CUIT Online</a> facilitaron la conversión de matrículas de identidad y 
-	claves tributarias de los aportantes privados contenidas en los informes de 
-	financiamiento en domicilios, que fueron luego georreferenciados utilizando 
+	claves tributarias de los aportantes privados en domicilios, que fueron luego georreferenciados utilizando 
 	el servicio de
 	<a target="_blank" href="https://maps.googleapis.com/maps/api/geocode/">
-	GoogleMaps</a>.</p>
-	<p>Los datos de edad y sexo fueron obtenidos de la misma manera mediante
+	GoogleMaps</a>. A los puntos georreferenciados se les aplicaron controles de 
+	consistencia, eliminando las locaciones fuera de los límites de la República 
+	Argentina y aquellas que no correspondían al distrito del domicilio 
+	original.</p>
+	<p><b>Edad y sexo. </b>La edad y sexo de los aportantes fueron obtenidos mediante
 	<a target="_blank" href="http://buscardatos.com">Buscar Datos</a> y <a href="http://cuitonline.com">
 	CUIT Online</a>, imputándose los faltantes mediante una estimación basada en 
-	el número de documento y el nombre de pila del aportante o el dígito final 
-	de la clave de identificación tributaria, respectivamente. A los fines de 
-	reducir el error de estimación, las edades se presentan agrupadas en intervalos de 
+	el número de documento para la edad y el nombre de pila del aportante o el dígito final 
+	de la clave de identificación tributaria para el sexo. A los fines de 
+	reducir el error de estimación, en los gráficos las edades se presentan agrupadas en intervalos de 
 	diez años de edad.</p>
-	<p>Las inscripciones fiscales de los aportantes se obtuvieron cruzando las 
+	<p><b>Inscripción fiscal.</b> Las inscripciones fiscales de los aportantes se obtuvieron cruzando las 
 	claves de identificación tributaria provistas por los informes de 
 	financiamiento electoral con el
 	<a target="_blank" href="http://www.afip.gob.ar/genericos/cInscripcion/archivoCompleto.asp">
 	archivo completo de la condición tributaria de los contribuyentes y 
 	responsables de la Resolución General N° 1817</a> que publica la <a target="_blank" href="http://www.afip.gov.ar">
 	Administración Federal de Ingresos Públicos</a>, a julio de 2014.</p>
-	<p>Las designaciones publicadas en el Boletín Oficial surgieron del cruce 
-	entre las matrículas de identidad y su ocurrencia en el texto de más de 
-	14.000 disposiciones de designación, nombramiento o prórrogas de 
-	designaciones publicadas por
+	<p><b>Designaciones. </b>Las designaciones publicadas en el Boletín Oficial 
+	surgieron del cruce entre las matrículas de identidad y su ocurrencia en el 
+	texto de más de 14.000 disposiciones de designación, nombramiento o 
+	prórrogas de designaciones extraídas del sitio
 	<a target="_blank" href="http://infoleg.mecon.gov.ar">Información 
-	Legislativa del Ministerio de Economía</a>, a julio de 2014.</p>
-	<p>La información sobre candidaturas para cargos electivos nacionales en el respectivo año 
+	Legislativa del Ministerio de Economía</a>, a julio de 2014. Puede 
+	consultarse un desarrollo de la base completa de designaciones
+	<a target="_blank" href="http://poderofilia.andytow.com">aquí</a>.</p>
+	<p><b>Candidaturas. </b>La información sobre candidaturas para cargos electivos nacionales en el respectivo año 
 	electoral fue provista por el <a href="http://www.andytow.com">Atlas 
 	Electoral de Andy Tow</a>, que recopila datos de la
 	<a target="_blank" href="http://www.elecciones.gov.ar">Dirección Nacional 
 	Electoral</a>, la
 	<a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a> y otros 
-	organismos electorales, a partir de la matrícula de identidad cuando 
+	organismos electorales. Los aportantes que registran candidaturas fueron 
+	identificados a partir de la matrícula de identidad cuando 
 	disponible, o los nombres y apellido, con un control manual aplicado en este 
 	último criterio.</p>
-	<p>Los cargos de autoridad partidaria, obtenidos a partir del cruce de la matrícula de 
-	identidad de los aportantes, fueron facilitados especialmente por la
+	<p><b>Autoridades partidarias.</b> Los aportantes con cargos de autoridad 
+	partidaria fueron identificados a partir del cruce de la matrícula de 
+	identidad de los aportantes con la registrada en la nómina facilitada especialmente por la
 	<a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a>, a julio 
-	de 2014.</p>
-	<p>Los datos sobre contratos en la Administración Pública Nacional fueron 
+	de 2014. </p>
+	<p><b>Contratos.</b> Los aportantes que registraron contratos en la Administración Pública Nacional 
+	en 2013 fueron 
 	obtenidos en el sitio de la 
 	<a target="_blank" href="http://www.sgp.gov.ar/contenidos/onep/onep.html">
 	Oficina Nacional de Empleo Público</a> cruzando las matrículas de identidad 
 	de los aportantes con los más de 50.000 registros correspondientes.</p>
-	<p>Los mandatos de aportantes en el Congreso de la Nación surgen del cruce 
+	<p><b>Mandatos legislativos.</b> Los aportantes con mandatos en el Congreso de la Nación surgen del cruce 
 	de apellidos y nombres de los registros históricos de la
 	<a target="_blank" href="http://www.archivodiputados.gob.ar/diputado/form.htm">
 	H. Cámara de Diputados de la Nación</a> y el
 	<a target="_blank" href="http://www.senado.gov.ar/senadores/Historico/Periodo">
-	H. Senado de la Nación</a> desde 1857 con una revisión manual de los datos 
-	resultantes por posible ambigüedad.</p>
+	H. Senado de la Nación</a> desde 1854 con una revisión manual de los datos 
+	resultantes por posible ambigüedad. Las bases de
+	<a target="_blank" href="https://www.google.com/fusiontables/DataSource?docid=1QlEC7yL1Au6ePhLopmOAKPsP0xIfH42foYw0w10">
+	Diputados Nacionales</a> y
+	<a target="_blank" href="https://www.google.com/fusiontables/DataSource?docid=1P4kyTfizGreww16GySJu65Ne_vZ0UuaDy2Xpc9A">
+	Senadores Nacionales</a> pueden descargarse completas.</p>
 
 </body>
 
