@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 from app import db
 from app import app
 
@@ -16,9 +19,24 @@ class Aportante(db.Model):
   clase = db.Column(db.Integer)
   lat = db.Column(db.String(50))
   lon = db.Column(db.String(50))
-  #designaciones, contrato, autoridad, candidatura, mandato_dip, mandato_sen, imp_ganancias, imp_iva, monotributo, integrante_soc, empleador, actividad_monotributo
+  designacion   = db.Column(db.Boolean) #si figura en el boletin oficial
+  contrato      = db.Column(db.Boolean) # si tiene algun contrato
+  autoridad     = db.Column(db.Boolean)
+  candidatura   = db.Column(db.Boolean)
+  mandato_diputado   = db.Column(db.Boolean)
+  mandato_senador    = db.Column(db.Boolean)
 
-  def __init__(self, documento, cuit, nombre, apellido, persona, sexo, clase, lat, lon):
+  tipo_inscripcion = db.Enum('NI', 'N', 'AC', 'S', 'EX', 'NA', 'XN', 'AN', 'NC', name='inscripcion_types') #'NI', 'N' = No Inscripto - 'AC', 'S' = Activo - 'EX' = Exento - 'NA' = No alcanzado  - 'XN' = Exento no alcanzado - 'AN' = Activo no alcanzado - 'NC' = No corresponde , por defecto NC
+
+  impuesto_ganancias = db.Column(tipo_inscripcion) # Tipo de inscripción en el Impuesto a las Ganancias
+  impuesto_iva = db.Column(tipo_inscripcion) # Tipo de inscripción en el Impuesto al Valor Agregado
+  monotributo = db.Column(tipo_inscripcion)  # Tipo de inscripción en el Monotributo
+
+  integrante_sociedades = db.Column(db.Boolean) # Es integrante de alguna sociedad?
+  empleador = db.Column(db.Boolean) # Es empleador?
+  actividad_monotributo = db.Column(db.String(50))
+
+  def __init__(self, documento, cuit, nombre, apellido, persona, sexo, clase, lat, lon, designacion, contrato, autoridad, candidatura, mandato_diputado, mandato_senador, impuesto_ganancias, impuesto_iva, monotributo, integrante_sociedades, empleador, actividad_monotributo):
     self.documento  = documento
     self.cuit       = cuit
     self.nombre     = nombre
@@ -29,8 +47,22 @@ class Aportante(db.Model):
     self.lat        = lat
     self.lon        = lon
 
+    self.designacion   = designacion
+    self.contrato      = contrato
+    self.autoridad     = autoridad
+    self.candidatura   = candidatura
+    self.mandato_diputado   = mandato_diputado
+    self.mandato_senador    = mandato_senador
+    self.impuesto_ganancias = impuesto_ganancias
+    self.impuesto_iva = impuesto_iva
+    self.monotributo = monotributo
+    self.integrante_sociedades = integrante_sociedades
+    self.empleador = empleador
+    self.actividad_monotributo = actividad_monotributo
+
+
   def __repr__(self):
-    return '<Aportante %r>' % self.nombre
+    return ' '.join[self.nombre, self.apellido]
 
 class Agrupacion(db.Model):
   __tablename__ = 'agrupaciones'
@@ -41,7 +73,7 @@ class Agrupacion(db.Model):
     self.nombre  = nombre
 
   def __repr__(self):
-    return '<Agrupacion %r>' % self.nombre
+    return self.nombre
 
 class Aporte(db.Model):
   __tablename__ = 'aportes'
@@ -75,9 +107,9 @@ class Aporte(db.Model):
     self.fecha    = fecha
     self.color        = color
     self.grupo_edad   = grupo_edad
-    self.grupo_aporte = grupo_aporte
+    self.grupo_aporte = grupo_aporte # categoria de importe, calculado por andy tow
     self.aportante  = Aportante.query.filter_by(documento=documento).first()
     self.agrupacion = Agrupacion.query.filter_by(nombre=agrupacion_name).first()
 
   def __repr__(self):
-    return '<Aporte %r>' % self.importe
+    return '<Aporte documento %s, importe %s>' % (self.aportante.documento, self.importe)
