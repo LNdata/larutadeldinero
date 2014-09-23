@@ -36,6 +36,19 @@ angular.module('larutadeldinero')
                 })
             }
 
+            // Aportante name
+            if (filter.aportanteName) {
+                filters.push({
+                    'name': 'aportante',
+                    'op': 'has',
+                    'val': {
+                        'name':'apellido',
+                        'op':'like',
+                        'val':'%' + filter.aportanteName + '%'
+                    }
+                })
+            }
+
             if (filters.length > 0) {
                 q = { 'filters': filters }
             }
@@ -61,6 +74,18 @@ angular.module('larutadeldinero')
                 if (q) params.push('q=' + JSON.stringify(q));
 
                 return $http.get(baseURL + '/aportes' + '?' + params.join('&'));
+            },
+
+            aportanteById: function(idNumber) {
+                var q = {
+                    'filters': [{
+                        'name': 'documento',
+                        'op': 'eq',
+                        'val': idNumber
+                    }]
+                };
+
+                return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
             }
 
         }

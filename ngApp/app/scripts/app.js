@@ -36,6 +36,10 @@ angular
                 templateUrl: 'views/table.html',
                 controller: 'TableCtrl'
             })
+            .when('/aportante/:documento', {
+                templateUrl: 'views/aportante.html',
+                controller: 'AportanteCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
