@@ -14,7 +14,7 @@
         <td>{{ aporte.ciclo }}</td>
         <td>{{ aporte.eleccion }}</td>
         <td>{{ aporte.distrito }}</td>
-        <td>{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }} (CUIT {{ aporte.aportante.cuit }})</td>
+        <td><a ng-href="#/aportante/{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
         <td>{{ aporte.agrupacion.nombre }}</td>
         <td>$ {{ aporte.importe }}</td>
     </tr>

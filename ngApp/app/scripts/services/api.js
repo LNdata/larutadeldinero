@@ -61,6 +61,18 @@ angular.module('larutadeldinero')
                 if (q) params.push('q=' + JSON.stringify(q));
 
                 return $http.get(baseURL + '/aportes' + '?' + params.join('&'));
+            },
+
+            aportanteById: function(idNumber) {
+                var q = {
+                    'filters': [{
+                        'name': 'documento',
+                        'op': 'eq',
+                        'val': idNumber
+                    }]
+                };
+
+                return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
             }
 
         }
