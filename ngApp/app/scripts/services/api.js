@@ -36,6 +36,19 @@ angular.module('larutadeldinero')
                 })
             }
 
+            // Aportante name
+            if (filter.aportanteName) {
+                filters.push({
+                    'name': 'aportante',
+                    'op': 'has',
+                    'val': {
+                        'name':'apellido',
+                        'op':'like',
+                        'val':'%' + filter.aportanteName + '%'
+                    }
+                })
+            }
+
             if (filters.length > 0) {
                 q = { 'filters': filters }
             }

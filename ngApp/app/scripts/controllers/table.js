@@ -15,6 +15,11 @@ angular.module('larutadeldinero')
             })
         };
 
+        $scope.filterByName = function() {
+            $scope.currentPage = 1;
+            $scope.pageChanged();
+        };
+
         $rootScope.$on('filterChanged', function(event) {
             $scope.currentPage = 1;
             $scope.pageChanged();
