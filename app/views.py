@@ -14,6 +14,9 @@ from app.models import Aporte, Aportante, Agrupacion
 
 from sqlalchemy import func
 
+# EndPoint treemap
+# EndPoint map data
+
 @app.route("/", methods = ['GET', 'POST'])
 @app.route("/viz/<viz>", methods = ['GET', 'POST'])
 def index(viz='treemap'):
@@ -66,21 +69,3 @@ def faq():
 @app.route('/team')
 def team():
   return render_template('team.html')
-
-
-# ######## API
-# To Do: convert with flask-restless
-
-@app.route('/api/aportes', methods=['GET'])
-def get_aportes():
-  aportes_json = { 'aportes': [] }
-  aportes = get_donations(get_filters(request.args.to_dict())).all()
-
-  for aporte in aportes:
-    try:
-      aportes_json['aportes'].append({ 'ciclo':  aporte.ciclo, 'cargo': aporte.cargo, 'eleccion': aporte.eleccion, 'distrito': aporte.distrito, 'lista': aporte.lista, 'importe': aporte.importe, 'aportante': aporte.aportante.nombre, 'agrupacion': aporte.agrupacion.nombre})
-    except:
-      # Log this error
-      continue
-
-  return jsonify( aportes_json )
