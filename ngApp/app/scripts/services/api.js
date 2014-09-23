@@ -36,6 +36,15 @@ angular.module('larutadeldinero')
                 })
             }
 
+            // Agrupación política
+            if (filter.party) {
+                filters.push({
+                    'name': 'agrupacion_id',
+                    'op': 'eq',
+                    'val': filter.party.id
+                })
+            }
+
             // Aportante name
             if (filter.aportanteName) {
                 filters.push({
@@ -86,6 +95,10 @@ angular.module('larutadeldinero')
                 };
 
                 return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
+            },
+
+            agrupaciones: function () {
+                return $http.get(baseURL + '/agrupaciones?results_per_page=200');
             }
 
         }

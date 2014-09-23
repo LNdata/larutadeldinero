@@ -48,7 +48,7 @@ angular
         $rootScope.location = $location;
     })
 
-    .controller('AppCtrl', function($scope, $rootScope) {
+    .controller('AppCtrl', function($scope, $rootScope, API) {
 
         $rootScope.filter = {
             year: null,
@@ -87,9 +87,14 @@ angular
             'TUCUMAN'
         ];
 
+        API.agrupaciones().then(function(response) {
+            $rootScope.parties = response.data.objects;
+        });
+
         $rootScope.$watch('filter.year', refreshData);
         $rootScope.$watch('filter.type', refreshData);
         $rootScope.$watch('filter.district', refreshData);
+        $rootScope.$watch('filter.party', refreshData);
 
         function refreshData() {
             setTimeout(function() {
@@ -104,4 +109,14 @@ angular
                 event.preventDefault();
             })
         }
-    });
+    })
+
+    .filter('agrupacionName', function($rootScope) {
+        return function(agrupacionId) {
+            var filtered = $rootScope.parties.filter(function (agrupacion) {
+                return agrupacion.id == agrupacionId
+            });
+
+            return filtered.length > 0 ? filtered[0].nombre : '-';
+        }
+    })
