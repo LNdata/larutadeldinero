@@ -24,4 +24,4 @@ manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
 # default. Allowed HTTP methods can be specified as well.
 manager.create_api(Aportante, methods=['GET', 'POST'], allow_functions=True)
 manager.create_api(Aporte, methods=['GET'], allow_functions=True)
-manager.create_api(Agrupacion, methods=['GET'], include_columns=['id', 'nombre'])
+manager.create_api(Agrupacion, methods=['GET'], include_columns=['id', 'nombre'], max_results_per_page=-1)
