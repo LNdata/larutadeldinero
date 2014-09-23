@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 </head>
-<body ng-app="larutadeldinero">
+<body ng-app="larutadeldinero" ng-controller="AppCtrl">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -32,7 +32,26 @@
         <h3 class="text-muted">La Ruta Electoral</h3>
     </div>
 
-    <div ng-view=""></div>
+    <div class="row">
+        <div class="col-lg-9" id="main">
+            <div ng-view=""></div>
+        </div>
+        <div class="col-lg-3">
+            <p>Filtro</p>
+            <form role="form">
+                <div class="form-group">
+                    <label for="filterYear">Año</label>
+                    <select class="form-control" id="filterYear"
+                            ng-model="filter.year" ng-options="year for year in years">
+                    </select>
+                </div>
+            </form>
+
+            <div class="well">
+                {{ filter | json }}
+            </div>
+        </div>
+    </div>
 
     <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
@@ -61,6 +80,7 @@
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -69,6 +89,8 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -78,6 +100,7 @@
 <script src="scripts/controllers/map.js"></script>
 <script src="scripts/controllers/charts.js"></script>
 <script src="scripts/controllers/table.js"></script>
+<script src="scripts/services/api.js"></script>
 <!-- endbuild -->
 </body>
 </html>

@@ -41,4 +41,20 @@ angular
     })
     .run(function($rootScope, $location) {
         $rootScope.location = $location;
+    })
+    .controller('AppCtrl', function($scope, $rootScope) {
+
+        $scope.filter = {
+            year: null,
+            type: null,
+            district: null,
+            party: null
+        };
+
+        $scope.years = [2007,2009,2011,2013];
+
+        $scope.$watch('filter.year', function(newValue, oldValue) {
+            console.log(oldValue);        //TODO(gb): Remove trace!!!
+            var rect = d3.select('#year-' + newValue);
+        })
     });
