@@ -1,2 +1,32 @@
-<h1>Tabla</h1>
+<h3 class="page-header">Aportes</h3>
 
+<table class="table">
+    <thead>
+    <th>Aportante</th>
+    <th>Agrupación</th>
+    <th>Monto</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
+        <td>{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }} (CUIT {{ aporte.aportante.cuit }})</td>
+        <td>{{ aporte.agrupacion.nombre }}</td>
+        <td>$ {{ aporte.importe }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="text-center">
+    <pagination total-items="totalItems"
+                ng-change="pageChanged()"
+                ng-model="currentPage"
+                max-size="maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                rotate="false"
+                num-pages="totalPages"
+                first-text="Primera"
+                last-text="Última"
+                previous-text="Anterior"
+                next-text="Siguiente">
+    </pagination>
+</div>

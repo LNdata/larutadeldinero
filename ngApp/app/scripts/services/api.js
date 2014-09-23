@@ -14,7 +14,7 @@ angular.module('larutadeldinero')
                 return $http.get(baseURL + '/aportantes' + '?page=' + page);
             },
 
-            aportes: function(page) {
+            aportes: function(page, rpp) {
                 return $http.get(baseURL + '/aportes' + '?page=' + page);
             }
 

@@ -15,7 +15,8 @@ angular
         'ngResource',
         'ngRoute',
         'ngSanitize',
-        'ngTouch'
+        'ngTouch',
+        'ui.bootstrap'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -54,7 +55,6 @@ angular
         $scope.years = [2007,2009,2011,2013];
 
         $scope.$watch('filter.year', function(newValue, oldValue) {
-            console.log(oldValue);        //TODO(gb): Remove trace!!!
             var rect = d3.select('#year-' + newValue);
         })
     });
