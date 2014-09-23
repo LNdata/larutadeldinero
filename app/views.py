@@ -14,6 +14,9 @@ from app.models import Aporte, Aportante, Agrupacion
 
 from sqlalchemy import func
 
+# EndPoint treemap
+# EndPoint map data
+
 @app.route("/", methods = ['GET', 'POST'])
 @app.route("/viz/<viz>", methods = ['GET', 'POST'])
 def index(viz='treemap'):

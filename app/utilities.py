@@ -31,7 +31,34 @@ class GenerateJson(Command):
       json.dump(results, outfile)
 
   def generate_treemap_json(self):
-    pass
+    results = {"name": "Ciclos", "children": []}
+
+    query_ciclos = "SELECT DISTINCT CICLO FROM aportes"
+    ciclos = [x[0] for x in query(query_ciclos)]
+    # CICLO ------
+    for ciclo in ciclos:
+      nuevo_ciclo = {"name": ciclo, "children": []}
+      query_elecciones = "SELECT DISTINCT ELECCIONES as eleccion FROM aportes WHERE CICLO = '%s'" % ciclo
+      elecciones = [x[0] for x in query(query_elecciones)]
+      # ELECCION ------
+      for eleccion in elecciones:
+        nueva_eleccion = {"name": eleccion, "children": []}
+        query_distritos = "SELECT DISTINCT DISTRITO FROM aportes WHERE CICLO = '%s' AND ELECCIONES = '%s'" % (ciclo, eleccion)
+        distritos = [x[0] for x in query(query_distritos)]
+        # DISTRITO ------
+        for distrito in distritos:
+          nuevo_distrito = get_distrito(ciclo, eleccion, distrito)
+          nueva_eleccion["children"].append(nuevo_distrito)
+        nuevo_ciclo["children"].append(nueva_eleccion)
+        # AGRUPACION ------
+          # IMPORTE ------
+      print nuevo_ciclo
+      results["children"].append(nuevo_ciclo)
+
+    conn.close()
+
+    with open('data/treemap_elecciones.json','w') as outfile:
+      json.dump(results, outfile)
 
   def run(self, name):
     self.generate_map_json()

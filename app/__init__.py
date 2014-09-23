@@ -8,6 +8,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 from app.models import *
+from app import views
 
 # HTTP error handling
 @app.errorhandler(404)
@@ -21,5 +22,6 @@ manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
 
 # Create API endpoints, which will be available at /api/<tablename> by
 # default. Allowed HTTP methods can be specified as well.
-manager.create_api(Aportante, methods=['GET', 'POST', 'DELETE'])
-manager.create_api(Aporte, methods=['GET'])
+manager.create_api(Aportante, methods=['GET', 'POST'], allow_functions=True)
+manager.create_api(Aporte, methods=['GET'], allow_functions=True)
+manager.create_api(Agrupacion, methods=['GET'])
