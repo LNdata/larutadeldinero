@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('TableCtrl', function ($scope, API) {
+    .controller('TableCtrl', function ($scope, $rootScope, API) {
         $scope.currentPage = 1;
         $scope.maxSize = 10;
 
@@ -13,7 +13,10 @@ angular.module('larutadeldinero')
                 $scope.totalPages = response.data.total_pages;
                 $scope.aportes = response.data.objects;
             })
-        }
+        };
 
-        $scope.pageChanged();
+        $rootScope.$on('filterChanged', function(event) {
+            $scope.currentPage = 1;
+            $scope.pageChanged();
+        })
     });

@@ -43,9 +43,10 @@ angular
     .run(function($rootScope, $location) {
         $rootScope.location = $location;
     })
+
     .controller('AppCtrl', function($scope, $rootScope) {
 
-        $scope.filter = {
+        $rootScope.filter = {
             year: null,
             type: null,
             district: null,
@@ -53,8 +54,50 @@ angular
         };
 
         $scope.years = [2007,2009,2011,2013];
+        $scope.types = ['PRIMARIAS','GENERALES'];
+        $scope.districts = [
+            'ORDEN NACIONAL',
+            'BUENOS AIRES',
+            'CAPITAL FEDERAL',
+            'CATAMARCA',
+            'CHACO',
+            'CHUBUT',
+            'CORDOBA',
+            'CORRIENTES',
+            'ENTRE RIOS',
+            'FORMOSA',
+            'JUJUY',
+            'LA PAMPA',
+            'LA RIOJA',
+            'MENDOZA',
+            'MISIONES',
+            'NEUQUEN',
+            'RIO NEGRO',
+            'SALTA',
+            'SAN JUAN',
+            'SAN LUIS',
+            'SANTA CRUZ',
+            'SANTA FE',
+            'SANTIAGO DEL ESTERO',
+            'TIERRA DEL FUEGO',
+            'TUCUMAN'
+        ];
 
-        $scope.$watch('filter.year', function(newValue, oldValue) {
-            var rect = d3.select('#year-' + newValue);
-        })
+        $rootScope.$watch('filter.year', refreshData);
+        $rootScope.$watch('filter.type', refreshData);
+        $rootScope.$watch('filter.district', refreshData);
+
+        function refreshData() {
+            setTimeout(function() {
+                $rootScope.$emit('filterChanged');
+            }, 100)
+        }
+    })
+
+    .directive('preventClick', function() {
+        return function(scope, element, attrs) {
+            $(element).click(function(event) {
+                event.preventDefault();
+            })
+        }
     });
