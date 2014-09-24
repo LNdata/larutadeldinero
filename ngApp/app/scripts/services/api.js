@@ -139,6 +139,14 @@ angular.module('larutadeldinero')
                 return $http.get(baseURL + '/aportantes' + '?page=' + page);
             },
 
+            aportantesBySex: function() {
+                return $http.get(baseURL + '/aportantes/sexo');
+            },
+
+            aportantesByAge: function() {
+                return $http.get(baseURL + '/aportantes/edad');
+            },
+
             aportes: function(page, rpp) {
 
                 var params = ['page=' + page],
