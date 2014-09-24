@@ -36,7 +36,7 @@ manager.create_api(Agrupacion, methods=['GET'], include_columns=['id', 'nombre']
 
 # datos para visualizaciones
 app.add_url_rule('/api/treemap', 'treemap', data_for_treemap)
-#app.add_url_rule('/api/map', 'map', data_for_map)
+app.add_url_rule('/api/map', 'map', data_for_map)
 
 # consultas
 app.add_url_rule('/api/aportantes/sexo', 'aportantes_por_sexo', aportantes_por_sexo)
