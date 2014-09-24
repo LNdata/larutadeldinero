@@ -131,6 +131,10 @@ angular.module('larutadeldinero')
                 return $http.get('/data/treemap_elecciones.json');
             },
 
+            mapdata: function() {
+                return $http.get(baseURL + '/map');
+            },
+
             aportantes: function(page) {
                 return $http.get(baseURL + '/aportantes' + '?page=' + page);
             },
