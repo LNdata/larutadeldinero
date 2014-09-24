@@ -20,11 +20,11 @@ class GenerateJson(Command):
       ]
 
   def generate_map_json(self):
-    aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe) ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
+    aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
 
     results = {
           "key": "Aportes",
-          "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3]} for aporte in aportes]
+          "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4]} for aporte in aportes]
           }
 
     with open('data/map.json','w') as outfile:
@@ -100,7 +100,6 @@ class ImportData(Command):
         for data in lines:
           if data[0] == 'DOCUMENTO':
             continue
-          print data
           documento = data[0].split('.')[0]
           cuit = data[1]
           nombre = data[2]
@@ -125,8 +124,8 @@ class ImportData(Command):
           else:
             monotributo = 'NC'
 
-          integrante_sociedades = True if data[16] else False
-          empleador = True if data[17] else False
+          integrante_sociedades = True if data[16] == 'S' else False
+          empleador = True if data[17] == 'S' else False
 
           actividad_monotributo = data[18]
 
@@ -171,6 +170,6 @@ class ImportData(Command):
         db.session.commit()
 
   def run(self, name):
-    #self.import_agrupaciones()
-    #self.import_aportantes()
+    self.import_agrupaciones()
+    self.import_aportantes()
     self.import_aportes()
