@@ -32,7 +32,7 @@ def aportantes_por_sexo():
 
   return jsonify( aportes )
 
-
+@app.route('/api/aportantes/edad')
 def aportantes_por_edad():
 
   filters = parse_filters(request.args.get('q'))
@@ -51,13 +51,14 @@ def data_for_treemap():
   treemap_data = get_treemap()
   return jsonify(treemap_data)
 
-@app.route('/api/map')
-def data_for_map():
-  aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
-
-  results = {
-        "key": "Aportes",
-        "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4]} for aporte in aportes]
-        }
-
-  return jsonify(results)
+# @app.route('/api/map')
+# def data_for_map():
+#   # eq e in sobre todos los campos del aportante
+#   aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
+#
+#   results = {
+#         "key": "Aportes",
+#         "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4]} for aporte in aportes]
+#         }
+#
+#   return jsonify(results)
