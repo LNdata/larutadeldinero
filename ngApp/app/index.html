@@ -37,56 +37,7 @@
             <div ng-view=""></div>
         </div>
         <div class="col-lg-2">
-            <h4>Filtro</h4>
-            <form role="form">
-                <div class="form-group">
-                    <label for="filterYear">
-                        Año
-                        <a href="#" ng-click="filter.year = null" ng-show="filter.year" prevent-click>
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </label>
-                    <select class="form-control" id="filterYear"
-                            ng-model="filter.year" ng-options="year for year in years">
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="filterType">
-                        Elección
-                        <a href="#" ng-click="filter.type = null" ng-show="filter.type" prevent-click>
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </label>
-                    <select class="form-control" id="filterType"
-                            ng-model="filter.type" ng-options="type for type in types">
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="filterDistrict">
-                        Distrito
-                        <a href="#" ng-click="filter.district = null" ng-show="filter.district" prevent-click>
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </label>
-                    <select class="form-control" id="filterDistrict"
-                            ng-model="filter.district" ng-options="district for district in districts">
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="filterParty">
-                        Agrupación política
-                        <a href="#" ng-click="filter.party = null" ng-show="filter.party" prevent-click>
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </label>
-                    <select class="form-control" id="filterParty"
-                            ng-model="filter.party" ng-options="party.nombre for party in parties">
-                    </select>
-                </div>
-            </form>
+            <div ng-include src="'/views/filter.html'"></div>
         </div>
     </div>
 
