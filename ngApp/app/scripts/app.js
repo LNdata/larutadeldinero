@@ -16,6 +16,7 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
+        "leaflet-directive",
         'ui.bootstrap'
     ])
     .config(function ($routeProvider) {
