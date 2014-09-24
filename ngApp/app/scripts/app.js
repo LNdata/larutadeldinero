@@ -92,13 +92,10 @@ angular
             { name: 'Más de $50.000', val: '50.000 y más \n' }
         ];
 
-        $rootScope.$watch('filter.year', refreshData);
-        $rootScope.$watch('filter.type', refreshData);
-        $rootScope.$watch('filter.district', refreshData);
-        $rootScope.$watch('filter.party', refreshData);
-        $rootScope.$watch('filter.sexes', refreshData, true);
-        $rootScope.$watch('filter.ages', refreshData, true);
-        $rootScope.$watch('filter.amounts', refreshData, true);
+        setTimeout(function() {
+            $rootScope.$watch('filter', refreshData, true);
+        }, 1000);
+
 
         function refreshData() {
             setTimeout(function() {

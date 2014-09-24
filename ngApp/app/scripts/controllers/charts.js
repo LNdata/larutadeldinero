@@ -6,7 +6,6 @@ angular.module('larutadeldinero')
         $scope.refreshData = function() {
             API.aportantesBySex().then(function(response) {
                 $scope.aportesBySex = response.data.objects[0][0].values;
-                console.log($scope.aportesBySex);        //TODO(gb): Remove trace!!!
             });
 
             API.aportantesByAge().then(function(response) {
@@ -17,7 +16,6 @@ angular.module('larutadeldinero')
         $scope.refreshData();
 
         $rootScope.$on('filterChanged', function(event) {
-            console.log('sdds');        //TODO(gb): Remove trace!!!
             $scope.refreshData();
         })
 
