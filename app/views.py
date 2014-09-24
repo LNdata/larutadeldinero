@@ -35,10 +35,7 @@ def aportantes_por_sexo():
 
 @app.route('/api/treemap')
 def data_for_treemap():
-
-  with open('data/treemap_elecciones.json','r') as f:
-    treemap_data = eval(f.read())
-
+  treemap_data = get_treemap()
   return jsonify(treemap_data)
 
 @app.route('/api/map')

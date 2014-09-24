@@ -175,3 +175,40 @@ def parse_filters(query):
   #   if (params[key] != 0) and (params[key] != 'todas'):
   #     filters[key] = params[key]
   return filters
+
+def get_treemap():
+  results = {"name": "Ciclos", "type":"treemap", "children": []}
+
+  ciclos = [x.ciclo for x in db.session.query(Aporte).group_by(Aporte.ciclo).all()]
+
+  # CICLO ------
+  for ciclo in ciclos:
+    nuevo_ciclo = {"name": ciclo, "type": "ciclo", "children": []}
+    elecciones = [x.eleccion for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo).group_by(Aporte.eleccion).all()]
+
+    # ELECCION ------
+    for eleccion in elecciones:
+      nueva_eleccion = {"name": eleccion, "type":'eleccion', "children": []}
+      distritos = [x.distrito for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion).group_by(Aporte.eleccion).all()]
+
+      # DISTRITO ------
+      for distrito in distritos:
+        nuevo_distrito = {"name": distrito, "type": "distrito", "children": []}
+        agrupaciones = [x.agrupacion_id for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion, Aporte.distrito == distrito).group_by(Aporte.agrupacion_id).all()]
+
+        # AGRUPACION ------
+        for agrupacion in agrupaciones:
+          # IMPORTE ------
+          if agrupacion is None:
+            continue
+          importe_total = db.session.query(func.sum(Aporte.importe)).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion, Aporte.distrito == distrito, Aporte.agrupacion_id == agrupacion).scalar()
+          nueva_agrupacion = {"name": Agrupacion.query.get(agrupacion).nombre, "type": "agrupacion", "value": importe_total}
+          nuevo_distrito["children"].append(nueva_agrupacion)
+
+        nueva_eleccion["children"].append(nuevo_distrito)
+
+      nuevo_ciclo["children"].append(nueva_eleccion)
+
+    results["children"].append(nuevo_ciclo)
+
+  return results
