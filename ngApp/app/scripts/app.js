@@ -54,52 +54,53 @@ angular
             year: null,
             type: null,
             district: null,
-            party: null
+            party: null,
+            sexes: {},
+            ages: {}
         };
 
+        $scope.advancedFilterCollapsed = false;
+
+        // Elementos del filtro
         $scope.years = [2007,2009,2011,2013];
         $scope.types = ['PRIMARIAS','GENERALES'];
-        $scope.districts = [
-            'ORDEN NACIONAL',
-            'BUENOS AIRES',
-            'CAPITAL FEDERAL',
-            'CATAMARCA',
-            'CHACO',
-            'CHUBUT',
-            'CORDOBA',
-            'CORRIENTES',
-            'ENTRE RIOS',
-            'FORMOSA',
-            'JUJUY',
-            'LA PAMPA',
-            'LA RIOJA',
-            'MENDOZA',
-            'MISIONES',
-            'NEUQUEN',
-            'RIO NEGRO',
-            'SALTA',
-            'SAN JUAN',
-            'SAN LUIS',
-            'SANTA CRUZ',
-            'SANTA FE',
-            'SANTIAGO DEL ESTERO',
-            'TIERRA DEL FUEGO',
-            'TUCUMAN'
-        ];
-
+        $scope.districts = ['ORDEN NACIONAL','BUENOS AIRES','CAPITAL FEDERAL','CATAMARCA','CHACO','CHUBUT','CORDOBA','CORRIENTES','ENTRE RIOS','FORMOSA','JUJUY','LA PAMPA','LA RIOJA','MENDOZA','MISIONES','NEUQUEN','RIO NEGRO','SALTA','SAN JUAN','SAN LUIS','SANTA CRUZ','SANTA FE','SANTIAGO DEL ESTERO','TIERRA DEL FUEGO','TUCUMAN'];
         API.agrupaciones().then(function(response) {
             $rootScope.parties = response.data.objects;
         });
+
+        // Elementos del filtro avanzado
+        $scope.sexes = [
+            { name: 'Hombres', val: 'M' },
+            { name: 'Mujeres', val: 'F' }
+        ];
+        $scope.ages = [
+            { name: 'Menos de 30', val: 'menos de 30' },
+            { name: 'Entre 30 y 39', val: '30-39' },
+            { name: 'Entre 40 y 49', val: '40-49' },
+            { name: 'Entre 50 y 59', val: '50-59' },
+            { name: 'Entre 60 y 69', val: '60-69' },
+            { name: 'Más de 70', val: '70 y más' }
+        ];
 
         $rootScope.$watch('filter.year', refreshData);
         $rootScope.$watch('filter.type', refreshData);
         $rootScope.$watch('filter.district', refreshData);
         $rootScope.$watch('filter.party', refreshData);
+        $rootScope.$watch('filter.sexes', refreshData, true);
+        $rootScope.$watch('filter.ages', refreshData, true);
 
         function refreshData() {
             setTimeout(function() {
                 $rootScope.$emit('filterChanged');
             }, 100)
+        }
+
+        $scope.hasAnyTrueValues = function(obj) {
+            for (var val in obj) {
+                if (obj[val]) return true;
+            }
+            return false;
         }
     })
 
