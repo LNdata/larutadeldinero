@@ -3,7 +3,7 @@
 
 from flask import request, render_template, \
                   flash, g, session, redirect, url_for, \
-                  jsonify
+                  jsonify, json
 
 from app import app
 from app import db
@@ -21,8 +21,12 @@ def index():
 @app.route('/api/aportantes/sexo')
 def aportantes_por_sexo():
 
-  q = request.args.get('q')
-  filters = parse_filters(q)
+
+  if request.args.get('q'):
+    query = json.loads(request.args.get('q'))
+    filters = parse_filters(query)
+  else:
+    filters = {}
 
   cantidad_aportantes_por_sexo = donors_per_sex(filters),
 

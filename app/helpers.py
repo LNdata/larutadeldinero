@@ -166,14 +166,13 @@ def get_donations(filters):
   return aportes
 
 def parse_filters(query):
-  # ?q={"filters":[{"name":"age","op":"ge","field":"height"}]}
+  # ?q={"filters":[{"name":"age","op":"ge","value":"22"}]}
+
   filters = {}
 
-  # for filter in query["filters"]:
-  #   filter["name"]
-  #   filter["field"]
-  #   if (params[key] != 0) and (params[key] != 'todas'):
-  #     filters[key] = params[key]
+  for filter in query["filters"]:
+     filters[filter["name"]]  = filter["value"]
+
   return filters
 
 def get_treemap():
