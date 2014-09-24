@@ -4,14 +4,14 @@ angular.module('larutadeldinero')
     .factory('API', function($http, $rootScope) {
         var baseURL = 'http://origen.larutaelectoral.com.ar/api';
 
-        function filterToQuery(filter) {
+        function filterToQuery(filter, order_by) {
 
             var filters = [],
-                q = {
-                    'order_by': [
-                        { 'field': 'importe', 'direction': 'desc'}
-                    ]
-                };
+                q = null;
+
+            if (order_by) {
+                q = { 'order_by': order_by };
+            }
 
             // Año
             if (filter.year) {
@@ -119,6 +119,27 @@ angular.module('larutadeldinero')
 
 
             if (filters.length > 0) {
+                if (!q) q = {};
+                q.filters= filters;
+            }
+
+            return q;
+        }
+
+        function groupToQuery(filter) {
+            var filters = [],
+                q = null;
+
+            // Año
+            if (filter.year) {
+                filters.push({
+                    'name': 'ciclo',
+                    'value': filter.year
+                })
+            }
+
+            if (filters.length > 0) {
+                if (!q) q = {};
                 q.filters= filters;
             }
 
@@ -140,17 +161,27 @@ angular.module('larutadeldinero')
             },
 
             aportantesBySex: function() {
-                return $http.get(baseURL + '/aportantes/sexo');
+                var params = [],
+                    q = groupToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/sexo' + '?' + params.join('&'));
             },
 
             aportantesByAge: function() {
-                return $http.get(baseURL + '/aportantes/edad');
+                var params = [],
+                    q = groupToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/edad' + '?' + params.join('&'));
             },
 
             aportes: function(page, rpp) {
-
                 var params = ['page=' + page],
-                    q = filterToQuery($rootScope.filter);
+                    order_by = [{ 'field': 'importe', 'direction': 'desc'}],
+                    q = filterToQuery($rootScope.filter, order_by);
 
                 if (q) params.push('q=' + JSON.stringify(q));
 

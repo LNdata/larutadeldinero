@@ -1,15 +1,25 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('ChartsCtrl', function ($scope, API) {
+    .controller('ChartsCtrl', function ($scope, $rootScope, API) {
 
-        API.aportantesBySex().then(function(response) {
-            $scope.aportesBySex = response.data.objects[0][0].values;
-        });
+        $scope.refreshData = function() {
+            API.aportantesBySex().then(function(response) {
+                $scope.aportesBySex = response.data.objects[0][0].values;
+                console.log($scope.aportesBySex);        //TODO(gb): Remove trace!!!
+            });
 
-        API.aportantesByAge().then(function(response) {
-            $scope.aportesByAge = response.data.objects[0].values;
-        });
+            API.aportantesByAge().then(function(response) {
+                $scope.aportesByAge = response.data.objects[0].values;
+            });
+        };
+
+        $scope.refreshData();
+
+        $rootScope.$on('filterChanged', function(event) {
+            console.log('sdds');        //TODO(gb): Remove trace!!!
+            $scope.refreshData();
+        })
 
     })
 
@@ -26,8 +36,10 @@ angular.module('larutadeldinero')
                     width = element.parent().width() - margin.left - margin.right,
                     height = attrs.height - margin.top - margin.bottom,
                     yAxisLabel = attrs.yAxisLabel || '',
+                    yAxisMax = attrs.yAxisMax,
                     ticks = attrs.yAxisTicks || 10,
-                    title = attrs.chartTitle || '';
+                    title = attrs.chartTitle || '',
+                    loaded = false;
 
                 var x = d3.scale.ordinal()
                     .rangeRoundBands([0, width], .1);
@@ -74,8 +86,11 @@ angular.module('larutadeldinero')
                 scope.$watch('data', function(data) {
                     if (!data) return false;
 
-                    x.domain(data.map(function(d) { return d.label; }));
-                    y.domain([0, d3.max(data, function(d) { return d.value; })]);
+                    if (!loaded) {
+                        x.domain(data.map(function(d) { return d.label; }));
+                        y.domain([0, yAxisMax || d3.max(data, function(d) { return d.value; })]);
+                        loaded = true;
+                    }
 
                     svg.select('.x.axis')
                         .call(xAxis);
@@ -91,6 +106,8 @@ angular.module('larutadeldinero')
                         .attr("width", x.rangeBand())
                         .attr("y", height)
                         .attr("height", 0)
+
+                    svg.selectAll(".bar")
                         .transition()
                         .attr("y", function(d) { return y(d.value); })
                         .attr("height", function(d) { return height - y(d.value); })
