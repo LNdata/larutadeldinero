@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('TableCtrl', function ($scope, $rootScope, API) {
+    .controller('TableCtrl', function ($scope, $rootScope, Aportes) {
         $scope.currentPage = 1;
         $scope.maxSize = 10;
 
         $scope.pageChanged = function() {
             $scope.fetching = true;
-            API.aportes($scope.currentPage).then(function(response) {
+            Aportes.find($scope.currentPage).then(function(response) {
                 $scope.fetching = false;
                 $scope.totalItems = response.data.num_results;
                 $scope.totalPages = response.data.total_pages;

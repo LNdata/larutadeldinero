@@ -6,7 +6,7 @@ angular.module('larutadeldinero')
 
     })
 
-    .directive('treemap', function(API, $rootScope) {
+    .directive('treemap', function(Aportes, $rootScope) {
 
         return {
             restrict: 'E',
@@ -54,7 +54,7 @@ angular.module('larutadeldinero')
                     .attr('y', 6 - margin.top)
                     .attr('dy', '.75em');
 
-                API.treemap().then(function(response) {
+                Aportes.forTreemap().then(function(response) {
                     var root = response.data;
                     initialize(root);
                     accumulate(root);

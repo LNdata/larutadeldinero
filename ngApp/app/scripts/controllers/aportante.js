@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('larutadeldinero')
-.controller('AportanteCtrl', function($scope, $routeParams, API) {
+    .controller('AportanteCtrl', function($scope, $routeParams, Aportantes) {
         var idNumber = $routeParams.documento;
 
-        API.aportanteById(idNumber).then(function(response) {
+        Aportantes.findById(idNumber).then(function(response) {
             $scope.aportante = response.data.objects[0];
         })
     });
