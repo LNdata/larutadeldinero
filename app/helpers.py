@@ -5,12 +5,7 @@ from app.models import Aporte, Aportante, Agrupacion
 
 from sqlalchemy import func
 
-def get_filters(params):
-  filters = {}
-  for key in params:
-    if (params[key] != 0) and (params[key] != 'todas'):
-      filters[key] = params[key]
-  return filters
+from flask import json
 
 # it returns the amount of donors per sex filtered by filters
 def donors_per_sex(filters):
@@ -166,12 +161,14 @@ def get_donations(filters):
   return aportes
 
 def parse_filters(query):
-  # ?q={"filters":[{"name":"age","op":"ge","value":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"equal","value":"22"}]}
 
   filters = {}
 
-  for filter in query["filters"]:
-     filters[filter["name"]]  = filter["value"]
+  if query:
+    query = json.loads(query)
+    for filter in query["filters"]:
+       filters[filter["name"]]  = filter["value"]
 
   return filters
 
