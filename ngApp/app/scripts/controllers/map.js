@@ -10,7 +10,12 @@ angular.module('larutadeldinero')
 			zoomControl: false
 	});
 
-   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo($scope.map);
+   var mapLink='<a href="http://openstreetmap.org">OpenStreetMap</a>';
+
+    L.tileLayer(
+            'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+			attribution: '&copy; ' + mapLink + ' Contributors',
+            }).addTo($scope.map);
 
     	$scope.center={
     		        lat: 24.0391667,
