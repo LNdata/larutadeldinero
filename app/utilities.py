@@ -100,7 +100,6 @@ class ImportData(Command):
         for data in lines:
           if data[0] == 'DOCUMENTO':
             continue
-          print data
           documento = data[0].split('.')[0]
           cuit = data[1]
           nombre = data[2]
@@ -125,8 +124,8 @@ class ImportData(Command):
           else:
             monotributo = 'NC'
 
-          integrante_sociedades = True if data[16] else False
-          empleador = True if data[17] else False
+          integrante_sociedades = True if data[16] == 'S' else False
+          empleador = True if data[17] == 'S' else False
 
           actividad_monotributo = data[18]
 
@@ -171,6 +170,6 @@ class ImportData(Command):
         db.session.commit()
 
   def run(self, name):
-    #self.import_agrupaciones()
-    #self.import_aportantes()
+    self.import_agrupaciones()
+    self.import_aportantes()
     self.import_aportes()
