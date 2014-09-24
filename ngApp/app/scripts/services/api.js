@@ -132,7 +132,12 @@ angular.module('larutadeldinero')
             },
 
             mapdata: function() {
-                return $http.get(baseURL + '/map');
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/map' + '?' + params.join('&'));
             },
 
             aportantes: function(page) {
