@@ -14,73 +14,36 @@ from app.models import Aporte, Aportante, Agrupacion
 
 from sqlalchemy import func
 
-@app.route("/", methods = ['GET', 'POST'])
-@app.route("/viz/<viz>", methods = ['GET', 'POST'])
-def index(viz='treemap'):
-  params = request.args.to_dict()
-  page = request.args.get('page', 1, type=int)
+@app.route('/')
+def index():
+  return render_template('index.html')
 
-  per_page = app.config.get('PER_PAGE', 10)
+@app.route('/api/aportantes/sexo')
+def aportantes_por_sexo():
 
-  # TO DO - REFACTORING
-  form = FilterForm(request.form, params)
-  filters = get_filters(form.data)
+  q = request.args.get('q')
+  filters = parse_filters(q)
 
-  aportes = get_donations(filters)
-  aportes_paginados = aportes.paginate(page, per_page, False)
+  cantidad_aportantes_por_sexo = donors_per_sex(filters),
 
-  if (viz == 'mapa'):
-    query = "select * from larutaelectoral where elecciones='GENERALES'"
-    return render_template('mapa_b.html', aportes=aportes_paginados, form=form, query=query)
+  aportes = {
+    "num_results": len(cantidad_aportantes_por_sexo),
+    'objects': cantidad_aportantes_por_sexo
+  }
 
-  elif (viz == 'graficos'):
-    return render_template('graficos_b.html', \
-            aportes=aportes_paginados, form=form,\
-            cantidad_aportantes_por_sexo=donors_per_sex(filters),\
-            cantidad_aportantes_por_edad=donors_per_age(filters), \
-            cantidad_aportantes_por_agrupaciones=donors_per_party(filters), \
-            suma_aportes_por_sexo=import_per_sex(filters), \
-            suma_aportes_por_edad=import_per_age(filters), \
-            suma_aportes_por_agrupaciones=import_per_party(filters) \
-            )
+  return jsonify( aportes )
 
-  elif (viz == 'tabla'):
-    return render_template('tabla_datos.html', aportes=aportes_paginados, form=form)
+@app.route('/api/treemap')
+def data_for_treemap():
 
-  else:
-    return render_template('treemap_b.html', aportes=aportes_paginados, form=form)
+  with open('data/treemap_elecciones.json','r') as f:
+    treemap_data = eval(f.read())
 
-@app.route('/aportante/<documento>')
-def aportante(documento):
-    aportante = Aportante.query.filter_by(documento=documento).first_or_404()
-    return render_template('aportante.html', aportante=aportante)
+  return jsonify(treemap_data)
 
-@app.route('/about')
-def about():
-  return render_template('sitio.html')
+@app.route('/api/map')
+def data_for_map():
+  with open('data/map.json','r') as f:
+    treemap_data = eval(f.read())
 
-@app.route('/faq')
-def faq():
-  return render_template('faq.html')
-
-@app.route('/team')
-def team():
-  return render_template('team.html')
-
-
-# ######## API
-# To Do: convert with flask-restless
-
-@app.route('/api/aportes', methods=['GET'])
-def get_aportes():
-  aportes_json = { 'aportes': [] }
-  aportes = get_donations(get_filters(request.args.to_dict())).all()
-
-  for aporte in aportes:
-    try:
-      aportes_json['aportes'].append({ 'ciclo':  aporte.ciclo, 'cargo': aporte.cargo, 'eleccion': aporte.eleccion, 'distrito': aporte.distrito, 'lista': aporte.lista, 'importe': aporte.importe, 'aportante': aporte.aportante.nombre, 'agrupacion': aporte.agrupacion.nombre})
-    except:
-      # Log this error
-      continue
-
-  return jsonify( aportes_json )
+  return jsonify(treemap_data)

@@ -1,0 +1,38 @@
+<h3>{{ aportante.nombre }} {{ aportante.apellido }}</h3>
+<dl class="dl-horizontal">
+
+    <dt>Sexo</dt>
+    <dd>{{ aportante.sexo }}</dd>
+
+    <dt>Documento</dt>
+    <dd>{{ aportante.documento }}</dd>
+
+    <dt>Clase</dt>
+    <dd>{{ aportante.clase }}</dd>
+
+    <dt>CUIT</dt>
+    <dd>{{ aportante.cuit }}</dd>
+</dl>
+
+<table class="table">
+    <thead>
+    <th>Ciclo</th>
+    <th>Elección</th>
+    <th>Distrito</th>
+    <th>Cargo</th>
+    <th>Agrupación</th>
+    <th>Lista</th>
+    <th>Monto</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="aporte in aportante.aportes" ng-class="{ 'text-muted': fetching }">
+        <td>{{ aporte.ciclo }}</td>
+        <td>{{ aporte.eleccion }}</td>
+        <td>{{ aporte.distrito }}</td>
+        <td>{{ aporte.cargo }}</td>
+        <td>{{ aporte.agrupacion_id | agrupacionName }}</td>
+        <td>{{ aporte.codlista }}</td>
+        <td>$ {{ aporte.importe }}</td>
+    </tr>
+    </tbody>
+</table>

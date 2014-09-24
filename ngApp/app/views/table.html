@@ -1,2 +1,55 @@
-<h1>Tabla</h1>
+<div class="row">
+    <div class="col-lg-3">
+        <h3 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h3>
+    </div>
+    <div class="col-lg-9">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input type="search" class="form-control" id="filterName" ng-model="filter.aportanteName" placeholder="Buscar por apellido">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="filterByName()">Buscar</button>
+            <a href="#" ng-click="filter.aportanteName = null; filterByName()" ng-show="filter.aportanteName" prevent-click>
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        </form>
+    </div>
+</div>
+<hr/>
 
+
+<table class="table" ng-init="pageChanged()">
+    <thead>
+    <th>Ciclo</th>
+    <th>Elección</th>
+    <th>Distrito</th>
+    <th>Aportante</th>
+    <th>Agrupación</th>
+    <th>Monto</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
+        <td>{{ aporte.ciclo }}</td>
+        <td>{{ aporte.eleccion }}</td>
+        <td>{{ aporte.distrito }}</td>
+        <td><a ng-href="#/aportante/{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
+        <td>{{ aporte.agrupacion.nombre }}</td>
+        <td>$ {{ aporte.importe }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="text-center">
+    <pagination total-items="totalItems"
+                ng-change="pageChanged()"
+                ng-model="currentPage"
+                max-size="maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                rotate="false"
+                num-pages="totalPages"
+                first-text="Primera"
+                last-text="Última"
+                previous-text="Anterior"
+                next-text="Siguiente">
+    </pagination>
+</div>

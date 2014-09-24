@@ -150,7 +150,7 @@ def get_boletas_filtradas(aportes):
   return boletas
 
 def get_donations(filters):
-  aportes = Aporte.query
+  aportes = Aporte.query.with_entities(Aporte.id, Aporte.ciclo, Aporte.cargo, Aporte.eleccion, Aporte.distrito, Aporte.lista, Aporte.importe, Aporte.color, Aporte.grupo_edad, Aporte.aportante, Aporte.agrupacion)
 
   for key in filters:
     if key == 'agrupacion':
@@ -162,4 +162,16 @@ def get_donations(filters):
       aportes = aportes.filter_by(eleccion = filters[key])
     elif key == 'distrito':
       aportes = aportes.filter_by(distrito = filters[key])
+
   return aportes
+
+def parse_filters(query):
+  # ?q={"filters":[{"name":"age","op":"ge","field":"height"}]}
+  filters = {}
+
+  # for filter in query["filters"]:
+  #   filter["name"]
+  #   filter["field"]
+  #   if (params[key] != 0) and (params[key] != 'todas'):
+  #     filters[key] = params[key]
+  return filters
