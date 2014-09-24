@@ -48,7 +48,7 @@ angular
         $rootScope.location = $location;
     })
 
-    .controller('AppCtrl', function($scope, $rootScope, API) {
+    .controller('AppCtrl', function($scope, $rootScope, Agrupaciones) {
 
         $rootScope.filter = {
             year: null,
@@ -66,7 +66,7 @@ angular
         $scope.years = [2007,2009,2011,2013];
         $scope.types = ['PRIMARIAS','GENERALES'];
         $scope.districts = ['ORDEN NACIONAL','BUENOS AIRES','CAPITAL FEDERAL','CATAMARCA','CHACO','CHUBUT','CORDOBA','CORRIENTES','ENTRE RIOS','FORMOSA','JUJUY','LA PAMPA','LA RIOJA','MENDOZA','MISIONES','NEUQUEN','RIO NEGRO','SALTA','SAN JUAN','SAN LUIS','SANTA CRUZ','SANTA FE','SANTIAGO DEL ESTERO','TIERRA DEL FUEGO','TUCUMAN'];
-        API.agrupaciones().then(function(response) {
+        Agrupaciones.findAll().then(function(response) {
             $rootScope.parties = response.data.objects;
         });
 

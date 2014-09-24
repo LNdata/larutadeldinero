@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('ChartsCtrl', function ($scope, $rootScope, API) {
+    .controller('ChartsCtrl', function ($scope, $rootScope, Aportantes) {
 
         $scope.refreshData = function() {
-            API.aportantesBySex().then(function(response) {
+            Aportantes.groupBySex().then(function(response) {
                 $scope.aportesBySex = response.data.objects[0][0].values;
             });
 
-            API.aportantesByAge().then(function(response) {
+            Aportantes.groupByAge().then(function(response) {
                 $scope.aportesByAge = response.data.objects[0].values;
             });
         };

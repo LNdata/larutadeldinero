@@ -1,13 +1,131 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .factory('API', function($http, $rootScope) {
+    .factory('Aportantes', function($http, $rootScope) {
         var baseURL = 'http://origen.larutaelectoral.com.ar/api';
 
-        function filterToQuery(filter, order_by) {
+        function filterToQuery(filter, query) {
+            var q = { filters: [] };
+            angular.extend(q, query);
+
+            // Sexo
+            if (filter.sexes) {
+                var sexes = [];
+
+                for (var sex in filter.sexes) {
+                    if (filter.sexes[sex]) sexes.push(sex);
+                }
+
+                if (sexes.length > 0) {
+                    q.filters.push({
+                        'name': 'sexo',
+                        'op': 'in',
+                        'val': sexes
+                    })
+                }
+            }
+
+            // Año
+            if (filter.year) {
+                q.filters.push({
+                    'name': 'ciclo',
+                    'op': 'eq',
+                    'val': filter.year
+                })
+            }
+
+            // Elecciones
+            if (filter.type) {
+                q.filters.push({
+                    'name': 'eleccion',
+                    'op': 'eq',
+                    'val': filter.type
+                })
+            }
+
+            // Distrito
+            if (filter.district) {
+                q.filters.push({
+                    'name': 'distrito',
+                    'op': 'eq',
+                    'val': filter.district
+                })
+            }
+
+            // Agrupación política
+            if (filter.party) {
+                q.filters.push({
+                    'name': 'agrupacion_id',
+                    'op': 'eq',
+                    'val': filter.party.id
+                })
+            }
+
+            return q;
+        }
+
+        return {
+            find: function(page) {
+                return $http.get(baseURL + '/aportantes' + '?page=' + page);
+            },
+
+            findById: function(idNumber) {
+                var q = {
+                    'filters': [{
+                        'name': 'documento',
+                        'op': 'eq',
+                        'val': idNumber
+                    }]
+                };
+
+                return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
+            },
+
+            groupBySex: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/sexo' + '?' + params.join('&'));
+            },
+
+            groupByAge: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/edad' + '?' + params.join('&'));
+            },
+
+            forMap: function() {
+                var params = [],
+                    baseQuery = {
+                        filters: [
+                            {'name': 'lat', 'op': 'neq', 'val': ''},
+                            {'name': 'lon', 'op': 'neq', 'val': ''}
+                        ]
+                    },
+                    q = filterToQuery($rootScope.filter, baseQuery);
+
+                if (q) params.push('q=' + JSON.stringify(q) + '?' + params.join('&'));
+
+                return $http.get(baseURL + '/map');
+            }
+        }
+    })
+
+    .factory('Aportes', function($http, $rootScope) {
+        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+
+        function filterToQuery(filter, order_by, initialFilters) {
 
             var filters = [],
                 q = null;
+
+            if (initialFilters)
+                filters = filters.concat(initialFilters);
 
             if (order_by) {
                 q = { 'order_by': order_by };
@@ -65,11 +183,11 @@ angular.module('larutadeldinero')
             // Sexo
             if (filter.sexes) {
                 var sexes = [];
-                
+
                 for (var sex in filter.sexes) {
                     if (filter.sexes[sex]) sexes.push(sex);
                 }
-                
+
                 if (sexes.length > 0) {
                     filters.push({
                         'name': 'aportante',
@@ -80,7 +198,7 @@ angular.module('larutadeldinero')
                             'val': sexes
                         }
                     })
-                }                
+                }
             }
 
             // Edades
@@ -126,64 +244,13 @@ angular.module('larutadeldinero')
             return q;
         }
 
-        function groupToQuery(filter) {
-            var filters = [],
-                q = null;
-
-            // Año
-            if (filter.year) {
-                filters.push({
-                    'name': 'ciclo',
-                    'value': filter.year
-                })
-            }
-
-            if (filters.length > 0) {
-                if (!q) q = {};
-                q.filters= filters;
-            }
-
-            return q;
-        }
-
         return {
 
-            treemap: function() {
+            forTreemap: function() {
                 return $http.get('/data/treemap_elecciones.json');
             },
 
-            mapdata: function() {
-                var params = [],
-                    q = filterToQuery($rootScope.filter);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/map' + '?' + params.join('&'));
-            },
-
-            aportantes: function(page) {
-                return $http.get(baseURL + '/aportantes' + '?page=' + page);
-            },
-
-            aportantesBySex: function() {
-                var params = [],
-                    q = groupToQuery($rootScope.filter);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/aportantes/sexo' + '?' + params.join('&'));
-            },
-
-            aportantesByAge: function() {
-                var params = [],
-                    q = groupToQuery($rootScope.filter);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/aportantes/edad' + '?' + params.join('&'));
-            },
-
-            aportes: function(page, rpp) {
+            find: function(page, rpp) {
                 var params = ['page=' + page],
                     order_by = [{ 'field': 'importe', 'direction': 'desc'}],
                     q = filterToQuery($rootScope.filter, order_by);
@@ -191,34 +258,16 @@ angular.module('larutadeldinero')
                 if (q) params.push('q=' + JSON.stringify(q));
 
                 return $http.get(baseURL + '/aportes' + '?' + params.join('&'));
-            },
-
-            aportanteById: function(idNumber) {
-                var q = {
-                    'filters': [{
-                        'name': 'documento',
-                        'op': 'eq',
-                        'val': idNumber
-                    }]
-                };
-
-                return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
-            },
-
-            agrupaciones: function () {
-                return $http.get(baseURL + '/agrupaciones?results_per_page=200');
-            },
-
-            aportesRange: function() {
-                var q = {
-                    'functions': [{
-                        'name': 'max',
-                        'field': 'importe'
-                    }]
-                };
-
-                return $http.get(baseURL + '/eval/aportes?q=' + JSON.stringify(q));
             }
-
         }
-    });
+    })
+
+    .factory('Agrupaciones', function($http, $rootScope) {
+        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+
+        return {
+            findAll: function () {
+                return $http.get(baseURL + '/agrupaciones?results_per_page=200');
+            }
+        }
+    })
