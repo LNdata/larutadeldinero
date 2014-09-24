@@ -164,3 +164,14 @@ def get_donations(filters):
       aportes = aportes.filter_by(distrito = filters[key])
 
   return aportes
+
+def parse_filters(query):
+  # ?q={"filters":[{"name":"age","op":"ge","field":"height"}]}
+  filters = {}
+
+  # for filter in query["filters"]:
+  #   filter["name"]
+  #   filter["field"]
+  #   if (params[key] != 0) and (params[key] != 'todas'):
+  #     filters[key] = params[key]
+  return filters

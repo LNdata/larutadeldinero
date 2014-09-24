@@ -8,12 +8,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 from app.models import *
-from app import views
-
-# HTTP error handling
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('404.html'), 404
+from app.views import *
 
 db.create_all()
 
@@ -25,3 +20,6 @@ manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
 manager.create_api(Aportante, methods=['GET', 'POST'], allow_functions=True)
 manager.create_api(Aporte, methods=['GET'], allow_functions=True)
 manager.create_api(Agrupacion, methods=['GET'], include_columns=['id', 'nombre'], max_results_per_page=-1)
+
+app.add_url_rule('/api/treemap', 'treemap', data_for_treemap)
+app.add_url_rule('/', 'index', index)
