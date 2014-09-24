@@ -1,6 +1,6 @@
 from app import db
 from app.models import Aporte, Aportante, Agrupacion
-from sqlalchemy import func
+from sqlalchemy.sql import func
 
 from flask.ext.script import Command, Manager, Option
 
@@ -31,37 +31,46 @@ class GenerateJson(Command):
       json.dump(results, outfile)
 
   def generate_treemap_json(self):
-    results = {"name": "Ciclos", "children": []}
+    results = {"name": "Ciclos", "type":"treemap", "children": []}
 
-    query_ciclos = "SELECT DISTINCT CICLO FROM aportes"
-    ciclos = [x[0] for x in query(query_ciclos)]
+    ciclos = [x.ciclo for x in db.session.query(Aporte).group_by(Aporte.ciclo).all()]
+
     # CICLO ------
     for ciclo in ciclos:
-      nuevo_ciclo = {"name": ciclo, "children": []}
-      query_elecciones = "SELECT DISTINCT ELECCIONES as eleccion FROM aportes WHERE CICLO = '%s'" % ciclo
-      elecciones = [x[0] for x in query(query_elecciones)]
+      nuevo_ciclo = {"name": ciclo, "type": "ciclo", "children": []}
+      elecciones = [x.eleccion for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo).group_by(Aporte.eleccion).all()]
+
       # ELECCION ------
       for eleccion in elecciones:
-        nueva_eleccion = {"name": eleccion, "children": []}
-        query_distritos = "SELECT DISTINCT DISTRITO FROM aportes WHERE CICLO = '%s' AND ELECCIONES = '%s'" % (ciclo, eleccion)
-        distritos = [x[0] for x in query(query_distritos)]
+        nueva_eleccion = {"name": eleccion, "type":'eleccion', "children": []}
+        distritos = [x.distrito for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion).group_by(Aporte.eleccion).all()]
+
         # DISTRITO ------
         for distrito in distritos:
-          nuevo_distrito = get_distrito(ciclo, eleccion, distrito)
-          nueva_eleccion["children"].append(nuevo_distrito)
-        nuevo_ciclo["children"].append(nueva_eleccion)
-        # AGRUPACION ------
-          # IMPORTE ------
-      print nuevo_ciclo
-      results["children"].append(nuevo_ciclo)
+          nuevo_distrito = {"name": distrito, "type": "distrito", "children": []}
+          agrupaciones = [x.agrupacion_id for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion, Aporte.distrito == distrito).group_by(Aporte.agrupacion_id).all()]
 
-    conn.close()
+          # AGRUPACION ------
+          for agrupacion in agrupaciones:
+            # IMPORTE ------
+            if agrupacion is None:
+              continue
+            importe_total = db.session.query(func.sum(Aporte.importe)).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion, Aporte.distrito == distrito, Aporte.agrupacion_id == agrupacion).scalar()
+            nueva_agrupacion = {"name": Agrupacion.query.get(agrupacion).nombre, "type": "agrupacion", "value": importe_total}
+            nuevo_distrito["children"].append(nueva_agrupacion)
+
+          nueva_eleccion["children"].append(nuevo_distrito)
+
+        nuevo_ciclo["children"].append(nueva_eleccion)
+
+      results["children"].append(nuevo_ciclo)
 
     with open('data/treemap_elecciones.json','w') as outfile:
       json.dump(results, outfile)
 
   def run(self, name):
     self.generate_map_json()
+    self.generate_treemap_json()
 
 
 class ImportData(Command):
