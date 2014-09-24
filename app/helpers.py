@@ -169,8 +169,9 @@ def parse_filters(query):
 
   if query:
     query = json.loads(query)
-    for filter in query["filters"]:
-       filters[filter["name"]]  = filter["val"]
+    filters = query["filters"]
+    #for filter in query["filters"]:
+    #   filters[filter["name"]]  = filter["val"]
 
   return filters
 

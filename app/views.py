@@ -54,13 +54,28 @@ def data_for_treemap():
 @app.route('/api/map')
 def data_for_map():
 
+# ?q={"filters":[{"name":"age","op":"eq","val":"22"}]}
+# ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
+# ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
+
   filters = parse_filters(request.args.get('q'))
-  
+
   # eq e in sobre todos los campos del aportante
-  aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
+  aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "")
+
+  for filter in filters:
+    if filter["op"] == "eq":
+      field = "Aporte.%s" % filter["name"]
+      aportes = aportes.filter(field == filter["val"])
+    elif filter["op"] == "in":
+      for val in filter["val"]:
+        field = "Aporte.%s" % filter["name"]
+        aportes = aportes.filter(field == val)
+
+  aportes = aportes.group_by(Aportante.documento).distinct().all()
 
   results = {
-        "key": "Aportes",
+        "key": "Aportantes",
         "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4]} for aporte in aportes]
         }
 
