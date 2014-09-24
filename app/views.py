@@ -43,7 +43,11 @@ def data_for_treemap():
 
 @app.route('/api/map')
 def data_for_map():
-  with open('data/map.json','r') as f:
-    treemap_data = eval(f.read())
+  aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
 
-  return jsonify(treemap_data)
+  results = {
+        "key": "Aportes",
+        "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4]} for aporte in aportes]
+        }
+
+  return jsonify(results)

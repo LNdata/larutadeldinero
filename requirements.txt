@@ -1,6 +1,7 @@
 Flask==0.10.1
 Flask-Migrate==1.2.0
 Flask-MySQL==1.2
+Flask-Restless==0.14.2
 Flask-SQLAlchemy==1.0
 Flask-Script==2.0.5
 Flask-WTF==0.10.0
@@ -17,5 +18,8 @@ flask-paginate==0.2.1
 gunicorn==19.1.1
 honcho==0.5.0
 itsdangerous==0.24
+mimerender==0.5.4
+python-dateutil==2.2
+python-mimeparse==0.1.4
+six==1.8.0
 wsgiref==0.1.2
-Flask-Restless==0.14.2
