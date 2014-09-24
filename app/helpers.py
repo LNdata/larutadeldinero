@@ -161,16 +161,31 @@ def get_donations(filters):
   return aportes
 
 def parse_filters(query):
-  # ?q={"filters":[{"name":"age","op":"equal","value":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"eq","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
 
   filters = {}
 
   if query:
     query = json.loads(query)
     for filter in query["filters"]:
-       filters[filter["name"]]  = filter["value"]
+       filters[filter["name"]]  = filter["val"]
 
   return filters
+
+# Para procesar los parametros antes de hacer el request de aportantes para el mapa
+def pre_get_many_aportantes_mapa(search_params=None, **kw):
+    if search_params is None:
+        return
+    filt_lat = dict(name='lat', op='neq', val="")
+    filt_lon = dict(name='lon', op='neq', val="")
+
+    if 'filters' not in search_params:
+        search_params['filters'] = []
+
+    search_params['filters'].append(filt_lat)
+    search_params['filters'].append(filt_lon)
 
 def get_treemap():
   results = {"name": "Ciclos", "type":"treemap", "children": []}
