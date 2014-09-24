@@ -100,6 +100,23 @@ angular.module('larutadeldinero')
                 }
             }
 
+            // Monto de aporte
+            if (filter.amounts) {
+                var amounts = [];
+
+                for (var amount in filter.amounts) {
+                    if (filter.amounts[amount]) amounts.push('$' + amount);
+                }
+
+                if (amounts.length > 0) {
+                    filters.push({
+                        'name': 'grupo_aporte',
+                        'op': 'in',
+                        'val': amounts
+                    })
+                }
+            }
+
 
             if (filters.length > 0) {
                 q.filters= filters;

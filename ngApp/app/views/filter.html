@@ -79,6 +79,20 @@
                     {{ age.name }}
                 </label>
             </div>
+
+            <div class="from-group">
+                <label>
+                    Aporte
+                    <a href="#" ng-click="filter.amounts = { }" ng-show="hasAnyTrueValues(filter.amounts)" prevent-click>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </label><br/>
+
+                <label ng-repeat="amount in amounts">
+                    <input type="checkbox" ng-model="filter.amounts[amount.val]">
+                    {{ amount.name }}
+                </label>
+            </div>            
         </form>
     </div>
 

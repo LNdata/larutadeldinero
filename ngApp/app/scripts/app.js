@@ -56,7 +56,8 @@ angular
             district: null,
             party: null,
             sexes: {},
-            ages: {}
+            ages: {},
+            amounts: {}
         };
 
         $scope.advancedFilterCollapsed = false;
@@ -82,6 +83,14 @@ angular
             { name: 'Entre 60 y 69', val: '60-69' },
             { name: 'Más de 70', val: '70 y más' }
         ];
+        $scope.amounts = [
+            { name: 'Menos de $500', val: '1 - $499 \n' },
+            { name: 'Entre $500 y $1.999', val: '500 - $1.999 \n' },
+            { name: 'Entre $2.000 y $4.999', val: '2.000 - $4.999 \n' },
+            { name: 'Entre $5.000 y $9.999', val: '5.000 - $9.999 \n' },
+            { name: 'Entre $10.000 y $49.999', val: '10.000 - $49.999 \n' },
+            { name: 'Más de $50.000', val: '50.000 y más \n' }
+        ];
 
         $rootScope.$watch('filter.year', refreshData);
         $rootScope.$watch('filter.type', refreshData);
@@ -89,6 +98,7 @@ angular
         $rootScope.$watch('filter.party', refreshData);
         $rootScope.$watch('filter.sexes', refreshData, true);
         $rootScope.$watch('filter.ages', refreshData, true);
+        $rootScope.$watch('filter.amounts', refreshData, true);
 
         function refreshData() {
             setTimeout(function() {
