@@ -27,12 +27,12 @@ def aportantes_por_sexo():
 
   cantidad_aportantes_por_sexo = donors_per_sex(filters),
 
-  aportes = {
+  aportantes = {
     "num_results": len(cantidad_aportantes_por_sexo),
     'objects': cantidad_aportantes_por_sexo
   }
 
-  return jsonify( aportes )
+  return jsonify( aportantes )
 
 @app.route('/api/aportantes/edad')
 def aportantes_por_edad():
@@ -41,12 +41,12 @@ def aportantes_por_edad():
 
   cantidad_aportantes_por_edad = donors_per_age(filters)
 
-  aportes = {
+  aportantes = {
     "num_results": len(cantidad_aportantes_por_edad),
     'objects': cantidad_aportantes_por_edad
   }
 
-  return jsonify( aportes )
+  return jsonify( aportantes )
 
 @app.route('/api/aportantes/agrupacion')
 def aportantes_por_agrupacion():
@@ -54,21 +54,48 @@ def aportantes_por_agrupacion():
 
   cantidad_aportantes_por_agrupacion = donors_per_party(filters)
 
-  aportes = {
+  aportantes = {
     "num_results": len(cantidad_aportantes_por_agrupacion),
     'objects': cantidad_aportantes_por_agrupacion
   }
-  
-  return jsonify( aportes )
+
+  return jsonify( aportantes )
 
 def aportes_por_sexo():
-  pass
+  filters = parse_filters(request.args.get('q'))
+
+  cantidad_aportes_por_sexo = amount_per_sex(filters)
+
+  aportes = {
+    "num_results": len(cantidad_aportes_por_sexo),
+    'objects': cantidad_aportes_por_sexo
+  }
+
+  return jsonify( aportes )
 
 def aportes_por_edad():
-  pass
+  filters = parse_filters(request.args.get('q'))
+
+  cantidad_aportes_por_edad = amount_per_age(filters)
+
+  aportes = {
+    "num_results": len(cantidad_aportes_por_edad),
+    'objects': cantidad_aportes_por_edad
+  }
+
+  return jsonify( aportes )
 
 def aportes_por_agrupacion():
-  pass
+  filters = parse_filters(request.args.get('q'))
+
+  cantidad_aportes_por_agrupacion = amount_per_party(filters)
+
+  aportes = {
+    "num_results": len(cantidad_aportes_por_agrupacion),
+    'objects': cantidad_aportes_por_agrupacion
+  }
+
+  return jsonify( aportes )
 
 # Visualizaciones ----------------------------------
 

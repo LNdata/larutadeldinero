@@ -41,13 +41,10 @@ def donors_per_sex(filters):
 
 # it returns the amount of donors per age range filtered by filters
 def donors_per_age(filters):
-  # filtros = ciclo, agrupacion, eleccion, distrito
-
-  if filters.has_key('agrupacion'):
-    filters['agrupacion_id'] = filters.pop('agrupacion')
+  # filters [{u'name': u'ciclo', u'val': 2009, u'op': u'eq'}, ... ]
 
   if filters:
-    where_clause = " and ". join([ "%s = '%s'" % (key,filters[key]) for key in filters.keys()])
+    where_clause = " and ". join([ "%s = '%s'" % (filter["name"], filter["val"]) for filter in filters])
     query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
                FROM ( \
                       SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
@@ -104,6 +101,7 @@ def amount_per_sex(filters):
   # ?q={"filters":[{"name":"age","op":"eq","val":"22"}]}
   # ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
   # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
+
   query_join = db.session.query(Aporte,func.sum(Aporte.importe))
 
   for filter in filters:
@@ -137,10 +135,67 @@ def amount_per_sex(filters):
   ]
 
 def amount_per_age(filters):
-  return []
+  # ?q={"filters":[{"name":"age","op":"eq","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
+  #if filters.has_key('agrupacion'):
+  #  filters['agrupacion_id'] = filters.pop('agrupacion')
+
+  if filters:
+    where_clause = " and ". join([ "%s = '%s'" % (filter["name"], filter["val"]) for filter in filters])
+    query = """SELECT grupo_edad, SUM(importe) AS CuentaDeGrupoEdad \
+               FROM ( \
+                      SELECT aportes.grupo_edad as grupo_edad, aportes.importe as importe, aportantes.documento \
+                      FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
+                      WHERE %s
+                     GROUP BY aportes.grupo_edad, aportantes.documento \
+                     HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                     ) AS T \
+               GROUP BY grupo_edad"""  % where_clause
+  else:
+    query = """SELECT grupo_edad, SUM(importe) AS importe \
+               FROM ( \
+                      SELECT aportes.grupo_edad as grupo_edad, aportes.importe as importe , aportantes.documento \
+                      FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
+                     GROUP BY aportes.grupo_edad, aportantes.documento \
+                     HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                     ) AS T \
+               GROUP BY grupo_edad"""
+
+  values = db.session.execute(query).fetchall()
+
+  return [ {
+    'key'    : 'Edades',
+    'values' : [ {"label": x, "value": int(y) } for (x,y) in values ]
+    }
+  ]
+
 
 def amount_per_party(filters):
-  return []
+  # ?q={"filters":[{"name":"age","op":"eq","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
+
+  if filters:
+    where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
+    query = "select sum(importe), agrupaciones.nombre \
+             from aportes inner join agrupaciones \
+             on agrupacion_id = agrupaciones.id \
+             where %s \
+             group by agrupaciones.nombre" % where_clause
+  else:
+    query = "select sum(importe), agrupaciones.nombre \
+             from aportes inner join agrupaciones \
+             on agrupacion_id = agrupaciones.id \
+             group by agrupaciones.nombre"
+
+  values = db.session.execute(query).fetchall()
+
+  return [ {
+    'key'    : 'Agrupaciones',
+    'values' : [ {"label": y, "value": int(x) } for (x,y) in values ]
+    }
+  ]
 
 def get_boletas_filtradas(aportes):
   boletas = [] # { codlista: NN, ciclo: NNNN}
