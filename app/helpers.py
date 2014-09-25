@@ -77,12 +77,10 @@ def donors_per_age(filters):
 
 # it returns amount of donors per party filtered by filters
 def donors_per_party(filters):
-
-  if filters.has_key('agrupacion'):
-    filters['agrupacion_id'] = filters.pop('agrupacion')
+  # filters [{u'name': u'ciclo', u'val': 2009, u'op': u'eq'}, ... ]
 
   if filters:
-    where_clause = " and ". join([ "%s = '%s'" % (key,filters[key]) for key in filters.keys()])
+    where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
     query = "select count(aportante_id), agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
@@ -102,18 +100,23 @@ def donors_per_party(filters):
     }
   ]
 
-def import_per_sex(filters):
+def amount_per_sex(filters):
+  # ?q={"filters":[{"name":"age","op":"eq","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
+  # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
   query_join = db.session.query(Aporte,func.sum(Aporte.importe))
 
-  for key in filters:
-    if key == 'agrupacion':
-      query_join = query_join.filter(Aporte.agrupacion.has(id = filters[key]))
-    elif key == 'ciclo':
-      query_join = query_join.filter_by(ciclo = filters[key])
-    elif key == 'eleccion':
-      query_join = query_join.filter_by(eleccion = filters[key])
-    elif key == 'distrito':
-      query_join = query_join.filter_by(distrito = filters[key])
+  for filter in filters:
+    field = "Aporte.%s" % filter["name"]
+    op = filter["op"]
+    val = filter["val"]
+    if op == "eq":
+      query_join = query_join.filter(field == val)
+    elif op == "in":
+      for v in val:
+        query_join = query_join.filter(field == v)
+    #elif op == "has":
+    #  query_join = query_join.filter(Aporte.agrupacion.has(id = filters[key]))
 
   import_by_sex_f = query_join.filter(Aporte.aportante.has(Aportante.sexo=='F')).distinct().all()[0][1]
   import_by_sex_m = query_join.filter(Aporte.aportante.has(Aportante.sexo=='M')).distinct().all()[0][1]
@@ -133,10 +136,10 @@ def import_per_sex(filters):
     ]}
   ]
 
-def import_per_age(filters):
+def amount_per_age(filters):
   return []
 
-def import_per_party(filters):
+def amount_per_party(filters):
   return []
 
 def get_boletas_filtradas(aportes):

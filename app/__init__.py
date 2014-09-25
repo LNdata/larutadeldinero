@@ -41,6 +41,11 @@ app.add_url_rule('/api/map', 'map', data_for_map)
 # consultas
 app.add_url_rule('/api/aportantes/sexo', 'aportantes_por_sexo', aportantes_por_sexo)
 app.add_url_rule('/api/aportantes/edad', 'aportantes_por_edad', aportantes_por_edad)
+app.add_url_rule('/api/aportantes/agrupacion', 'aportantes_por_agrupacion', aportantes_por_agrupacion)
+
+app.add_url_rule('/api/aportes/sexo', 'aportes_por_sexo', aportes_por_sexo)
+app.add_url_rule('/api/aportes/edad', 'aportes_por_edad', aportes_por_edad)
+app.add_url_rule('/api/aportes/agrupacion', 'aportes_por_agrupacion', aportes_por_agrupacion)
 
 # info sobre el api
 app.add_url_rule('/', 'index', index)

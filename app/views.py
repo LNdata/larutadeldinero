@@ -18,6 +18,8 @@ from sqlalchemy import func
 def index():
   return render_template('index.html')
 
+# Consultas -----------------------
+
 @app.route('/api/aportantes/sexo')
 def aportantes_por_sexo():
 
@@ -45,6 +47,30 @@ def aportantes_por_edad():
   }
 
   return jsonify( aportes )
+
+@app.route('/api/aportantes/agrupacion')
+def aportantes_por_agrupacion():
+  filters = parse_filters(request.args.get('q'))
+
+  cantidad_aportantes_por_agrupacion = donors_per_party(filters)
+
+  aportes = {
+    "num_results": len(cantidad_aportantes_por_agrupacion),
+    'objects': cantidad_aportantes_por_agrupacion
+  }
+  
+  return jsonify( aportes )
+
+def aportes_por_sexo():
+  pass
+
+def aportes_por_edad():
+  pass
+
+def aportes_por_agrupacion():
+  pass
+
+# Visualizaciones ----------------------------------
 
 @app.route('/api/treemap')
 def data_for_treemap():
