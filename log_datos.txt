@@ -1,8 +1,0 @@
-Unir las dos tablas para obtener nombre
-csvjoin --left -c DOCUMENTO aportes.csv aportantes.csv
-Remove not necesary columns
-csvjson
-
-
-Sacar valores de partidos unicos
-awk -F"," '{print $1}' agrupaciones.csv|sort|uniq > partidos.csv
