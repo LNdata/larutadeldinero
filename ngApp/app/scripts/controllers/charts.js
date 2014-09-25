@@ -4,7 +4,8 @@ angular.module('larutadeldinero')
     .controller('ChartsCtrl', function ($scope, $rootScope, Aportes) {
 
         $scope.refreshData = function() {
-            $scope.containerWidth = 300;
+
+            // Aportantes
             Aportes.aportantesBySex().then(function(response) {
                 $scope.aportantesBySex = response.data.objects[0][0].values;
             });
@@ -13,12 +14,21 @@ angular.module('larutadeldinero')
                 $scope.aportantesByAge = response.data.objects[0].values;
             });
 
+            Aportes.aportantesByAgrupacion().then(function(response) {
+                $scope.aportantesByAgrupacion = response.data.objects[0].values;
+            });
+
+            // Aportes
             Aportes.bySex().then(function(response) {
                 $scope.aportesBySex = response.data.objects[0].values;
             });
 
             Aportes.byAge().then(function(response) {
                 $scope.aportesByAge = response.data.objects[0].values;
+            });
+
+            Aportes.byAgrupacion().then(function(response) {
+                $scope.aportesByAgrupacion = response.data.objects[0].values;
             });
         };
 
@@ -43,11 +53,10 @@ angular.module('larutadeldinero')
             link: function(scope, element, attrs) {
 
                 setTimeout(function() {
-                    if (!$rootScope.chartWidth) {
-                        $rootScope.chartWidth = element.parent().width();
-                    }
-                    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                        width = $rootScope.chartWidth - margin.left - margin.right,
+                    var containerWidth = $('#' + attrs.containerId).width();
+
+                    var margin = {top: 20, right: 20, bottom: parseInt(attrs.marginBottom) || 30, left: 40},
+                        width = containerWidth - margin.left - margin.right,
                         height = attrs.height - margin.top - margin.bottom,
                         yAxisLabel = attrs.yAxisLabel || '',
                         yAxisMax = attrs.yAxisMax,
@@ -104,32 +113,64 @@ angular.module('larutadeldinero')
                     scope.$watch('data', function(data) {
                         if (!data) return false;
 
+                        x.domain(data.map(function(d) { return d.label; }));
                         if (!loaded) {
-                            x.domain(data.map(function(d) { return d.label; }));
                             y.domain([0, yAxisMax || d3.max(data, function(d) { return d.value; })]);
                             loaded = true;
                         }
 
                         svg.select('.x.axis')
-                            .call(xAxis);
+                            .call(xAxis)
+                            .selectAll("text")
+                            .call(wrap, x.rangeBand());
 
                         svg.select('.y.axis')
                             .call(yAxis);
 
-                        svg.selectAll(".bar")
-                            .data(data)
-                            .enter().append("rect")
+                        var bar = svg.selectAll(".bar")
+                            .data(data);
+
+                        bar.enter().append("rect")
                             .attr("class", "bar")
                             .attr("x", function(d) { return x(d.label); })
                             .attr("width", x.rangeBand())
                             .attr("y", height)
                             .attr("height", 0)
 
-                        svg.selectAll(".bar")
-                            .transition()
+                        bar.attr("width", x.rangeBand());
+
+                        bar.transition()
                             .attr("y", function(d) { return y(d.value); })
                             .attr("height", function(d) { return height - y(d.value); })
+
+                        bar.exit()
+                            .remove();
+
                     });
+
+                    function wrap(text, width) {
+                        text.each(function() {
+                            var text = d3.select(this),
+                                words = text.text().split(/\s+/).reverse(),
+                                word,
+                                line = [],
+                                lineNumber = 0,
+                                lineHeight = 1.1, // ems
+                                y = text.attr("y"),
+                                dy = parseFloat(text.attr("dy")),
+                                tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+                            while (word = words.pop()) {
+                                line.push(word);
+                                tspan.text(line.join(" "));
+                                if (tspan.node().getComputedTextLength() > width) {
+                                    line.pop();
+                                    tspan.text(line.join(" "));
+                                    line = [word];
+                                    tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+                                }
+                            }
+                        });
+                    }
                 }, 100)
             }
         };

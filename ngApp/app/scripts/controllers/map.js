@@ -44,25 +44,38 @@ angular.module('larutadeldinero')
             }
 
             if($scope.loading){
-                return;
+                return false;
             }
 
             $scope.loading=true;
             Aportantes.forMap().then(function(response) {
-                var points = response.data.values;
+                var points = response.data.objects.filter(function(point) {
+                    return point.aportes.length > 0;
+                });
 
-                $(points).each(function(i,d){
-                    if(!markers[d['color']]){
-                        markers[d['color']]=[];
+                $(points).each(function(i,d) {
+                    var color = d.aportes[0].color;
+                    if(!markers[color]) {
+                        markers[color]=[];
                     }
-                    var item=d;
-                    item['layer']=colors.indexOf(d['color']);
-                    var marker = new L.CircleMarker([item['latitud'],item['longitud']], {dni:item['documento'],monto:item['monto'],radius: Math.log(item['monto']), fillOpacity: 0.8, color: "#"+item['color']});
-                    
+                    var item = d;
+                    item['layer']=colors.indexOf(color);
+                    var monto = item.aportes.reduce(function(sum, aporte) { return sum + aporte.importe }, 0)
 
-                    marker.l = d['color'];
-                    markers[d['color']].push(marker);
-                })
+                    var marker = new L.CircleMarker(
+                        [item['lat'], item['lon']],
+                        {
+                            dni: item['documento'],
+                            monto: monto,
+                            radius: Math.log(monto),
+                            fillOpacity: 0.8,
+                            color: "#"+color
+                        }
+                    );
+
+                    marker.l = color;
+                    markers[color].push(marker);
+                });
 
                 for(var key in markers) {
                     var cluster = new L.MarkerClusterGroup({
@@ -87,7 +100,7 @@ angular.module('larutadeldinero')
                             }
 
                             var layer = cl.getAllChildMarkers()[0].l;
-							
+
                             return new L.DivIcon({ html: '<div style="background-color:transparent; overflow:hidden"><div class=" circle' + montoClass + '" style="background:#'+layer+';"></div></div>' });
                         },
                         spiderfyDistanceMultiplier:	1,
@@ -95,24 +108,24 @@ angular.module('larutadeldinero')
                         disableClusteringAtZoom:14,
                         maxClusterRadius:80
                     });
-					
-					cluster.on('click',function(marker){
-						
-						var dni = marker.layer.options.dni;
-						Aportantes.findById(dni).then(function(response){
-							var popUp=new L.Popup();
-							popUp.setLatLng(marker.layer._latlng);
-							var aportante=response.data.objects[0];
-							var sum=0;
-							aportante.aportes.forEach(function(a){
-								sum+=parseInt(a.importe);
-							})
-							var link = ""
-							popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
-							$scope.map.openPopup(popUp);
-						});
-						
-					});
+
+                    cluster.on('click',function(marker){
+
+                        var dni = marker.layer.options.dni;
+                        Aportantes.findById(dni).then(function(response){
+                            var popUp=new L.Popup();
+                            popUp.setLatLng(marker.layer._latlng);
+                            var aportante=response.data.objects[0];
+                            var sum=0;
+                            aportante.aportes.forEach(function(a){
+                                sum+=parseInt(a.importe);
+                            })
+                            var link = ""
+                            popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
+                            $scope.map.openPopup(popUp);
+                        });
+
+                    });
 
 
                     for(var j = 0; j < markers[key].length; j++){
