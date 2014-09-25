@@ -54,11 +54,12 @@ angular.module('larutadeldinero')
                 $(points).each(function(i,d){
                     if(!markers[d['color']]){
                         markers[d['color']]=[];
-                        console.log(d['color']);
                     }
                     var item=d;
                     item['layer']=colors.indexOf(d['color']);
-                    var marker = new L.CircleMarker([item['latitud'],item['longitud']], {monto:item['monto'],radius: Math.log(item['monto']), fillOpacity: 0.8, color: "#"+item['color']}).bindPopup('layer '+i);
+                    var marker = new L.CircleMarker([item['latitud'],item['longitud']], {dni:item['documento'],monto:item['monto'],radius: Math.log(item['monto']), fillOpacity: 0.8, color: "#"+item['color']});
+                    
+
                     marker.l = d['color'];
                     markers[d['color']].push(marker);
                 })
@@ -94,7 +95,26 @@ angular.module('larutadeldinero')
                         disableClusteringAtZoom:14,
                         maxClusterRadius:80
                     });
-
+					
+					cluster.on('click',function(marker){
+						console.log(marker.layer._latlng);
+						var dni = marker.layer.options.dni;
+						Aportantes.findById(dni).then(function(response){
+							var popUp=new L.Popup();
+							popUp.setLatLng(marker.layer._latlng);
+							var aportante=response.data.objects[0];
+							console.log(response.data.objects[0]);
+							var sum=0;
+							aportante.aportes.forEach(function(a){
+								console.log(a);
+								sum+=parseInt(a.importe);
+							})
+							var link = ""
+							popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
+							$scope.map.openPopup(popUp);
+						});
+						console.log(marker.layer.options.dni);
+					});
 
 
                     for(var j = 0; j < markers[key].length; j++){
