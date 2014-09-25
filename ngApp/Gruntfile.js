@@ -27,6 +27,36 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+      buildcontrol: {
+          options: {
+              dir: 'dist',
+              commit: true,
+              push: true,
+              message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+          },
+//          pages: {
+//              options: {
+//                  remote: 'git@github.com:example_user/example_webapp.git',
+//                  branch: 'gh-pages'
+//              }
+//          },
+          heroku: {
+              options: {
+                  remote: 'git@heroku.com:larutaelectoral.git',
+                  branch: 'master',
+                  tag: pkg.version
+              }
+          },
+          local: {
+              options: {
+                  remote: '../',
+                  branch: 'build'
+              }
+          }
+      }
+  });
+
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
