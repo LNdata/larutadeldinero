@@ -1,18 +1,46 @@
-<div class="row">
-    <div class="col-lg-6">
-        <bar-chart data="aportesBySex"
-                   height="300"
-                   y-axis-ticks="10"
-                   y-axis-max="20000"
-                   chart-title="Aportantes por sexo">
-        </bar-chart>
-    </div>
-    <div class="col-lg-6">
-        <bar-chart data="aportesByAge"
-                   height="300"
-                   y-axis-ticks="7"
-                   y-axis-max="7000"
-                   chart-title="Aportantes por edad">
-        </bar-chart>
-    </div>
-</div>
+<tabset>
+    <tab heading="Aportantes">
+        <div class="row">
+            <div class="col-lg-6">
+                <bar-chart class="bar-chart"
+                           data="aportantesBySex"
+                           height="300"
+                           y-axis-ticks="10"
+                           y-axis-max="20000"
+                           chart-title="Aportantes por sexo">
+                </bar-chart>
+            </div>
+            <div class="col-lg-6">
+                <bar-chart class="bar-chart"
+                           data="aportantesByAge"
+                           height="300"
+                           y-axis-ticks="10"
+                           chart-title="Aportantes por edad">
+                </bar-chart>
+            </div>
+        </div>
+    </tab>
+
+    <tab heading="Aportes" select="loadAportes()">
+        <div class="row">
+            <div class="col-lg-6">
+                <bar-chart class="bar-chart"
+                           data="aportesBySex"
+                           height="300"
+                           y-axis-ticks="10"
+                           y-axis-tick-format="s"
+                           chart-title="Aportes por sexo">
+                </bar-chart>
+            </div>
+            <div class="col-lg-6">
+                <bar-chart class="bar-chart"
+                           data="aportesByAge"
+                           height="300"
+                           y-axis-ticks="10"
+                           y-axis-tick-format="s"
+                           chart-title="Aportes por edad">
+                </bar-chart>
+            </div>
+        </div>
+    </tab>
+</tabset>

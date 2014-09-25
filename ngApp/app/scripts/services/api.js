@@ -2,7 +2,7 @@
 
 angular.module('larutadeldinero')
     .factory('Aportantes', function($http, $rootScope) {
-        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+        var baseURL = 'http://api.larutaelectoral.com.ar/api';
 
         function filterToQuery(filter, query) {
             var q = { filters: [] };
@@ -81,24 +81,6 @@ angular.module('larutadeldinero')
                 return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
             },
 
-            groupBySex: function() {
-                var params = [],
-                    q = filterToQuery($rootScope.filter);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/aportantes/sexo' + '?' + params.join('&'));
-            },
-
-            groupByAge: function() {
-                var params = [],
-                    q = filterToQuery($rootScope.filter);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/aportantes/edad' + '?' + params.join('&'));
-            },
-
             forMap: function() {
                 var params = [],
                     baseQuery = {
@@ -117,7 +99,7 @@ angular.module('larutadeldinero')
     })
 
     .factory('Aportes', function($http, $rootScope) {
-        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+        var baseURL = 'http://api.larutaelectoral.com.ar/api';
 
         function filterToQuery(filter, order_by, initialFilters) {
 
@@ -258,12 +240,48 @@ angular.module('larutadeldinero')
                 if (q) params.push('q=' + JSON.stringify(q));
 
                 return $http.get(baseURL + '/aportes' + '?' + params.join('&'));
+            },
+
+            bySex: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportes/edad' + '?' + params.join('&'));
+            },
+
+            byAge: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportes/sexo' + '?' + params.join('&'));
+            },
+
+            aportantesBySex: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/sexo' + '?' + params.join('&'));
+            },
+
+            aportantesByAge: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/edad' + '?' + params.join('&'));
             }
         }
     })
 
     .factory('Agrupaciones', function($http, $rootScope) {
-        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+        var baseURL = 'http://api.larutaelectoral.com.ar/api';
 
         return {
             findAll: function () {
