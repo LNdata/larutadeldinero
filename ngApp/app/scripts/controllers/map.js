@@ -27,6 +27,7 @@ angular.module('larutadeldinero')
         };
 
 
+
         var colors = ['868a08','386cb0','61380b','d7191c','018571','969696'];
         var markers=[];
 
@@ -38,7 +39,6 @@ angular.module('larutadeldinero')
             if($scope.layers.length>0){
                 $scope.layers.forEach(function(d,i){
                     $scope.map.removeLayer(d);
-                    console.log('refreshing map');
                 })
                 $scope.layers=[];
             }
@@ -54,11 +54,12 @@ angular.module('larutadeldinero')
                 $(points).each(function(i,d){
                     if(!markers[d['color']]){
                         markers[d['color']]=[];
+                        console.log(d['color']);
                     }
                     var item=d;
                     item['layer']=colors.indexOf(d['color']);
                     var marker = new L.CircleMarker([item['latitud'],item['longitud']], {monto:item['monto'],radius: Math.log(item['monto']), fillOpacity: 0.8, color: "#"+item['color']}).bindPopup('layer '+i);
-                    marker.l = colors.indexOf(d['color']);
+                    marker.l = d['color'];
                     markers[d['color']].push(marker);
                 })
 
@@ -85,12 +86,13 @@ angular.module('larutadeldinero')
                             }
 
                             var layer = cl.getAllChildMarkers()[0].l;
-                            return new L.DivIcon({ html: '<div style="background-color:transparent; overflow:hidden"><div class=" layer'+layer+' circle' + montoClass + '"></div></div>' });
+							
+                            return new L.DivIcon({ html: '<div style="background-color:transparent; overflow:hidden"><div class=" circle' + montoClass + '" style="background:#'+layer+';"></div></div>' });
                         },
                         spiderfyDistanceMultiplier:	1,
                         showCoverageOnHover:false,
                         disableClusteringAtZoom:14,
-                        maxClusterRadius:50
+                        maxClusterRadius:80
                     });
 
 
