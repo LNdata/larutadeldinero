@@ -84,6 +84,13 @@ class ImportData(Command):
           Option('-n', '--name', dest='name', default=self.default_name),
       ]
 
+  # clean all the tables
+  def clean_tables(self):
+    db.session.query(Aporte).delete()
+    db.session.query(Agrupacion).delete()
+    db.session.query(Aportante).delete()
+    db.session.commit()
+
   def import_agrupaciones(self):
       with open('data/agrupaciones.txt','r') as f:
         data = eval(f.read())
@@ -163,13 +170,14 @@ class ImportData(Command):
             print exception
             continue
 
-          aporte = Aporte(ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_nombre, codlista, lista, color, grupo_edad, grupo_aporte)
+          aporte = Aporte(ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, documento, agrupacion_nombre, codlista, lista, color, grupo_edad, grupo_aporte)
 
           db.session.add(aporte)
 
         db.session.commit()
 
   def run(self, name):
+    self.clean_tables()
     self.import_agrupaciones()
     self.import_aportantes()
     self.import_aportes()

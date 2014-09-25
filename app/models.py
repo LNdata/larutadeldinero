@@ -81,6 +81,7 @@ class Aporte(db.Model):
   ciclo = db.Column(db.Integer)
   cargo = db.Column(db.String(80))
   eleccion = db.Column(db.String(80))
+  coddistrito = db.Column(db.String(10))
   distrito = db.Column(db.String(80))
   lista = db.Column(db.String(80))
   codlista = db.Column(db.String(20))
@@ -96,10 +97,11 @@ class Aporte(db.Model):
   aportante = db.relationship("Aportante", backref=backref('aportes', order_by=id))
   agrupacion = db.relationship("Agrupacion", backref=backref('aportes', order_by=id))
 
-  def __init__(self, ciclo, cargo, eleccion, distrito, importe, fecha, documento, agrupacion_name, codlista, lista, color, grupo_edad, grupo_aporte):
+  def __init__(self, ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, documento, agrupacion_name, codlista, lista, color, grupo_edad, grupo_aporte):
     self.ciclo  = ciclo
     self.cargo   = cargo
     self.eleccion = eleccion
+    self.coddistrito = coddistrito
     self.distrito = distrito
     self.lista = lista
     self.codlista = codlista
