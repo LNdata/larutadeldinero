@@ -49,20 +49,23 @@ def donors_per_age(filters):
                FROM ( \
                       SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
                       FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
-                      WHERE %s
-                     GROUP BY aportes.grupo_edad, aportantes.documento \
-                     HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                      WHERE %s AND grupo_edad != "" \
+                      GROUP BY aportes.grupo_edad, aportantes.documento \
+                      HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
                      ) AS T \
-               GROUP BY grupo_edad"""  % where_clause
+               GROUP BY grupo_edad \
+               ORDER BY grupo_edad"""  % where_clause
   else:
     query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
                FROM ( \
                       SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
                       FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
-                     GROUP BY aportes.grupo_edad, aportantes.documento \
-                     HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                      WHERE grupo_edad != "" \
+                      GROUP BY aportes.grupo_edad, aportantes.documento \
+                      HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
                      ) AS T \
-               GROUP BY grupo_edad"""
+               GROUP BY grupo_edad
+               ORDER BY grupo_edad"""
 
   values = db.session.execute(query).fetchall()
 
@@ -78,16 +81,20 @@ def donors_per_party(filters):
 
   if filters:
     where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
-    query = "select count(aportante_id), agrupaciones.nombre \
+    query = "select count(aportante_id) as cantidad_aportantes, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
              where %s \
-             group by agrupaciones.nombre" % where_clause
+             group by agrupaciones.nombre \
+             order by cantidad_aportantes DESC \
+             LIMIT 10" % where_clause
   else:
-    query = "select count(aportante_id), agrupaciones.nombre \
+    query = "select count(aportante_id) as cantidad_aportantes, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
-             group by agrupaciones.nombre"
+             group by agrupaciones.nombre \
+             order by cantidad_aportantes DESC \
+             LIMIT 10"
 
   values = db.session.execute(query).fetchall()
 
@@ -147,20 +154,23 @@ def amount_per_age(filters):
                FROM ( \
                       SELECT aportes.grupo_edad as grupo_edad, aportes.importe as importe, aportantes.documento \
                       FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
-                      WHERE %s
+                      WHERE %s AND GRUPO_EDAD != "" \
                      GROUP BY aportes.grupo_edad, aportantes.documento \
                      HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
                      ) AS T \
-               GROUP BY grupo_edad"""  % where_clause
+               GROUP BY grupo_edad \
+               ORDER BY group_edad"""  % where_clause
   else:
     query = """SELECT grupo_edad, SUM(importe) AS importe \
                FROM ( \
                       SELECT aportes.grupo_edad as grupo_edad, aportes.importe as importe , aportantes.documento \
                       FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
-                     GROUP BY aportes.grupo_edad, aportantes.documento \
-                     HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
+                      WHERE grupo_edad != "" \
+                      GROUP BY aportes.grupo_edad, aportantes.documento \
+                      HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
                      ) AS T \
-               GROUP BY grupo_edad"""
+               GROUP BY grupo_edad \
+               ORDER BY grupo_edad"""
 
   values = db.session.execute(query).fetchall()
 
@@ -178,16 +188,18 @@ def amount_per_party(filters):
 
   if filters:
     where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
-    query = "select sum(importe), agrupaciones.nombre \
+    query = "select sum(importe) as monto, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
              where %s \
-             group by agrupaciones.nombre" % where_clause
+             group by agrupaciones.nombre \
+             order by monto DESC" % where_clause
   else:
-    query = "select sum(importe), agrupaciones.nombre \
+    query = "select sum(importe) as monto, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
-             group by agrupaciones.nombre"
+             group by agrupaciones.nombre \
+             order by monto DESC"
 
   values = db.session.execute(query).fetchall()
 
