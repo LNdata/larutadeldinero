@@ -12,3 +12,4 @@ migrations
 *.ipr
 *.iws
 Thumbs.db
+npm-debug.log
