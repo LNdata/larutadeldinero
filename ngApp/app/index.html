@@ -32,7 +32,7 @@
             <li ng-class="{ active: location.path() == '/graficos'}"><a ng-href="#/graficos">Gráficos</a></li>
             <li ng-class="{ active: location.path() == '/tabla'}"><a ng-href="#/tabla">Tabla</a></li>
         </ul>
-        <h3 class="text-muted">La Ruta Electoral AAA</h3>
+        <h3 class="text-muted">La Ruta Electoral</h3>
     </div>
 
     <div class="row">
@@ -40,7 +40,7 @@
             <div ng-view=""></div>
         </div>
         <div class="col-lg-2">
-            <div ng-include src="'/views/filter.html'"></div>
+            <div ng-include src="'views/filter.html'"></div>
         </div>
     </div>
 
