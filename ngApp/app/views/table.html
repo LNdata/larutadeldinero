@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-3">
-        <h3 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h3>
+        <h4 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h4>
     </div>
     <div class="col-lg-9">
         <form class="form-inline" role="form">
@@ -33,7 +33,7 @@
         <td>{{ aporte.distrito }}</td>
         <td><a ng-href="#/aportante/{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
         <td>{{ aporte.agrupacion.nombre }}</td>
-        <td>$ {{ aporte.importe }}</td>
+        <td align="right">$ {{ aporte.importe }}</td>
     </tr>
     </tbody>
 </table>
