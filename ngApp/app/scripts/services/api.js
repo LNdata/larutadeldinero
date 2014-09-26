@@ -193,7 +193,7 @@ angular.module('larutadeldinero')
         return {
 
             forTreemap: function() {
-                return $http.get('/data/treemap_elecciones.json');
+                return $http.get(baseURL + '/treemap');
             },
 
             find: function(page, rpp) {
