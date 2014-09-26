@@ -12,6 +12,9 @@ angular.module('larutadeldinero')
             restrict: 'E',
             link: function (scope, element, attrs) {
 
+				var color = d3.scale.ordinal()
+					.range(colorbrewer.GnBu[6]);
+					
                 var margin = {top: 20, right: 0, bottom: 0, left: 0},
                     width = $('#main').width(),
                     height = 500 - margin.top - margin.bottom,
@@ -80,11 +83,11 @@ angular.module('larutadeldinero')
                 }
 
                 // Compute the treemap layout recursively such that each group of siblings
-                // uses the same size (1Ã—1) rather than the dimensions of the parent cell.
+                // uses the same size (1×1) rather than the dimensions of the parent cell.
                 // This optimizes the layout for the current zoom state. Note that a wrapper
                 // object is created for the parent node for each group of siblings so that
-                // the parentâ€™s dimensions are not discarded as we recurse. Since each group
-                // of sibling was laid out in 1Ã—1, we must rescale to fit using absolute
+                // the parent’s dimensions are not discarded as we recurse. Since each group
+                // of sibling was laid out in 1×1, we must rescale to fit using absolute
                 // coordinates. This lets us use a viewport to zoom.
                 function layout(d) {
                     if (d._children) {
@@ -132,12 +135,23 @@ angular.module('larutadeldinero')
                         .attr('class', 'parent')
                         .call(rect)
                         .append('title')
-                        .text(function(d) { return formatNumber(d.value); });
+                        .text(function(d) { return d.name + ": $" + formatNumber(d.value); });
 
-                    g.append('text')
-                        .attr('dy', '.75em')
-                        .text(function(d) { return d.name; })
-                        .call(text);
+					g.append("text")
+					.attr("font-family", "'Yanone Kaffeesatz'")
+					.attr("font-size", "20px")
+        			.attr("fill", "#000000")
+        			.attr("dy", ".75em")
+        			.text(function(d) { return d.name; })
+        			.call(text);
+
+        			g.append("text")
+        			.attr("font-family", "'Open Sans'")
+					.attr("font-size", "16px")
+        			.attr("fill", "#000000")
+        			.attr("dy", "2.3em")
+        			.text(function(d) { return "$" + formatNumber(d.value); })
+        			.call(text);
 
                     function click(d) {
                         if (transitioning || !d) return;
@@ -197,7 +211,10 @@ angular.module('larutadeldinero')
                     rect.attr('x', function(d) { return x(d.x); })
                         .attr('y', function(d) { return y(d.y); })
                         .attr('width', function(d) { return x(d.x + d.dx) - x(d.x); })
-                        .attr('height', function(d) { return y(d.y + d.dy) - y(d.y); });
+                        .attr('height', function(d) { return y(d.y + d.dy) - y(d.y); })
+						.style("fill", function(d) {
+								return color(d.value);
+         });
                 }
 
                 function name(d) {

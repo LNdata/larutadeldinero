@@ -89,7 +89,7 @@ rect {
 
 rect.parent,
 .grandparent rect {
-    stroke-width: 2px;
+    stroke-width: 3px;
 }
 
 .grandparent rect {

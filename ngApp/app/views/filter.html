@@ -1,4 +1,3 @@
-<h4>Filtro</h4>
 <form role="form">
     <div class="form-group">
         <label for="filterYear">
@@ -14,7 +13,7 @@
 
     <div class="form-group">
         <label for="filterType">
-            Elección
+            Elecciones
             <a href="#" ng-click="filter.type = null" ng-show="filter.type" prevent-click>
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
@@ -49,7 +48,6 @@
     </div>
 
     <button class="btn btn-link" ng-click="advancedFilterCollapsed = !advancedFilterCollapsed">Filtro avanzado</button>
-    <hr/>
     <div collapse="advancedFilterCollapsed">
         <form role="form">
             <div class="from-group">
@@ -58,12 +56,13 @@
                     <a href="#" ng-click="filter.sexes = { }" ng-show="hasAnyTrueValues(filter.sexes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
-                </label><br/>
+                </label>
 
                 <label ng-repeat="sex in sexes">
                     <input type="checkbox" ng-model="filter.sexes[sex.val]">
-                    {{ sex.name }}
+                    <img src="http://andytow.com/scripts/larutaelectoral/img/icons/{{ sex.name }}.png" height="32">
                 </label>
+				
             </div>
 
             <div class="from-group">
@@ -76,7 +75,7 @@
 
                 <label ng-repeat="age in ages">
                     <input type="checkbox" ng-model="filter.ages[age.val]">
-                    {{ age.name }}
+                    <small>{{ age.name }}</small>&nbsp;&nbsp;
                 </label>
             </div>
 
@@ -88,10 +87,12 @@
                     </a>
                 </label><br/>
 
-                <label ng-repeat="amount in amounts">
+				<ul class="list-unstyled">
+                <li ng-repeat="amount in amounts">
                     <input type="checkbox" ng-model="filter.amounts[amount.val]">
-                    {{ amount.name }}
-                </label>
+                    <small>{{ amount.name }}</small>
+                </li>
+				</ul>
             </div>            
         </form>
     </div>
