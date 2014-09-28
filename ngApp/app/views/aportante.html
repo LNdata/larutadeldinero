@@ -2,13 +2,21 @@
   <div class="col-md-3">
 		<h4>{{ aportante.nombre }} {{ aportante.apellido }}</h4>
 		<img src="../img/icons/{{ aportante.sexo }}.png" height="32">&nbsp;&nbsp;
-		Clase {{ aportante.clase }}
+		Clase {{ aportante.clase }}<br/>
+		({{ 2014 - aportante.clase }} años de edad)
   </div>
   <div class="col-md-3">
-		<img src="../img/icons/imp_iva/{{ aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">&nbsp;
-		<img src="../img/icons/imp_ganancias/{{ aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">&nbsp;
-		<img src="../img/icons/monotributo/{{ aportante.monotributo }}.png" title="Monotributo categoría {{ aportante.monotributo }}">&nbsp;
-		<img src="../img/icons/empleador/{{ aportante.empleador }}.png" title="Empleador">
+		<img src="../img/icons/imp_iva/{{ aportante.impuesto_iva }}.png" height="32" title="Impuesto al Valor Agregado">
+		<img src="../img/icons/imp_ganancias/{{ aportante.impuesto_ganancias }}.png" height="32" title="Impuesto a las Ganancias">
+		<img src="../img/icons/monotributo/{{ aportante.monotributo }}.png" height="32" title="Monotributo categoría {{ aportante.monotributo }}">
+		<img src="../img/icons/empleador/{{ aportante.empleador }}.png" height="32" title="Empleador">
+		<br/>
+		<img src="../img/icons/autoridad/{{ aportante.autoridad }}.gif" height="32" title="Autoridad partidaria">
+		<img src="../img/icons/candidatura/{{ aportante.candidatura }}.gif" height="32" title="Candidatura">
+		<img src="../img/icons/contrato/{{ aportante.contrato }}.gif" height="32" title="Contrato">
+		<img src="../img/icons/designacion/{{ aportante.designacion }}.gif" height="32" title="Designación">
+		<img src="../img/icons/mandato_diputado/{{ aportante.mandato_diputado }}.gif" height="32" title="Mandato como Diputado">
+		<img src="../img/icons/mandato_diputado/{{ aportante.mandato_senador }}.gif" height="32" title="Mandato como Senador">
    </div>
   <div class="col-md-6">
 		<img ng-repeat="aporte in aportante.aportes | unique: 'coddistrito'" src="../img/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="120">&nbsp;&nbsp;
