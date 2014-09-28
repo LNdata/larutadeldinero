@@ -1,7 +1,19 @@
 <div class="row">
-  <div class="col-md-3"><h4>{{ aportante.nombre }} {{ aportante.apellido }}</h4><img src="../img/icons/{{ aportante.sexo }}.png" height="32">&nbsp;&nbsp; Clase {{ aportante.clase }}</div>
-  <div class="col-md-3"><img src="../img/icons/iva.png" title="Impuesto al Valor Agregado">{{ aportante.imp_iva }}&nbsp;<img src="../img/icons/ganancias.png" title="Impuesto a las Ganancias">{{ aportante.imp_ganancias }}&nbsp;<img src="../img/icons/monotributo.png" title="Monotributo">{{ aportante.monotributo }}&nbsp;<img src="../img/icons/empleador.png" title="Empleador">{{ aportante.empleador }}</div>
-  <div class="col-md-6"><img ng-repeat="aporte in aportante.aportes | unique: 'coddistrito'" src="../img/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="120">&nbsp;&nbsp;<img ng-repeat="aporte in aportante.aportes | unique: 'codlista'" src="../img/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="120"></div>
+  <div class="col-md-3">
+		<h4>{{ aportante.nombre }} {{ aportante.apellido }}</h4>
+		<img src="../img/icons/{{ aportante.sexo }}.png" height="32">&nbsp;&nbsp;
+		Clase {{ aportante.clase }}
+  </div>
+  <div class="col-md-3">
+		<img src="../img/icons/imp_iva/{{ aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">&nbsp;
+		<img src="../img/icons/imp_ganancias/{{ aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">&nbsp;
+		<img src="../img/icons/monotributo/{{ aportante.monotributo }}.png" title="Monotributo categoría {{ aportante.monotributo }}">&nbsp;
+		<img src="../img/icons/empleador/{{ aportante.empleador }}.png" title="Empleador">
+   </div>
+  <div class="col-md-6">
+		<img ng-repeat="aporte in aportante.aportes | unique: 'coddistrito'" src="../img/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="120">&nbsp;&nbsp;
+		<img ng-repeat="aporte in aportante.aportes | unique: 'codlista'" src="../img/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="120">
+  </div>
 </div>
 <!--<dl class="dl-horizontal">
 
