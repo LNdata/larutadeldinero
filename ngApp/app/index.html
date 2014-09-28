@@ -22,6 +22,7 @@
 
 body {font-family: 'Open Sans';
 		font-size: 130%;}
+a:hover { cursor:pointer; }
 </style>
     <!-- endbuild -->
 </head>
@@ -34,10 +35,10 @@ body {font-family: 'Open Sans';
 <div class="container">
     <div class="header">
         <ul class="nav nav-pills pull-right">
-            <li ng-class="{ active: location.path() == '/'}"><a ng-href="#">Treemap</a></li>
-            <li ng-class="{ active: location.path() == '/mapa'}"><a ng-href="#/mapa">Mapa</a></li>
-            <li ng-class="{ active: location.path() == '/graficos'}"><a ng-href="#/graficos">Gráficos</a></li>
-            <li ng-class="{ active: location.path() == '/tabla'}"><a ng-href="#/tabla">Tabla</a></li>
+            <li ng-class="{ active: location.path() == '/'}"><a ng-href="#"><center><img src="img/icons/treemap.png" height="32"><br>Treemap</center></a></li>
+            <li ng-class="{ active: location.path() == '/mapa'}"><a ng-href="#/mapa"><center><img src="img/icons/map.png" height="32"><br>Mapa</center></a></li>
+            <li ng-class="{ active: location.path() == '/graficos'}"><a ng-href="#/graficos"><center><img src="img/icons/charts.png" height="32"><br>Gráficos</center></a></li>
+            <li ng-class="{ active: location.path() == '/tabla'}"><a ng-href="#/tabla"><center><img src="img/icons/table.png" height="32"><br>Tabla</center></a></li>
         </ul>
         <h3 class="text-muted">La Ruta Electoral</h3>
     </div>
