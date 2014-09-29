@@ -2,7 +2,7 @@
     <div class="col-lg-3">
         <h4 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h4>
     </div>
-    <div class="col-lg-9">
+    <div class="col-lg-6">
         <form class="form-inline" role="form">
             <div class="form-group">
                 <input type="search" class="form-control" id="filterName" ng-model="filter.aportanteName" placeholder="Buscar por apellido">
@@ -13,11 +13,16 @@
             </a>
         </form>
     </div>
+	<div class="col-lg-3">
+		<table class="table">
+		<tr><td>Promedio</td><td align="right">$<b>AVG(importe(QUERY))</b></td></tr>
+		<tr><td>Total</td><td align="right">$<b>SUM(importe(QUERY))</b></td></tr>
+		</table>
 </div>
 <hr/>
 
 
-<table  class="table table-striped" ng-init="pageChanged()">
+<table class="table table-striped" ng-init="pageChanged()">
     <thead>
     <th><center>Ciclo</center></th>
     <th><center>Elección</center></th>
