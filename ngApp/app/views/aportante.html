@@ -1,3 +1,8 @@
+<script>
+$(document).ready(function(){
+    $("[data-toggle=tooltip]").tooltip({ placement: 'bottom'});
+});
+</script>
 <div class="row">
   <div class="col-md-3">
 		<h4>{{ aportante.nombre }} {{ aportante.apellido }}</h4>
@@ -6,21 +11,21 @@
 		({{ 2014 - aportante.clase }} años de edad)
   </div>
   <div class="col-md-3">
-		<img src="../img/icons/imp_iva/{{ aportante.impuesto_iva }}.png" height="32" title="Impuesto al Valor Agregado">
-		<img src="../img/icons/imp_ganancias/{{ aportante.impuesto_ganancias }}.png" height="32" title="Impuesto a las Ganancias">
-		<img src="../img/icons/monotributo/{{ aportante.monotributo }}.png" height="32" title="Monotributo categoría {{ aportante.monotributo }}">
-		<img src="../img/icons/empleador/{{ aportante.empleador }}.png" height="32" title="Empleador">
+		<img src="../img/icons/imp_iva/{{ aportante.impuesto_iva }}.png" height="32" data-toggle="tooltip" title="Impuesto al Valor Agregado">
+		<img src="../img/icons/imp_ganancias/{{ aportante.impuesto_ganancias }}.png" height="32" data-toggle="tooltip" title="Impuesto a las Ganancias">
+		<img src="../img/icons/monotributo/{{ aportante.monotributo }}.png" height="32" data-toggle="tooltip" title="Monotributo categoría {{ aportante.monotributo }}">
+		<img src="../img/icons/empleador/{{ aportante.empleador }}.png" height="32" data-toggle="tooltip" title="Empleador">
 		<br/>
-		<img src="../img/icons/autoridad/{{ aportante.autoridad }}.gif" height="32" title="Autoridad partidaria">
-		<img src="../img/icons/candidatura/{{ aportante.candidatura }}.gif" height="32" title="Candidatura">
-		<img src="../img/icons/contrato/{{ aportante.contrato }}.gif" height="32" title="Contrato">
-		<img src="../img/icons/designacion/{{ aportante.designacion }}.gif" height="32" title="Designación">
-		<img src="../img/icons/mandato_diputado/{{ aportante.mandato_diputado }}.gif" height="32" title="Mandato como Diputado">
-		<img src="../img/icons/mandato_diputado/{{ aportante.mandato_senador }}.gif" height="32" title="Mandato como Senador">
+		<img src="../img/icons/autoridad/{{ aportante.autoridad }}.gif" height="32" data-toggle="tooltip" title="Autoridad partidaria">
+		<img src="../img/icons/candidatura/{{ aportante.candidatura }}.gif" height="32" data-toggle="tooltip" title="Candidatura">
+		<img src="../img/icons/contrato/{{ aportante.contrato }}.gif" height="32" data-toggle="tooltip" title="Contrato">
+		<img src="../img/icons/designacion/{{ aportante.designacion }}.gif" height="32" data-toggle="tooltip" title="Designación">
+		<img src="../img/icons/mandato_diputado/{{ aportante.mandato_diputado }}.gif" height="32" data-toggle="tooltip" title="Mandato como Diputado">
+		<img src="../img/icons/mandato_diputado/{{ aportante.mandato_senador }}.gif" height="32" data-toggle="tooltip" title="Mandato como Senador">
    </div>
   <div class="col-md-6">
-		<img ng-repeat="aporte in aportante.aportes | unique: 'coddistrito'" src="../img/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="120">&nbsp;&nbsp;
-		<img ng-repeat="aporte in aportante.aportes | unique: 'codlista'" src="../img/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="120">
+		<img ng-repeat="aporte in aportante.aportes | unique: 'coddistrito'" src="../img/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" data-toggle="tooltip" height="120">&nbsp;&nbsp;
+		<img ng-repeat="aporte in aportante.aportes | unique: 'codlista'" src="../img/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" data-toggle="tooltip" title="{{ aporte.agrupacion_id | agrupacionName }}" height="120">
   </div>
 </div>
 <!--<dl class="dl-horizontal">
