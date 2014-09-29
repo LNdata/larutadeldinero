@@ -41,6 +41,22 @@ angular
                 templateUrl: 'views/aportante.html',
                 controller: 'AportanteCtrl'
             })
+            .when('/sitio', {
+                templateUrl: 'views/sitio.html',
+                controller: 'AportanteCtrl'
+            })
+            .when('/faq', {
+                templateUrl: 'views/faq.html',
+                controller: 'AportanteCtrl'
+            })	
+            .when('/data', {
+                templateUrl: 'views/datos.html',
+                controller: 'AportanteCtrl'
+            })	
+            .when('/team', {
+                templateUrl: 'views/team.html',
+                controller: 'AportanteCtrl'
+            })				
             .otherwise({
                 redirectTo: '/'
             });
@@ -92,6 +108,12 @@ angular
             { name: ' $10.000 - $49.999', val: '10.000 - $49.999 \n' },
             { name: '>$50.000', val: '50.000 y más \n' }
         ];
+        $scope.taxes = [
+            { name: 'IVA', val: '1 - $499 \n' },
+            { name: 'Ganancias', val: '500 - $1.999 \n' },
+            { name: 'Monotributo', val: '2.000 - $4.999 \n' },
+            { name: 'Empleador', val: '5.000 - $9.999 \n' }
+        ];		
 
         setTimeout(function() {
             $rootScope.$watch('filter', refreshData, true);
