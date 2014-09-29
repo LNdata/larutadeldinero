@@ -2,7 +2,7 @@
 
 angular.module('larutadeldinero')
     .factory('Aportantes', function($http, $rootScope) {
-        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+        var baseURL = 'http://api.larutaelectoral.com.ar/api';
 
         function filterToQuery(filter, query) {
             var q = { filters: [] };
@@ -117,7 +117,7 @@ angular.module('larutadeldinero')
     })
 
     .factory('Aportes', function($http, $rootScope) {
-        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+        var baseURL = 'http://api.larutaelectoral.com.ar/api';
 
         function filterToQuery(filter, order_by, initialFilters) {
 
@@ -263,7 +263,7 @@ angular.module('larutadeldinero')
     })
 
     .factory('Agrupaciones', function($http, $rootScope) {
-        var baseURL = 'http://origen.larutaelectoral.com.ar/api';
+        var baseURL = 'http://api.larutaelectoral.com.ar/api';
 
         return {
             findAll: function () {

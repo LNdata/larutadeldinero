@@ -27,8 +27,7 @@ manager.create_api(Aportante, collection_name='mapa',
                               methods=['GET'],
                               include_columns=['documento','lat','lon', 'aportes', 'aportes.color', 'aportes.importe'],
                               allow_functions=True,
-                              max_results_per_page=-1,
-                              postprocessors = {'GET_MANY': [pre_get_many_aportantes_mapa] }
+                              postprocessors = {'GET_MANY': [pre_get_many_aportantes_mapa]}
                   )
 
 manager.create_api(Aporte, methods=['GET'], allow_functions=True)
