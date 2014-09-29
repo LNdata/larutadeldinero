@@ -13,3 +13,4 @@ migrations
 *.iws
 Thumbs.db
 npm-debug.log
+.idea/

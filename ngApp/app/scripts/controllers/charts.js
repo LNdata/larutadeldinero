@@ -114,10 +114,7 @@ angular.module('larutadeldinero')
                         if (!data) return false;
 
                         x.domain(data.map(function(d) { return d.label; }));
-                        if (!loaded) {
-                            y.domain([0, yAxisMax || d3.max(data, function(d) { return d.value; })]);
-                            loaded = true;
-                        }
+                        y.domain([0, yAxisMax || d3.max(data, function(d) { return d.value; })]);
 
                         svg.select('.x.axis')
                             .call(xAxis)
