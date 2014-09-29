@@ -41,8 +41,15 @@ a:hover { cursor:pointer; }
             <li ng-class="{ active: location.path() == '/graficos'}"><a ng-href="#/graficos"><center><img src="img/icons/charts.png" height="32"><br>Gráficos</center></a></li>
             <li ng-class="{ active: location.path() == '/tabla'}"><a ng-href="#/tabla"><center><img src="img/icons/table.png" height="32"><br>Tabla</center></a></li>
         </ul>
+		<ul class="nav nav-pills pull-right">
+			<li ng-class="{ active: location.path() == '/sitio'}"><a ng-href="#/sitio"><small>¿Qué es este sitio?</small></a></li>
+			<li ng-class="{ active: location.path() == '/faq'}"><a ng-href="#/faq"><small>Preguntas frecuentes</small></a></li>
+			<li ng-class="{ active: location.path() == '/data'}"><a ng-href="#/data"><small>Datos y fuentes</small></a></li>
+			<li ng-class="{ active: location.path() == '/team'}"><a ng-href="#/team"><small>Equipo</small></a></li>
+		</ul>		
         <h2 class="text-muted">La Ruta Electoral</h2>
-		<p class="text-info">Financiamiento de campañas electorales en la Argentina</p>
+		Financiamiento de campañas electorales en la Argentina
+			
     </div>
 
     <div class="row">
@@ -55,12 +62,7 @@ a:hover { cursor:pointer; }
     </div>
 
     <div class="footer">
-		<ul class="nav nav-pills nav-justified">
-			<li ng-class="{ active: location.path() == '/sitio'}"><a ng-href="#/sitio">¿Qué es este sitio?</a></li>
-			<li ng-class="{ active: location.path() == '/faq'}"><a ng-href="#/faq">Preguntas frecuentes</a></li>
-			<li ng-class="{ active: location.path() == '/data'}"><a ng-href="#/data">Datos y fuentes</a></li>
-			<li ng-class="{ active: location.path() == '/team'}"><a ng-href="#/team">Equipo</a></li>
-		</ul>
+
     </div>
 </div>
 
