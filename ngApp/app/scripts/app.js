@@ -41,6 +41,22 @@ angular
                 templateUrl: 'views/aportante.html',
                 controller: 'AportanteCtrl'
             })
+            .when('/sitio', {
+                templateUrl: 'views/sitio.html',
+                controller: 'AportanteCtrl'
+            })
+            .when('/faq', {
+                templateUrl: 'views/faq.html',
+                controller: 'AportanteCtrl'
+            })	
+            .when('/data', {
+                templateUrl: 'views/datos.html',
+                controller: 'AportanteCtrl'
+            })	
+            .when('/team', {
+                templateUrl: 'views/team.html',
+                controller: 'AportanteCtrl'
+            })				
             .otherwise({
                 redirectTo: '/'
             });
