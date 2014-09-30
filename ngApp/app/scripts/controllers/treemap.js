@@ -11,10 +11,11 @@ angular.module('larutadeldinero')
         return {
             restrict: 'E',
             link: function (scope, element, attrs) {
+                console.log('linkkkkk');        //TODO(gb): Remove trace!!!
 
-				var color = d3.scale.ordinal()
-					.range(colorbrewer.GnBu[6]);
-					
+                var color = d3.scale.ordinal()
+                    .range(colorbrewer.GnBu[6]);
+
                 var margin = {top: 20, right: 0, bottom: 0, left: 0},
                     width = $('#main').width(),
                     height = 500 - margin.top - margin.bottom,
@@ -83,11 +84,11 @@ angular.module('larutadeldinero')
                 }
 
                 // Compute the treemap layout recursively such that each group of siblings
-                // uses the same size (1×1) rather than the dimensions of the parent cell.
+                // uses the same size (1ï¿½1) rather than the dimensions of the parent cell.
                 // This optimizes the layout for the current zoom state. Note that a wrapper
                 // object is created for the parent node for each group of siblings so that
-                // the parent’s dimensions are not discarded as we recurse. Since each group
-                // of sibling was laid out in 1×1, we must rescale to fit using absolute
+                // the parentï¿½s dimensions are not discarded as we recurse. Since each group
+                // of sibling was laid out in 1ï¿½1, we must rescale to fit using absolute
                 // coordinates. This lets us use a viewport to zoom.
                 function layout(d) {
                     if (d._children) {
@@ -137,35 +138,43 @@ angular.module('larutadeldinero')
                         .append('title')
                         .text(function(d) { return d.name + ": $" + formatNumber(d.value); });
 
-					g.append("text")
-					.attr("font-family", "'Yanone Kaffeesatz'")
-					.attr("font-size", "20px")
-        			.attr("fill", "#000000")
-        			.attr("dy", ".75em")
-        			.text(function(d) { return d.name; })
-        			.call(text);
+                    g.append("text")
+                        .attr("font-family", "'Yanone Kaffeesatz'")
+                        .attr("font-size", "20px")
+                        .attr("fill", "#000000")
+                        .attr("dy", ".75em")
+                        .text(function(d) { return d.name; })
+                        .call(text);
 
-        			g.append("text")
-        			.attr("font-family", "'Open Sans'")
-					.attr("font-size", "16px")
-        			.attr("fill", "#000000")
-        			.attr("dy", "2.3em")
-        			.text(function(d) { return "$" + formatNumber(d.value); })
-        			.call(text);
+                    g.append("text")
+                        .attr("font-family", "'Open Sans'")
+                        .attr("font-size", "16px")
+                        .attr("fill", "#000000")
+                        .attr("dy", "2.3em")
+                        .text(function(d) { return "$" + formatNumber(Math.round(d.value)).replace(',','.').replace(',','.'); })
+                        .call(text);
 
                     function click(d) {
                         if (transitioning || !d) return;
                         transitioning = true;
 
                         scope.$apply(function() {
-                            if (!d.parent.parent) {
-                                scope.filter.year = parseInt(d.name)
-                            } else if (!d.parent.parent.parent) {
-                                scope.filter.type = d.name
-                            } else if (!d.parent.parent.parent.parent) {
-                                scope.filter.district = d.name
-                            } else if (!d.parent.parent.parent.parent.parent) {
-                                scope.filter.party = d.name
+                            if (d.type == 'treemap') {
+                                scope.filter.year = null;
+                            }
+
+                            if (d.type == 'ciclo') {
+                                scope.filter.year = parseInt(d.name);
+                                scope.filter.type = null;
+                            }
+
+                            if (d.type == 'eleccion') {
+                                scope.filter.type = d.name;
+                                scope.filter.district = null;
+                            }
+
+                            if (d.type == 'distrito') {
+                                scope.filter.district = d.name;
                             }
                         });
 
@@ -212,9 +221,9 @@ angular.module('larutadeldinero')
                         .attr('y', function(d) { return y(d.y); })
                         .attr('width', function(d) { return x(d.x + d.dx) - x(d.x); })
                         .attr('height', function(d) { return y(d.y + d.dy) - y(d.y); })
-						.style("fill", function(d) {
-								return color(d.value);
-         });
+                        .style("fill", function(d) {
+                            return color(d.value);
+                        });
                 }
 
                 function name(d) {
