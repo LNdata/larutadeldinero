@@ -15,6 +15,8 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+    var pkg = require('./package.json');
+
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
@@ -62,6 +64,34 @@ module.exports = function (grunt) {
         ]
       }
     },
+
+      buildcontrol: {
+          options: {
+              dir: 'dist',
+              commit: true,
+              push: true,
+              message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+          },
+          pages: {
+              options: {
+                  remote: 'git@github.com:gabelula/larutadeldinero.git',
+                  branch: 'gh-pages'
+              }
+          },
+          heroku: {
+              options: {
+                  remote: 'git@heroku.com:larutaelectoral.git',
+                  branch: 'master',
+                  tag: pkg.version
+              }
+          },
+          local: {
+              options: {
+                  remote: '../',
+                  branch: 'build'
+              }
+          }
+      },
 
     // The actual grunt server settings
     connect: {
@@ -308,7 +338,8 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'fonts/*'
+            'fonts/*',
+            'data/*'
           ]
         }, {
           expand: true,

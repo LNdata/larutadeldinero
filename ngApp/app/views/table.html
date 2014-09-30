@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-lg-3">
-        <h3 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h3>
+        <h4 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h4>
     </div>
-    <div class="col-lg-9">
+    <div class="col-lg-6">
         <form class="form-inline" role="form">
             <div class="form-group">
                 <input type="search" class="form-control" id="filterName" ng-model="filter.aportanteName" placeholder="Buscar por apellido">
@@ -13,27 +13,32 @@
             </a>
         </form>
     </div>
+	<div class="col-lg-3">
+		<table class="table">
+		<tr><td>Promedio</td><td align="right">$<b>AVG(importe(QUERY))</b></td></tr>
+		<tr><td>Total</td><td align="right">$<b>SUM(importe(QUERY))</b></td></tr>
+		</table>
 </div>
 <hr/>
 
 
-<table class="table" ng-init="pageChanged()">
+<table class="table table-striped" ng-init="pageChanged()">
     <thead>
-    <th>Ciclo</th>
-    <th>Elección</th>
-    <th>Distrito</th>
-    <th>Aportante</th>
-    <th>Agrupación</th>
-    <th>Monto</th>
+    <th><center>Ciclo</center></th>
+    <th><center>Elección</center></th>
+    <th><center>Distrito</center></th>
+    <th><center>Aportante</center></th>
+    <th><center>Agrupación</center></th>
+    <th><center>Monto</center></th>
     </thead>
     <tbody>
     <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
-        <td>{{ aporte.ciclo }}</td>
-        <td>{{ aporte.eleccion }}</td>
-        <td>{{ aporte.distrito }}</td>
+        <td><a ng-click="filter.year={{ aporte.ciclo }}";>{{ aporte.ciclo }}</a></td>
+        <td><a ng-click="filter.type='{{ aporte.eleccion }}'";>{{ aporte.eleccion }}</a></td>
+        <td><a ng-click="filter.district='{{ aporte.distrito }}'";>{{ aporte.distrito }}</a></td>
         <td><a ng-href="#/aportante/{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
-        <td>{{ aporte.agrupacion.nombre }}</td>
-        <td>$ {{ aporte.importe }}</td>
+        <td><a ng-click="filter.party.id={{ aporte.agrupacion_id }}";"filter.party='{{ aporte.agrupacion.nombre }}'";>{{ aporte.agrupacion.nombre }}</a></td>
+        <td align="right">$ {{ aporte.importe }}</td>
     </tr>
     </tbody>
 </table>

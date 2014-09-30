@@ -24,4 +24,5 @@ angular.module('larutadeldinero')
             $scope.currentPage = 1;
             $scope.pageChanged();
         })
+
     });

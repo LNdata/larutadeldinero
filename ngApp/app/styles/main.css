@@ -89,7 +89,7 @@ rect {
 
 rect.parent,
 .grandparent rect {
-    stroke-width: 2px;
+    stroke-width: 3px;
 }
 
 .grandparent rect {
@@ -234,4 +234,12 @@ rect.parent,
 
 .x.axis path {
     display: none;
+}
+
+.tab-content {
+    width: 100%;
+}
+
+.tab-content > .tab-pane {
+    padding-top: 20px;
 }

@@ -11,3 +11,6 @@ migrations
 *.iml
 *.ipr
 *.iws
+Thumbs.db
+npm-debug.log
+.idea/

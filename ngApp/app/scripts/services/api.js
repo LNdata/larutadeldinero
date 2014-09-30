@@ -25,42 +25,6 @@ angular.module('larutadeldinero')
                 }
             }
 
-            // Año
-            if (filter.year) {
-                q.filters.push({
-                    'name': 'ciclo',
-                    'op': 'eq',
-                    'val': filter.year
-                })
-            }
-
-            // Elecciones
-            if (filter.type) {
-                q.filters.push({
-                    'name': 'eleccion',
-                    'op': 'eq',
-                    'val': filter.type
-                })
-            }
-
-            // Distrito
-            if (filter.district) {
-                q.filters.push({
-                    'name': 'distrito',
-                    'op': 'eq',
-                    'val': filter.district
-                })
-            }
-
-            // Agrupación política
-            if (filter.party) {
-                q.filters.push({
-                    'name': 'agrupacion_id',
-                    'op': 'eq',
-                    'val': filter.party.id
-                })
-            }
-
             return q;
         }
 
@@ -81,24 +45,6 @@ angular.module('larutadeldinero')
                 return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
             },
 
-            groupBySex: function() {
-                var params = [],
-                    q = filterToQuery($rootScope.filter);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/aportantes/sexo' + '?' + params.join('&'));
-            },
-
-            groupByAge: function() {
-                var params = [],
-                    q = filterToQuery($rootScope.filter);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/aportantes/edad' + '?' + params.join('&'));
-            },
-
             forMap: function() {
                 var params = [],
                     baseQuery = {
@@ -109,9 +55,9 @@ angular.module('larutadeldinero')
                     },
                     q = filterToQuery($rootScope.filter, baseQuery);
 
-                if (q) params.push('q=' + JSON.stringify(q) + '?' + params.join('&'));
+                if (q) params.push('q=' + JSON.stringify(q));
 
-                return $http.get(baseURL + '/map');
+                return $http.get(baseURL + '/mapa' + '?' + params.join('&'));
             }
         }
     })
@@ -247,7 +193,7 @@ angular.module('larutadeldinero')
         return {
 
             forTreemap: function() {
-                return $http.get('/data/treemap_elecciones.json');
+                return $http.get(baseURL + '/treemap');
             },
 
             find: function(page, rpp) {
@@ -258,6 +204,60 @@ angular.module('larutadeldinero')
                 if (q) params.push('q=' + JSON.stringify(q));
 
                 return $http.get(baseURL + '/aportes' + '?' + params.join('&'));
+            },
+
+            bySex: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportes/sexo' + '?' + params.join('&'));
+            },
+
+            byAge: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportes/edad' + '?' + params.join('&'));
+            },
+
+            byAgrupacion: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportes/agrupacion' + '?' + params.join('&'));
+            },
+
+            aportantesBySex: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/sexo' + '?' + params.join('&'));
+            },
+
+            aportantesByAge: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/edad' + '?' + params.join('&'));
+            },
+
+            aportantesByAgrupacion: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/aportantes/agrupacion' + '?' + params.join('&'));
             }
         }
     })
