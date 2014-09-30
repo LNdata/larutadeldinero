@@ -53,7 +53,8 @@ angular.module('larutadeldinero')
             link: function(scope, element, attrs) {
 
                 setTimeout(function() {
-                    var containerWidth = $('#' + attrs.containerId).width();
+                    var containerWidth = $('#' + attrs.containerId).width() * (attrs.widthFactor ? parseFloat(attrs.widthFactor) : 1);
+
 
                     var margin = {top: 20, right: 20, bottom: parseInt(attrs.marginBottom) || 30, left: 40},
                         width = containerWidth - margin.left - margin.right,
@@ -168,7 +169,7 @@ angular.module('larutadeldinero')
                             }
                         });
                     }
-                }, 100)
+                }, 500)
             }
         };
     });

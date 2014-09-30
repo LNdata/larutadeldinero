@@ -36,15 +36,15 @@ a:hover { cursor:pointer; }
 <div class="container">
     <div class="header">
         <ul class="nav nav-pills pull-right">
-            <li ng-class="{ active: location.path() == '/'}"><a ng-href="#"><center><img src="img/icons/treemap.png" height="32"><br>Treemap</center></a></li>
-            <li ng-class="{ active: location.path() == '/mapa'}"><a ng-href="#/mapa"><center><img src="img/icons/map.png" height="32"><br>Mapa</center></a></li>
-            <li ng-class="{ active: location.path() == '/graficos'}"><a ng-href="#/graficos"><center><img src="img/icons/charts.png" height="32"><br>Gráficos</center></a></li>
-            <li ng-class="{ active: location.path() == '/tabla'}"><a ng-href="#/tabla"><center><img src="img/icons/table.png" height="32"><br>Tabla</center></a></li>
+            <li ng-class="{ active: view == 'Treemap' && location.path() == '/' }"><a href="#" ng-click="setView('Treemap')" prevent-click><center><img src="img/icons/treemap.png" height="32"><br>Treemap</center></a></li>
+            <li ng-class="{ active: view == 'Map' && location.path() == '/' }"><a href="#" ng-click="setView('Map')" prevent-click><center><img src="img/icons/map.png" height="32"><br>Mapa</center></a></li>
+            <li ng-class="{ active: view == 'Charts' && location.path() == '/' }"><a href="#" ng-click="setView('Charts')" prevent-click><center><img src="img/icons/charts.png" height="32"><br>Gráficos</center></a></li>
+            <li ng-class="{ active: view == 'Table' && location.path() == '/' }"><a href="#" ng-click="setView('Table')" prevent-click><center><img src="img/icons/table.png" height="32"><br>Tabla</center></a></li>
         </ul>
 		<ul class="nav nav-pills pull-right">
-			<li ng-class="{ active: location.path() == '/sitio'}"><a ng-href="#/sitio"><small>¿Qué es este sitio?</small></a></li>
+			<li ng-class="{ active: location.path() == '/sitio'}"><a ui-sref="sitio"><small>¿Qué es este sitio?</small></a></li>
 			<li ng-class="{ active: location.path() == '/faq'}"><a ng-href="#/faq"><small>Preguntas frecuentes</small></a></li>
-			<li ng-class="{ active: location.path() == '/data'}"><a ng-href="#/data"><small>Datos y fuentes</small></a></li>
+			<li ng-class="{ active: location.path() == '/datos'}"><a ng-href="#/datos"><small>Datos y fuentes</small></a></li>
 			<li ng-class="{ active: location.path() == '/team'}"><a ng-href="#/team"><small>Equipo</small></a></li>
 		</ul>		
         <h2 class="text-muted">La Ruta Electoral</h2>
@@ -54,7 +54,11 @@ a:hover { cursor:pointer; }
 
     <div class="row">
         <div class="col-lg-10" id="main">
-            <div ng-view=""></div>
+            <div ui-view></div>
+            <div data-ui-view="Treemap" ng-show="view == 'Treemap'"></div>
+            <div data-ui-view="Map" ng-show="view == 'Map'"></div>
+            <div data-ui-view="Charts" ng-show="view == 'Charts'" id="charts"></div>
+            <div data-ui-view="Table" ng-show="view == 'Table'"></div>
         </div>
         <div class="col-lg-2">
             <div ng-include src="'views/filter.html'"></div>
@@ -100,6 +104,7 @@ a:hover { cursor:pointer; }
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/leaflet/dist/leaflet.js"></script>
 <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

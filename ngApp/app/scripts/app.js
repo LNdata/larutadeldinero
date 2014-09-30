@@ -13,52 +13,57 @@ angular
         'ngAnimate',
         'ngCookies',
         'ngResource',
-        'ngRoute',
         'ngSanitize',
         'ngTouch',
         'ui.bootstrap',
-		'angular.filter'
+        'ui.router',
+        'angular.filter'
     ])
-    .config(function ($routeProvider) {
-        $routeProvider
-            .when('/', {
-                templateUrl: 'views/treemap.html',
-                controller: 'TreemapCtrl'
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise("/");
+
+        $stateProvider
+            .state('root', {
+                url:'/',
+                views: {
+                    'Treemap': {
+                        templateUrl: 'views/treemap.html',
+                        controller: 'TreemapCtrl'
+                    },
+                    'Map': {
+                        templateUrl: 'views/map.html',
+                        controller: 'MapCtrl'
+                    },
+                    'Charts': {
+                        templateUrl: 'views/charts.html',
+                        controller: 'ChartsCtrl'
+                    },
+                    'Table': {
+                        templateUrl: 'views/table.html',
+                        controller: 'TableCtrl'
+                    }
+                }
             })
-            .when('/mapa', {
-                templateUrl: 'views/map.html',
-                controller: 'MapCtrl'
-            })
-            .when('/graficos', {
-                templateUrl: 'views/charts.html',
-                controller: 'ChartsCtrl'
-            })
-            .when('/tabla', {
-                templateUrl: 'views/table.html',
-                controller: 'TableCtrl'
-            })
-            .when('/aportante/:documento', {
+            .state('aportante', {
+                url: '/aportante/:documento',
                 templateUrl: 'views/aportante.html',
                 controller: 'AportanteCtrl'
             })
-            .when('/sitio', {
-                templateUrl: 'views/sitio.html',
-                controller: 'AportanteCtrl'
+            .state('sitio', {
+                url: '/sitio',
+                templateUrl: 'views/sitio.html'
             })
-            .when('/faq', {
-                templateUrl: 'views/faq.html',
-                controller: 'AportanteCtrl'
-            })	
-            .when('/data', {
-                templateUrl: 'views/datos.html',
-                controller: 'AportanteCtrl'
-            })	
-            .when('/team', {
-                templateUrl: 'views/team.html',
-                controller: 'AportanteCtrl'
-            })				
-            .otherwise({
-                redirectTo: '/'
+            .state('faq', {
+                url: '/faq',
+                templateUrl: 'views/faq.html'
+            })
+            .state('datos', {
+                url: '/datos',
+                templateUrl: 'views/datos.html'
+            })
+            .state('team', {
+                url: '/team',
+                templateUrl: 'views/team.html'
             });
     })
     .run(function($rootScope, $location) {
@@ -75,6 +80,12 @@ angular
             sexes: {},
             ages: {},
             amounts: {}
+        };
+
+        $rootScope.view = 'Treemap';
+        $scope.setView = function(view) {
+            $rootScope.location.path('/');
+            $rootScope.view = view;
         };
 
         $scope.advancedFilterCollapsed = false;
@@ -113,7 +124,7 @@ angular
             { name: 'Ganancias', val: '500 - $1.999 \n' },
             { name: 'Monotributo', val: '2.000 - $4.999 \n' },
             { name: 'Empleador', val: '5.000 - $9.999 \n' }
-        ];		
+        ];
 
         setTimeout(function() {
             $rootScope.$watch('filter', refreshData, true);

@@ -25,4 +25,10 @@ angular.module('larutadeldinero')
             $scope.pageChanged();
         })
 
+        $scope.setParty = function(partyId) {
+            var party = $rootScope.parties.filter(function(par) { return par.id == partyId; });
+            $rootScope.filter.party = party[0];
+            $rootScope.$apply();
+        }
+
     });

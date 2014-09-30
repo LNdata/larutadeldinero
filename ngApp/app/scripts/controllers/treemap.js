@@ -11,7 +11,6 @@ angular.module('larutadeldinero')
         return {
             restrict: 'E',
             link: function (scope, element, attrs) {
-                console.log('linkkkkk');        //TODO(gb): Remove trace!!!
 
                 var color = d3.scale.ordinal()
                     .range(colorbrewer.GnBu[6]);
