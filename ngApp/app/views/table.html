@@ -15,14 +15,14 @@
     </div>
 	<div class="col-lg-3">
 		<table class="table">
-		<tr><td>Promedio</td><td align="right">$<b>AVG(importe(QUERY))</b></td></tr>
-		<tr><td>Total</td><td align="right">$<b>SUM(importe(QUERY))</b></td></tr>
+		<tr><td>Promedio</td><td align="right">$<b>{{ average | number:0 }}</b></td></tr>
+		<tr><td>Total</td><td align="right">$<b>{{ sum | number:0 }}</b></td></tr>
 		</table>
 </div>
 <hr/>
 
 
-<table class="table table-striped" ng-init="pageChanged()">
+<table class="table table-striped" ng-class="{ 'table-loading': fetching }" ng-init="pageChanged()">
     <thead>
     <th><center>Ciclo</center></th>
     <th><center>Elección</center></th>
@@ -38,7 +38,7 @@
         <td><a ng-click="filter.district='{{ aporte.distrito }}'">{{ aporte.distrito }}</a></td>
         <td><a ng-href="#/aportante/{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
         <td><a ng-click="setParty(aporte.agrupacion.id)">{{ aporte.agrupacion.nombre }}</a></td>
-        <td align="right">$ {{ aporte.importe }}</td>
+        <td align="right">$ {{ aporte.importe | number:0 }}</td>
     </tr>
     </tbody>
 </table>

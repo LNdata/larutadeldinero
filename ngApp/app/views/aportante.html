@@ -60,7 +60,7 @@ $(document).ready(function(){
         <td>{{ aporte.distrito }}</td>
         <td>{{ aporte.cargo }}</td>
         <td>{{ aporte.agrupacion_id | agrupacionName }}</td>
-        <td align="right">$ {{ aporte.importe }}</td>
+        <td align="right">$ {{ aporte.importe | number:0 }}</td>
     </tr>
     </tbody>
 </table>

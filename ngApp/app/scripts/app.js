@@ -120,10 +120,10 @@ angular
             { name: '>$50.000', val: '50.000 y más \n' }
         ];
         $scope.taxes = [
-            { name: 'IVA', val: '1 - $499 \n' },
-            { name: 'Ganancias', val: '500 - $1.999 \n' },
-            { name: 'Monotributo', val: '2.000 - $4.999 \n' },
-            { name: 'Empleador', val: '5.000 - $9.999 \n' }
+            { name: 'IVA', val: 'iva' },
+            { name: 'Ganancias', val: 'ganancias' },
+            { name: 'Monotributo', val: 'monotributo' },
+            { name: 'Empleador', val: 'empleador' }
         ];
 
         setTimeout(function() {

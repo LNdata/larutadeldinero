@@ -243,3 +243,18 @@ rect.parent,
 .tab-content > .tab-pane {
     padding-top: 20px;
 }
+
+.table-loading {
+    background: url('/images/ajax-loader.gif');
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+.table-loading.table-striped > tbody > tr:nth-child(odd) > td {
+    background-color: transparent;
+}
+
+.table-loading td {
+    opacity: 0.4;
+}

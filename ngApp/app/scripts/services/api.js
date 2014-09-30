@@ -181,6 +181,76 @@ angular.module('larutadeldinero')
                 }
             }
 
+            // Inscripcion fiscal
+            if (filter.taxes) {
+                for (var tax in filter.taxes) {
+                    if (filter.taxes[tax]) {
+                        if (tax == 'iva') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'impuesto_iva',
+                                    'op': 'eq',
+                                    'val': 'AC'
+                                }
+                            })
+                        }
+                        if (tax == 'ganancias') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'impuesto_ganancias',
+                                    'op': 'eq',
+                                    'val': 'AC'
+                                }
+                            })
+                        }
+                        if (tax == 'monotributo') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'monotributo',
+                                    'op': 'neq',
+                                    'val': 'NI'
+                                }
+                            });
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'monotributo',
+                                    'op': 'neq',
+                                    'val': 'NC'
+                                }
+                            });
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'monotributo',
+                                    'op': 'is_not_null'
+                                }
+                            });
+                        }
+                        if (tax == 'empleador') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'empleador',
+                                    'op': 'eq',
+                                    'val': true
+                                }
+                            })
+                        }
+                    }
+                }
+
+            }
+
 
             if (filters.length > 0) {
                 if (!q) q = {};
@@ -204,6 +274,31 @@ angular.module('larutadeldinero')
                 if (q) params.push('q=' + JSON.stringify(q));
 
                 return $http.get(baseURL + '/aportes' + '?' + params.join('&'));
+            },
+
+            stats: function() {
+                var params = [],
+                    q = filterToQuery($rootScope.filter),
+                    functions = [
+                        {
+                            'name': 'sum',
+                            'field': 'importe'
+                        },
+                        {
+                            'name': 'avg',
+                            'field': 'importe'
+                        }
+                    ];
+
+                if (!q) {
+                    q = { functions: functions }
+                } else {
+                    q.functions = functions;
+                }
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/eval/aportes' + '?' + params.join('&'));
             },
 
             bySex: function() {

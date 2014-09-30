@@ -12,6 +12,11 @@ angular.module('larutadeldinero')
                 $scope.totalItems = response.data.num_results;
                 $scope.totalPages = response.data.total_pages;
                 $scope.aportes = response.data.objects;
+            });
+
+            Aportes.stats().then(function(response) {
+                $scope.average = response.data.avg__importe;
+                $scope.sum = response.data.sum__importe;
             })
         };
 
