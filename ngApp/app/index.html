@@ -25,6 +25,7 @@ body {font-family: 'Open Sans';
 a:hover { cursor:pointer; }
 
 </style>
+
     <!-- endbuild -->
 </head>
 <body ng-app="larutadeldinero" ng-controller="AppCtrl">
@@ -48,8 +49,7 @@ a:hover { cursor:pointer; }
 			<li ng-class="{ active: location.path() == '/team'}"><a ng-href="#/team"><small>Equipo</small></a></li>
 		</ul>		
         <h2 class="text-muted">La Ruta Electoral</h2>
-		Financiamiento de campañas electorales en la Argentina
-			
+		Financiamiento de campañas electorales en la Argentina	
     </div>
 
     <div class="row">
@@ -66,7 +66,7 @@ a:hover { cursor:pointer; }
     </div>
 
     <div class="footer">
-
+		<p align="center"><a href="https://github.com/gabelula/larutadeldinero/" target="_blank"><img src="http://decadavotada.com.ar/assets/img/GitHub-Mark-32px.png" data-toggle="tooltip" title="Fork me!"></a></p>
     </div>
 </div>
 
@@ -120,5 +120,10 @@ a:hover { cursor:pointer; }
 <!-- endbuild -->
 <script src="http://colorbrewer2.org/export/colorbrewer.js"></script>
 <script src="js/angular-filter.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("[data-toggle=tooltip]").tooltip({ placement: 'top'});
+});
+</script>
 </body>
 </html>
