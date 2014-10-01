@@ -245,7 +245,7 @@ rect.parent,
 }
 
 .table-loading {
-    background: url('/images/ajax-loader.gif');
+    background: url('../images/ajax-loader.gif');
     background-repeat: no-repeat;
     background-position-x: 50%;
     background-position-y: 50%;
