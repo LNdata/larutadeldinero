@@ -13,7 +13,7 @@ angular.module('larutadeldinero')
             link: function (scope, element, attrs) {
 
                 var color = d3.scale.ordinal()
-                    .range(colorbrewer.GnBu[6]);
+                    .range(colorbrewer.Blues[5]);
 
                 var margin = {top: 20, right: 0, bottom: 0, left: 0},
                     width = $('#main').width(),
