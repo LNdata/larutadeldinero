@@ -55,7 +55,9 @@ angular.module('larutadeldinero')
                 setTimeout(function() {
                     var containerWidth = $('#' + attrs.containerId).width() * (attrs.widthFactor ? parseFloat(attrs.widthFactor) : 1);
 
-
+					var color = d3.scale.ordinal()
+						.range(colorbrewer.Blues[6]);
+					
                     var margin = {top: 20, right: 20, bottom: parseInt(attrs.marginBottom) || 30, left: 40},
                         width = containerWidth - margin.left - margin.right,
                         height = attrs.height - margin.top - margin.bottom,
@@ -134,6 +136,9 @@ angular.module('larutadeldinero')
                             .attr("width", x.rangeBand())
                             .attr("y", height)
                             .attr("height", 0)
+							.style("fill", function(d) {
+                            return color(d.value);
+                        });
 
                         bar.attr("width", x.rangeBand());
 
