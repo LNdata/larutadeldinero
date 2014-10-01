@@ -270,10 +270,10 @@ def get_treemap():
     nuevo_ciclo = {"name": ciclo, "type": "ciclo", "children": []}
     elecciones = [x.eleccion for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo).group_by(Aporte.eleccion).all()]
 
-    # ELECCION ------
+    # ELECCION -----
     for eleccion in elecciones:
       nueva_eleccion = {"name": eleccion, "type":'eleccion', "children": []}
-      distritos = [x.distrito for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion).group_by(Aporte.eleccion).all()]
+      distritos = [x.distrito for x in db.session.query(Aporte).filter(Aporte.ciclo == ciclo, Aporte.eleccion == eleccion).group_by(Aporte.distrito).all()]
 
       # DISTRITO ------
       for distrito in distritos:

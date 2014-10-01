@@ -103,7 +103,7 @@ class ImportData(Command):
       #with open('data/aportantes.csv','r') as f:\
       with open('data/aportantes.csv', 'r') as csvfile:
         #lines = f.readlines()[1:]
-        lines = csv.reader(csvfile, delimiter=',', quotechar='|', skipinitialspace=True)
+        lines = csv.reader(csvfile, delimiter=',', quotechar='"', skipinitialspace=True)
         for data in lines:
           if data[0] == 'DOCUMENTO':
             continue
@@ -146,10 +146,11 @@ class ImportData(Command):
         db.session.commit()
 
   def import_aportes(self):
-      with open('data/aportes.csv','r') as f:
-        data = f.readlines()[1:]
-        for line in data:
-          data = line.split(',')
+      with open('data/aportes.csv','r') as csvfile:
+        lines = csv.reader(csvfile, delimiter=',', quotechar='"', skipinitialspace=True)
+        for data in lines:
+          if data[0] == 'CICLO':
+            continue
           try:
             ciclo = int(float(data[0]))
             cargo = data[1]
