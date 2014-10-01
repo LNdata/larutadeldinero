@@ -103,7 +103,7 @@ class ImportData(Command):
       #with open('data/aportantes.csv','r') as f:\
       with open('data/aportantes.csv', 'r') as csvfile:
         #lines = f.readlines()[1:]
-        lines = csv.reader(csvfile, delimiter=',', quotechar='|', skipinitialspace=True)
+        lines = csv.reader(csvfile, delimiter=',', quotechar='"', skipinitialspace=True)
         for data in lines:
           if data[0] == 'DOCUMENTO':
             continue
