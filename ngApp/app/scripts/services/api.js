@@ -57,7 +57,7 @@ angular.module('larutadeldinero')
 
                 if (q) params.push('q=' + JSON.stringify(q));
 
-                return $http.get(baseURL + '/mapa' + '?' + params.join('&'));
+                return $http.get(baseURL + '/map' + '?' + params.join('&'));
             }
         }
     })
