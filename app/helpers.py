@@ -193,13 +193,15 @@ def amount_per_party(filters):
              on agrupacion_id = agrupaciones.id \
              where %s \
              group by agrupaciones.nombre \
-             order by monto DESC" % where_clause
+             order by monto DESC \
+             limit 10" % where_clause
   else:
     query = "select sum(importe) as monto, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
              group by agrupaciones.nombre \
-             order by monto DESC"
+             order by monto DESC \
+             limit 10"
 
   values = db.session.execute(query).fetchall()
 
