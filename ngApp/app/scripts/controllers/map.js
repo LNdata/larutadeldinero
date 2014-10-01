@@ -49,21 +49,20 @@ angular.module('larutadeldinero')
 
             $scope.loading=true;
             Aportantes.forMap().then(function(response) {
-                var points = response.data.objects.filter(function(point) {
-                    return point.aportes.length > 0;
-                });
+                var points = response.data.values;
+                console.log(points);        //TODO(gb): Remove trace!!!
 
                 $(points).each(function(i,d) {
-                    var color = d.aportes[0].color;
+                    var color = d.color;
                     if(!markers[color]) {
                         markers[color]=[];
                     }
                     var item = d;
                     item['layer']=colors.indexOf(color);
-                    var monto = item.aportes.reduce(function(sum, aporte) { return sum + aporte.importe }, 0)
+                    var monto = item.monto;
 
                     var marker = new L.CircleMarker(
-                        [item['lat'], item['lon']],
+                        [item['latitud'], item['longitud']],
                         {
                             dni: item['documento'],
                             monto: monto,
