@@ -22,9 +22,26 @@
 <style id="andy-css">
 
 body {font-family: 'Open Sans';
-		font-size: 130%;}
+	  font-size: 130%;}
+p.edad {
+    font-family: "Times New Roman", Times, serif;
+	font-size: 120%;;
+} 
 a:hover { cursor:pointer; }
-
+    .tooltip{color:#FFFFFF;
+	  font-size: 200%;
+	  font-weight: 800; 
+	  background-color:#000000;
+          margin: 10px;
+          padding-right: 10px;
+          padding-left: 10px;
+          padding-top: 10px;
+		  padding-bottom: 10px;
+	  text-align: center;
+      -webkit-border-radius:10px;
+      -moz-border-radius:10px;
+      border-radius:10px;
+        }
 </style>
 
     <!-- endbuild -->
@@ -120,6 +137,7 @@ a:hover { cursor:pointer; }
 <script src="scripts/controllers/table.js"></script>
 <script src="scripts/controllers/aportante.js"></script>
 <script src="scripts/services/api.js"></script>
+<script src="js/tooltip.js"></script>
 <!-- endbuild -->
 <script>
 $(document).ready(function(){

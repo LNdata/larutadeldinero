@@ -7,8 +7,8 @@ $(document).ready(function(){
   <div class="col-md-3">
 		<h4>{{ aportante.nombre }} {{ aportante.apellido }}</h4>
 		<img src="images/icons/{{ aportante.sexo }}.png">&nbsp;&nbsp;
-		Clase {{ aportante.clase }}<br/>
-		({{ 2014 - aportante.clase }} años de edad)
+		Clase {{ aportante.clase }}
+		<p class="edad">(~ {{ 2014 - aportante.clase }} años de edad)</p>
   </div>
   <div class="col-md-3">
 		<img src="images/icons/imp_iva/{{ aportante.impuesto_iva }}.png" data-toggle="tooltip" title="Impuesto al Valor Agregado">
@@ -48,7 +48,7 @@ $(document).ready(function(){
 <table class="table">
     <thead>
     <th>Ciclo</th>
-    <th>Elección</th>
+    <th>Elecciones</th>
     <th>Distrito</th>
     <th>Cargo</th>
     <th>Agrupación</th>
@@ -66,17 +66,6 @@ $(document).ready(function(){
     </tbody>
 </table>
 <div class="text-center">
-    <pagination total-items="totalItems"
-                ng-change="pageChanged()"
-                ng-model="currentPage"
-                max-size="maxSize"
-                class="pagination-sm"
-                boundary-links="true"
-                rotate="false"
-                num-pages="totalPages"
-                first-text="Primera"
-                last-text="Última"
-                previous-text="Anterior"
-                next-text="Siguiente">
-    </pagination>
+   <a href="#" ng-click="setView('Table')" prevent-click> <button type="button" class="btn btn-default">Volver a la Tabla</button></a>
+   <a href="#" ng-click="setView('Map')" prevent-click> <button type="button" class="btn btn-default">Volver al Mapa</button></a>
 </div>
