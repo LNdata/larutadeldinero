@@ -69,7 +69,9 @@ angular.module('larutadeldinero')
 
                     var x = d3.scale.ordinal()
                         .rangeRoundBands([0, width], .1);
-
+					
+					var fmt = d3.format(",.0f");
+					
                     var y = d3.scale.linear()
                         .range([height, 0]);
 
@@ -139,6 +141,12 @@ angular.module('larutadeldinero')
 							.style("fill", function(d) {
                             return color(d.value);
                         });
+						
+						bar.data(data).append("title")
+						.text(function(d) { return fmt((d.value));});;
+						
+						bar.data(data)
+						.call(d3.helper.tooltip(function(d) { return (fmt(d.value));}));
 
                         bar.attr("width", x.rangeBand());
 
