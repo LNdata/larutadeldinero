@@ -14,11 +14,16 @@
     "angular-touch": "~1.2.0",
     "angular-route": "~1.2.0",
     "angular-bootstrap": "~0.11.0",
-    "leaflet": "~0.7.3",
     "angular-ui-router": "~0.2.11",
     "angular-filter": "~0.4.6",
     "colorbrewer2": "*",
+    "leaflet": "~0.7.3",
     "leaflet.markercluster": "~0.4.0"
+  },
+  "overrides": {
+    "leaflet.markercluster": {
+      "main": "dist/leaflet.markercluster.js"
+    }
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
