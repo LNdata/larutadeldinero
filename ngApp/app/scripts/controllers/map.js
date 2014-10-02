@@ -50,7 +50,6 @@ angular.module('larutadeldinero')
             $scope.loading=true;
             Aportantes.forMap().then(function(response) {
                 var points = response.data.values;
-                console.log(points);        //TODO(gb): Remove trace!!!
 
                 $(points).each(function(i,d) {
                     var color = d.color;
