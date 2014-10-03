@@ -1,18 +1,18 @@
 
 d3.helper = {};
  
-d3.helper.tooltip = function(accessor){
+d3.helper.tooltip_chart = function(accessor){
     return function(selection){
         var tooltipDiv;
-        var bodyNode = d3.select('element').node();
+        var bodyNode = d3.select('#charts').node();
         selection.on("mouseover", function(d, i){
             // Clean up lost tooltips
-            d3.select('element').selectAll('div.tooltip').remove();
+           d3.select('#charts').selectAll('div.tooltip_chart').remove();
             // Append tooltip
-            tooltipDiv = d3.select('element').append('div').attr('class', 'tooltip');
+            tooltipDiv = d3.select('#charts').append('div').attr('class', 'tooltip_chart');
             var absoluteMousePos = d3.mouse(bodyNode);
-            tooltipDiv.style('left', (absoluteMousePos[0] + 10)+'px')
-                .style('top', (absoluteMousePos[1] - 15)+'px')
+            tooltipDiv.style('left', (absoluteMousePos[0] - 10) +'px')
+                .style('top', (absoluteMousePos[1] - 80)+'px')
                 .style('position', 'absolute')
                 .style('z-index', 1001);
             // Add text using the accessor function
@@ -23,15 +23,13 @@ d3.helper.tooltip = function(accessor){
         })
         .on('mousemove', function(d, i) {
             // Move tooltip
-            var absoluteMousePos = d3.mouse(bodyNode);
-            tooltipDiv.style('left', (absoluteMousePos[0] + 10)+'px')
-                .style('top', (absoluteMousePos[1] - 15)+'px');
+
             var tooltipText = accessor(d, i) || '';
             tooltipDiv.html(tooltipText);
         })
         .on("mouseout", function(d, i){
             // Remove tooltip
-            tooltipDiv.remove();
+           tooltipDiv.remove();
         });
  
     };

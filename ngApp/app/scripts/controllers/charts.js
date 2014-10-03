@@ -142,11 +142,8 @@ angular.module('larutadeldinero')
                             return color(d.value);
                         });
 						
-						bar.data(data).append("title")
-						.text(function(d) { return fmt((d.value));});;
-						
 						bar.data(data)
-						.call(d3.helper.tooltip(function(d) { return (fmt(d.value));}));
+						.call(d3.helper.tooltip_chart(function(d) { return (fmt(d.value));}));
 
                         bar.attr("width", x.rangeBand());
 
