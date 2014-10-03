@@ -33,10 +33,10 @@
     </thead>
     <tbody>
     <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
-        <td width="5%"><a ng-click="filter.year={{ aporte.ciclo }}"><font color="#000">{{ aporte.ciclo }}</font></a></td>
-        <td width="5%"><a ng-click="filter.type='{{ aporte.eleccion }}'"><font color="#000">{{ aporte.eleccion }}</font></a></td>
-        <td width="15%"><a ng-click="filter.district='{{ aporte.distrito }}'"><font color="#000">{{ aporte.distrito }}</font></a></td>
-        <td width="25%"><a ng-href="#/aportante/{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</font></a></td>
+        <td width="5%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
+        <td width="5%"><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</font></td>
+        <td width="15%"><a ng-click="filter.district='{{ aporte.distrito }}'">{{ aporte.distrito }}</a></td>
+        <td width="25%"><a href="#/aportante/{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a></td>
         <td width="30%"><a ng-click="setParty(aporte.agrupacion.id)"><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font></a></td>
         <td align="right" width="10%">$ {{ aporte.importe | number:0 }}</td>
     </tr>

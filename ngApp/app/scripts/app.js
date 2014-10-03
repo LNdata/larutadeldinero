@@ -41,29 +41,26 @@ angular
                     'Table': {
                         templateUrl: 'views/table.html',
                         controller: 'TableCtrl'
-                    }
+                    },
+					'Sitio': {
+                        templateUrl: 'views/sitio.html'
+					},
+					'Faq': {
+                        templateUrl: 'views/faq.html'
+					},
+					'Datos': {
+                        templateUrl: 'views/datos.html'
+					},
+					'Team': {
+                        templateUrl: 'views/team.html'
+					},
+							
                 }
             })
             .state('aportante', {
                 url: '/aportante/:documento',
                 templateUrl: 'views/aportante.html',
                 controller: 'AportanteCtrl'
-            })
-            .state('sitio', {
-                url: '/sitio',
-                templateUrl: 'views/sitio.html'
-            })
-            .state('faq', {
-                url: '/faq',
-                templateUrl: 'views/faq.html'
-            })
-            .state('datos', {
-                url: '/datos',
-                templateUrl: 'views/datos.html'
-            })
-            .state('team', {
-                url: '/team',
-                templateUrl: 'views/team.html'
             });
     })
     .run(function($rootScope, $location) {
