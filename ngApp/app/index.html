@@ -36,10 +36,10 @@
             <li ng-class="{ active: view == 'Table' && location.path() == '/' }"><a href="#" ng-click="setView('Table')" prevent-click><center><img src="images/icons/table.png" height="32"><br>Tabla</center></a></li>
         </ul>
 		<ul class="nav nav-pills pull-right">
-			<li ng-class="{ active: view == 'Sitio' && location.path() == '/' }"><a href="#" ng-click="setView('Sitio')" prevent-click><small>¿Qué es este sitio?</small></a></li>
+			<li ng-class="{ active: view == 'Sitio' && location.path() == '/' }"><a href="#" ng-click="setView('Sitio')" prevent-click><small>Acerca de</small></a></li>
 			<li ng-class="{ active: view == 'Faq' && location.path() == '/' }"><a href="#" ng-click="setView('Faq')" prevent-click><small>Preguntas frecuentes</small></a></li>
-			<li ng-class="{ active: view == 'Datos' && location.path() == '/' }"><a href="#" ng-click="setView('Datos')" prevent-click><small>Datos y fuentes</small></a></li>
 			<li ng-class="{ active: view == 'Team' && location.path() == '/' }"><a href="#" ng-click="setView('Team')" prevent-click><small>Equipo</small></a></li>
+			<li ng-class="{ active: view == 'Tutorial' && location.path() == '/' }"><a href="#" ng-click="setView('Tutorial')" prevent-click><small>Tutorial</small></a></li>
 		</ul>		
         <h2 class="text-muted">La Ruta Electoral</h2>
 		Financiamiento de campañas electorales en la Argentina	
@@ -54,8 +54,8 @@
             <div data-ui-view="Table" ng-show="view == 'Table'"></div>
 			<div data-ui-view="Sitio" ng-show="view == 'Sitio'"></div>
 			<div data-ui-view="Faq" ng-show="view == 'Faq'"></div>
-			<div data-ui-view="Datos" ng-show="view == 'Datos'"></div>
 			<div data-ui-view="Team" ng-show="view == 'Team'"></div>
+			<div data-ui-view="Tutorial" ng-show="view == 'Tutorial'"></div>
 			<div data-ui-view="Aportante" ng-show="view == 'Aportante'"></div>
         </div>
         <div class="col-lg-2">

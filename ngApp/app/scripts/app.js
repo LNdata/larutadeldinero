@@ -48,12 +48,12 @@ angular
 					'Faq': {
                         templateUrl: 'views/faq.html'
 					},
-					'Datos': {
-                        templateUrl: 'views/datos.html'
-					},
 					'Team': {
                         templateUrl: 'views/team.html'
 					},
+					'Tutorial': {
+                        templateUrl: 'views/tutorial.html'
+					}					
 							
                 }
             })
