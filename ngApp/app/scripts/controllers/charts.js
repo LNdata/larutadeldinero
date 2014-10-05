@@ -119,7 +119,7 @@ angular.module('larutadeldinero')
                         if (!data) return false;
 
                         x.domain(data.map(function(d) { return d.label; }));
-                        y.domain([0, yAxisMax || d3.max(data, function(d) { return d.value; })]);
+                        y.domain([0, yAxisMax || d3.max(data, function(d) { return (d.value); })]);
 
                         svg.select('.x.axis')
                             .call(xAxis)
@@ -143,7 +143,7 @@ angular.module('larutadeldinero')
                         });
 						
 						bar.data(data)
-						.call(d3.helper.tooltip_chart(function(d) { return (fmt(d.value));}));
+						.call(d3.helper.tooltip_chart(function(d) { return (fmt(d.value)).replace(',','.').replace(',','.');}));
 
                         bar.attr("width", x.rangeBand());
 
