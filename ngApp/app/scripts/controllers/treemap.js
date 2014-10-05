@@ -133,9 +133,7 @@ angular.module('larutadeldinero')
 
                     g.append('rect')
                         .attr('class', 'parent')
-                        .call(rect)
-                        .append('title')
-                        .text(function(d) { return d.name + ": $" + formatNumber(d.value); });
+                        .call(rect);
 
                     g.append("text")
                         .attr("font-family", "'Yanone Kaffeesatz'")

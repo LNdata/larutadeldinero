@@ -8,11 +8,15 @@ angular.module('larutadeldinero')
             center: [-34.5957733,-58.3814453],
             maxZoom: 17,
             zoom: 11,
-            zoomControl: false
+            zoomControl: false,
+			fullscreenControl: true,
+			fullscreenControlOptions: {
+				position: 'topleft'
+			}
         });
 
         var mapLink='<a href="http://openstreetmap.org">OpenStreetMap</a>';
-
+	
         L.tileLayer(
             'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
                 attribution: '&copy; ' + mapLink + ' Contributors'
