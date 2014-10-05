@@ -1,27 +1,17 @@
 	<h3>Tutorial</h3>
-	<div class="row">
-		<div class="col-md-6">
-		<ul>
-			<ol>
-			<b>Aquí un video de demo de la app, reportaje a los programadores y especialistas</b>
-			<iframe width="427" height="255" src="//www.youtube.com/embed/ocZiEOZFnh0" frameborder="0" allowfullscreen></iframe>
-		</div>
-		<div class="col-md-6">
-		<b>Con el apoyo de:</b>
-		  <ul>
-			<ol><a href="http://hackslabs.org/" target="_blank">
-				<img src="images/icons/hackslabs.png"></a>
-			</ol>
-			<hr>
-			<ol>
-				<a href="http://www.icfj.org/" target="_blank">
-				<img src="images/icons/ICFJ.png"></a>
-			</ol>
-			<hr>
-			<ol>
-				<a href="http://wbi.worldbank.org/wbi/" target="_blank">
-				<img src="images/icons/WBI.png"></a>
-			</ol>
-		  </ul>
-		</div>
-	</div>
+
+			<p>La aplicación consta de cuatro visualizaciones: <a href="#" ng-click="setView('Treemap')" prevent-click>Treemap</a>, <a href="#" ng-click="setView('Map')" prevent-click>Mapa</a>, <a href="#" ng-click="setView('Charts')" prevent-click>Gráficos</a> y <a href="#" ng-click="setView('Table')" prevent-click>Tabla</a>.</p>
+			
+			<p><a href="#" ng-click="setView('Treemap')" prevent-click><img src="images/icons/treemap.png" height="40" align="left" style="padding:5px; margin:0px"></a>El <a href="#" ng-click="setView('Treemap')" prevent-click>Treemap</a> muestra datos organizados jerárquicamente utilizando rectángulos anidados, que representan distintos niveles de agregación de los datos con tamaños proporcionales a los montos que contienen. Haciendo click en los rectángulos se modifican los filtros de listas desplegables a la derecha. Estos filtros controlan la selección de datos que muestran el mapa, los gráficos y la tabla.</p>
+			
+			<p><a href="#" ng-click="setView('Map')" prevent-click><img src="images/icons/map.png" height="40" align="left" style="padding:5px; margin:0px"></a>El <a href="#" ng-click="setView('Map')" prevent-click>Mapa</a> muestra las ubicaciones geográficas de los aportantes de la selección que controlan los filtros. A medida que se incrementa la altura, los globos de colores que representan los aportantes individuales se agrupan y fusionan con un tamaño en función de la sumatoria de sus aportes. Los colores de los globos indican agrupamientos o espacios políticos de nivel nacional, sobre la base de un análisis de las <a href="http://elecciones.andytow.com" target="_blank">últimas elecciones</a>.</p>
+			
+			<p><a href="#" ng-click="setView('Charts')" prevent-click><img src="images/icons/charts.png" height="40" align="left" style="padding:5px; margin:0px"></a>Los <a href="#" ng-click="setView('Charts')" prevent-click>Gráficos</a> representan las cantidades de aportantes y sumatoria de aportes en pesos por sexo, grupos de edad y por agrupación política de la selección definida por los filtros.</p>
+			
+			<p><a href="#" ng-click="setView('Table')" prevent-click><img src="images/icons/table.png" height="40" align="left" style="padding:5px; margin:0px"></a>La <a href="#" ng-click="setView('Table')" prevent-click>Tabla</a> muestra la sumatoria de aportes de los aportantes para cada ciclo o año electoral, elección, distrito y agrupación. Haciendo click en los años, elecciones, distritos y agrupaciones se modifican los correspondientes filtros de listas desplegables a la derecha. Al hacer click en el nombre del aportante se accede a una ficha individual.</p>
+			
+			<p>La ficha individual del aportante muestra sexo, edad aproximada, distrito, boletas electorales de las agrupaciones, aportes, inscripciones fiscales y si registra designaciones, contratos, cargos de autoridad partidaria y mandatos legislativos. Haciendo click en los íconos correspondientes se accede a sitios externos con información detallada sobre estos atributos.</p>
+
+			<h4>Demo de la app, reportaje a los programadores y especialistas</h4>
+			
+			<iframe width="427" height="255" src="//www.youtube.com/embed/ocZiEOZFnh0" frameborder="0" allowfullscreen align="center"></iframe>
