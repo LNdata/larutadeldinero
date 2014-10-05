@@ -1,9 +1,37 @@
 	<h3>Preguntas frecuentes</h3>
-	
+
+<ul class="nav nav-tabs" role="tablist">
+	<li class="active"><a href="#aplicacion" data-toggle="tab" class="tab-btn">Aplicación</a></li>
+	<li><a href="#elecciones" data-toggle="tab" class="tab-btn">Elecciones y partidos</a></li>
+</ul>
+<div class="tab-content">
+	<div class="aplicacion tab-pane active" id="aplicacion">
 	<h4>¿Qué información contiene este sitio?</h4>
 	
-	<p>Esta plataforma brinda información acerca de los aportes provenientes de personas físicas o jurídicas de carácter privado para las últimas cuatro campañas electorales nacionales, a saber, para las elecciones de Presidente y Vicepresidente de 2007 y 2011 y para las elecciones de miembros del Congreso nacional de 2007, 2009, 2011 y 2013.</p>
-	
+	<p>Esta plataforma brinda información acerca de los aportes provenientes de personas físicas o jurídicas de carácter privado para las últimas cuatro campañas electorales nacionales, a saber, para las elecciones de Presidente y Vicepresidente de 2007 y 2011 y para las elecciones de miembros del Congreso nacional de 2007, 2009, 2011 y 2013.</p>	
+
+	<h4>¿Incluyen estos datos el financiamiento corriente de los partidos
+políticos?</h4>
+
+	<p>No. Esta base de datos solo incluye información relativa al financiamiento de
+las campañas electorales. Los informes correspondientes a los gastos corrientes
+pueden obtenerse en el sitio de la <a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a>.</p>
+
+	<h4>¿De donde se obtuvieron los datos de aportes privados?</h4>
+
+	<p>La <a target="_blank" href="http://www.infoleg.gob.ar/infolegInternet/anexos/120000-124999/124231/texact.htm"> Ley de Financiamiento de los Partidos Políticos</a> dispone que noventa días después de finalizada la elección, el presidente y tesorero del partido y los responsables económico-financiero y político de la campaña deberán presentar, en forma conjunta, ante la justicia federal con competencia electoral del distrito correspondiente, un informe final detallado de los aportes públicos y privados recibidos, con indicación de origen y monto, así como de los gastos incurridos con motivo de la campaña electoral. Las agrupaciones políticas elaboran dichos informes en base un software
+especialmente desarrollado por la	<a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a>, de manera de garantizar la consistencia de los datos obtenidos. Una vez presentados a la Justicia Electoral, la <a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a> publica dichos informes en la web. Para más detalles, consultar la sección <a href="#" ng-click="setView('Datos')" prevent-click>Datos y fuentes</a>.</p>
+
+	<h4>¿De donde se obtuvieron los datos de aportantes individuales?</h4>
+
+	<p>A partir de los datos de aportantes en los informes de financiamiento de campaña se consultaron bases	de acceso público para agregar sexo, edad, domicilios georreferenciados, inscripción fiscal en la Administración Federal de Ingresos Públicos, designaciones publicadas en el Boletín Oficial a julio, candidaturas nacionales en el respectivo año electoral, cargos de autoridad partidaria, contratos en la Administración Pública Nacional y mandatos en el Congreso de la Nación. Para más detalles sobre las fuentes y la metodología, consultar la sección <a href="#" ng-click="setView('Datos')" prevent-click>Datos y fuentes</a>.</p>
+
+	<h4>¿Como puedo saber si la información provista es fiel a la original?</h4>
+
+	<p>La información contenida en este sitio fue obtenida a partir de documentos oficiales y bases de datos de acceso público, pero no constituye información oficial. Hacemos todos los esfuerzos posibles y razonables por mantener la información fiel a la original.En ocasiones puede haber errores o modificaciones involuntarias durante el proceso de obtención y procesamiento de los datos. Por ello, recomendamos en todos los casos remitirse a las fuentes originales para corroborarlos.</p>	
+	</div>
+
+	<div class="elecciones tab-pane" id="elecciones">
 	<h4>¿Cómo se organizan las elecciones y los partidos políticos en Argentina?</h4>
 	
 	<p> Argentina es un país federal en el que cada distrito (provincias y la Ciudad de Buenos Aires) goza de autonomía para darse sus propias instituciones políticas, incluido la forma y el financiamiento de sus elecciones locales. Los partidos políticos tienen sede en cada distrito (provincias y la Ciudad de Buenos Aires) y pueden conformar partidos nacionales si tienen presencia en al menos cinco distritos. Para las elecciones del Congreso nacional, los partidos, solos o en alianza con otros partidos, forman agrupaciones políticas y presentan candidatos en cada distrito. Las elecciones de Presidente y Vice se realizan por distrito único y solamente los partidos nacionales pueden presentar candidatos.</p>
@@ -29,28 +57,8 @@
 
 	<p>Hasta 2009, las agrupaciones políticas estaban autorizadas a recibir aportes de cualquier persona física (cualquier ciudadano) o persona jurídica (empresas, Organizaciones No Gubernamentales, etc.). A partir de las <a target="_blank" href="http://infoleg.mecon.gov.ar/infolegInternet/anexos/160000-164999/161453/texact.htm">reformas introducidas ese año</a>, las agrupaciones políticas solo pueden recibir contribuciones y donaciones de personas físicas, quedando prohibida toda donación o contribución a una agrupación política por personas jurídicas.</p>
 
-	<h4>¿Incluyen estos datos el financiamiento corriente de los partidos
-políticos?</h4>
-
-	<p>No. Esta base de datos solo incluye información relativa al financiamiento de
-las campañas electorales. Los informes correspondientes a los gastos corrientes
-pueden obtenerse en el sitio de la <a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a>.</p>
-
-	<h4>¿De donde se obtuvieron los datos de aportes privados?</h4>
-
-	<p>La <a target="_blank" href="http://www.infoleg.gob.ar/infolegInternet/anexos/120000-124999/124231/texact.htm"> Ley de Financiamiento de los Partidos Políticos</a> dispone que noventa días después de finalizada la elección, el presidente y tesorero del partido y los responsables económico-financiero y político de la campaña deberán presentar, en forma conjunta, ante la justicia federal con competencia electoral del distrito correspondiente, un informe final detallado de los aportes públicos y privados recibidos, con indicación de origen y monto, así como de los gastos incurridos con motivo de la campaña electoral. Las agrupaciones políticas elaboran dichos informes en base un software
-especialmente desarrollado por la	<a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a>, de manera de garantizar la consistencia de los datos obtenidos. Una vez presentados a la Justicia Electoral, la <a href="http://www.electoral.gov.ar">Cámara Nacional Electoral</a> publica dichos informes en la web. Para más detalles, consultar la sección <a ng-href="#/data">Datos y fuentes</a>.</p>
-
-	<h4>¿De donde se obtuvieron los datos de aportantes individuales?</h4>
-
-	<p>A partir de los datos de aportantes en los informes de financiamiento de campaña se consultaron bases	de acceso público para agregar sexo, edad, domicilios georreferenciados, inscripción fiscal en la Administración Federal de Ingresos Públicos, designaciones publicadas en el Boletín Oficial a julio, candidaturas nacionales en el respectivo año electoral, cargos de autoridad partidaria, contratos en la Administración Pública Nacional y mandatos en el Congreso de la Nación. Para más detalles sobre las fuentes y la metodología, consultar la sección <a ng-href="#/data">Datos y fuentes</a>.</p>
-
-	<h4>¿Como puedo saber si la información provista es fiel a la original?</h4>
-
-	<p>La información contenida en este sitio fue obtenida a partir de documentos oficiales y bases de datos de acceso público, pero no constituye información oficial. Hacemos todos los esfuerzos posibles y razonables por mantener la información fiel a la original.
-En ocasiones puede haber errores o modificaciones involuntarias durante el proceso de obtención y procesamiento de los datos. Por ello, recomendamos en todos los casos remitirse a las fuentes originales para corroborarlos.</p>
-
 	<h4>¿Qué importancia tiene conocer cómo se financian las campañas políticas?</h4>
 	
 	<p>Para que los ciudadanos podamos conocer las propuestas electorales los partidos necesitan invertir recursos en sus campañas políticas.  Estos recursos tienen una gran influencia en la capacidad que el partido tenga para atraer votos, pero a su vez, pueden condicionar a los candidatos y partidos una vez que asuman sus cargos. Conocer quién financia las campañas y de donde proviene ese dinero nos permite conocer mejor las motivaciones de los candidatos y pensar las posibles consecuencias que esto pueda tener en sus planes de gobierno. Además, es importante saber si estas campañas se están financiando de modo legal, o están utilizando fuentes ilegales para promocionar sus plataformas electorales.</p>
-
+	</div>
+</div>	
