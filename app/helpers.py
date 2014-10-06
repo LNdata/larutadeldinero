@@ -6,6 +6,23 @@ from app.models import Aporte, Aportante, Agrupacion
 from sqlalchemy import func
 
 from flask import json
+import ast
+
+def get_where_clause(filters):
+  # generate where clause with the filters
+  filters_list = []
+  for filter in filters:
+    vals = filter["val"]#ast.literal_eval(filter["val"])
+    if type(vals) is list:
+      name = filter["name"]
+      for val in vals:
+        filters_list.append("%s = '%s'" % (name, val))
+    else:
+      filters_list.append("%s = '%s'" % (filter["name"], vals))
+
+  where_clause = " and ". join(filters_list)
+
+  return where_clause
 
 # it returns the amount of donors per sex filtered by filters
 def donors_per_sex(filters):
@@ -44,7 +61,9 @@ def donors_per_age(filters):
   # filters [{u'name': u'ciclo', u'val': 2009, u'op': u'eq'}, ... ]
 
   if filters:
-    where_clause = " and ". join([ "%s = '%s'" % (filter["name"], filter["val"]) for filter in filters])
+    #where_clause = " and ". join([ "%s = '%s'" % (filter["name"], filter["val"]) for filter in filters])
+    where_clause = get_where_clause(filters)
+
     query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
                FROM ( \
                       SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
@@ -80,7 +99,8 @@ def donors_per_party(filters):
   # filters [{u'name': u'ciclo', u'val': 2009, u'op': u'eq'}, ... ]
 
   if filters:
-    where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
+    #where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
+    where_clause = get_where_clause(filters)
     query = "select count(aportante_id) as cantidad_aportantes, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
@@ -149,7 +169,9 @@ def amount_per_age(filters):
   #  filters['agrupacion_id'] = filters.pop('agrupacion')
 
   if filters:
-    where_clause = " and ". join([ "%s = '%s'" % (filter["name"], filter["val"]) for filter in filters])
+
+    where_clause = where_clause = get_where_clause(filters)
+
     query = """SELECT grupo_edad, SUM(importe) AS CuentaDeGrupoEdad \
                FROM ( \
                       SELECT aportes.grupo_edad as grupo_edad, aportes.importe as importe, aportantes.documento \
