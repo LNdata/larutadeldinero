@@ -170,7 +170,7 @@ def amount_per_age(filters):
 
   if filters:
 
-    where_clause = where_clause = get_where_clause(filters)
+    where_clause = get_where_clause(filters)
 
     query = """SELECT grupo_edad, SUM(importe) AS CuentaDeGrupoEdad \
                FROM ( \
@@ -209,7 +209,9 @@ def amount_per_party(filters):
   # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
 
   if filters:
-    where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
+    #where_clause = " and ". join( [ "%s = '%s'" % (filter["name"],filter["val"]) for filter in filters])
+    where_clause = get_where_clause(filters)
+
     query = "select sum(importe) as monto, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
