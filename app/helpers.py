@@ -129,22 +129,22 @@ def amount_per_sex(filters):
   # ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
   # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
 
-  query_join = db.session.query(Aporte,func.sum(Aporte.importe))
+  query_join = db.session.query(func.sum(Aporte.importe))
 
   for filter in filters:
     field = "Aporte.%s" % filter["name"]
     op = filter["op"]
     val = filter["val"]
     if op == "eq":
-      query_join = query_join.filter(field == val)
+      query_join = query_join.filter(eval(field) == val)
     elif op == "in":
       for v in val:
-        query_join = query_join.filter(field == v)
+        query_join = query_join.filter(eval(field) == v)
     #elif op == "has":
     #  query_join = query_join.filter(Aporte.agrupacion.has(id = filters[key]))
 
-  import_by_sex_f = query_join.filter(Aporte.aportante.has(Aportante.sexo=='F')).distinct().all()[0][1]
-  import_by_sex_m = query_join.filter(Aporte.aportante.has(Aportante.sexo=='M')).distinct().all()[0][1]
+  import_by_sex_f = query_join.filter(Aporte.aportante.has(Aportante.sexo=='F')).distinct().all()[0]
+  import_by_sex_m = query_join.filter(Aporte.aportante.has(Aportante.sexo=='M')).distinct().all()[0]
 
   return [ {
   'key'    : 'Sexo',
