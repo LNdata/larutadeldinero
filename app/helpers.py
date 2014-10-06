@@ -144,7 +144,13 @@ def amount_per_sex(filters):
     #  query_join = query_join.filter(Aporte.agrupacion.has(id = filters[key]))
 
   import_by_sex_f = query_join.filter(Aporte.aportante.has(Aportante.sexo=='F')).distinct().all()[0][0]
+  if not import_by_sex_f is None:
+    import_by_sex_f = int(import_by_sex_f)
+
   import_by_sex_m = query_join.filter(Aporte.aportante.has(Aportante.sexo=='M')).distinct().all()[0][0]
+  if not import_by_sex_m is None:
+    import_by_sex_m = int(import_by_sex_m)
+
 
   return [ {
   'key'    : 'Sexo',
@@ -152,11 +158,11 @@ def amount_per_sex(filters):
     [
     {
         "label": "Femenino",
-        "value" : int(import_by_sex_f)
+        "value" : import_by_sex_f
       } ,
       {
         "label": "Masculino",
-        "value" : int(import_by_sex_m)
+        "value" : import_by_sex_m
       }
     ]}
   ]
