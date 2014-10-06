@@ -159,7 +159,7 @@ def amount_per_age(filters):
                      HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
                      ) AS T \
                GROUP BY grupo_edad \
-               ORDER BY group_edad"""  % where_clause
+               ORDER BY grupo_edad"""  % where_clause
   else:
     query = """SELECT grupo_edad, SUM(importe) AS importe \
                FROM ( \
