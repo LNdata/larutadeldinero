@@ -122,9 +122,9 @@ angular.module('larutadeldinero')
                             aportante.aportes.forEach(function(a){
                                 sum+=parseInt(a.importe);
                             })
-                            var link = ""
-                            popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
-                            $scope.map.openPopup(popUp);
+//                            var link = ""
+//                            popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
+//                            $scope.map.openPopup(popUp);
                         });
 
                     });
