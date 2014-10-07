@@ -53,8 +53,8 @@ angular
 					},
 					'Tutorial': {
                         templateUrl: 'views/tutorial.html'
-					}					
-							
+					}
+
                 }
             })
             .state('aportante', {
@@ -83,6 +83,10 @@ angular
         $scope.setView = function(view) {
             $rootScope.location.path('/');
             $rootScope.view = view;
+        };
+
+        $scope.reloadPage = function(){
+          window.location.reload();
         };
 
         $scope.advancedFilterCollapsed = false;

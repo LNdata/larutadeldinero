@@ -14,14 +14,14 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-	<link rel="stylesheet" href="bower_components/leaflet.fullscreen/Control.FullScreen.css" />	
+	<link rel="stylesheet" href="bower_components/leaflet.fullscreen/Control.FullScreen.css" />
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
 	<link rel="stylesheet" href="bower_components/leaflet.fullscreen/Control.FullScreen.css" />
     <!-- endbuild -->
 	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>	
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body ng-app="larutadeldinero" ng-controller="AppCtrl">
 <!--[if lt IE 7]>
@@ -41,10 +41,10 @@
 			<li ng-class="{ active: view == 'Sitio' && location.path() == '/' }"><a href="#" ng-click="setView('Sitio')" prevent-click><small>Acerca de</small></a></li>
 			<li ng-class="{ active: view == 'Faq' && location.path() == '/' }"><a href="#" ng-click="setView('Faq')" prevent-click><small>Preguntas frecuentes</small></a></li>
 			<li ng-class="{ active: view == 'Tutorial' && location.path() == '/' }"><a href="#" ng-click="setView('Tutorial')" prevent-click><small>Tutorial</small></a></li>
-			<li ng-class="{ active: view == 'Team' && location.path() == '/' }"><a href="#" ng-click="setView('Team')" prevent-click><small>Equipo</small></a></li>			
-		</ul>		
-        <h2 class="text-muted">La Ruta Electoral</h2>
-		Financiamiento de campañas electorales en la Argentina	
+			<li ng-class="{ active: view == 'Team' && location.path() == '/' }"><a href="#" ng-click="setView('Team')" prevent-click><small>Equipo</small></a></li>
+		</ul>
+        <h2 class="text-muted"><a ng-click="reloadPage()">La Ruta Electoral</a></h2>
+		Financiamiento de campañas electorales en la Argentina
     </div>
 
     <div class="row">
@@ -57,7 +57,7 @@
 			<div data-ui-view="Sitio" ng-show="view == 'Sitio'"></div>
 			<div data-ui-view="Faq" ng-show="view == 'Faq'"></div>
 			<div data-ui-view="Tutorial" ng-show="view == 'Tutorial'"></div>
-			<div data-ui-view="Team" ng-show="view == 'Team'"></div>			
+			<div data-ui-view="Team" ng-show="view == 'Team'"></div>
 			<div data-ui-view="Aportante" ng-show="view == 'Aportante'"></div>
         </div>
         <div class="col-lg-2">
