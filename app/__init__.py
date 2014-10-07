@@ -11,7 +11,6 @@ db = SQLAlchemy(app)
 
 from app.models import *
 from app.views import *
-from app.helpers import pre_get_many_aportantes_mapa
 
 db.create_all()
 
@@ -21,14 +20,6 @@ manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
 # Create API endpoints, which will be available at /api/<tablename> by
 # default. Allowed HTTP methods can be specified as well.
 manager.create_api(Aportante, methods=['GET', 'POST'], allow_functions=True)
-
-# # Para el mapa necesitamos sólo algunos datos
-# manager.create_api(Aportante, collection_name='mapa',
-#                               methods=['GET'],
-#                               include_columns=['documento','lat','lon', 'aportes', 'aportes.color', 'aportes.importe'],
-#                               allow_functions=True,
-#                               postprocessors = {'GET_MANY': [pre_get_many_aportantes_mapa]}
-#                   )
 
 manager.create_api(Aporte, methods=['GET'], allow_functions=True)
 manager.create_api(Agrupacion, methods=['GET'], include_columns=['id', 'nombre'], max_results_per_page=-1)
