@@ -18,8 +18,9 @@
     "angular-filter": "~0.4.6",
     "colorbrewer2": "*",
     "leaflet": "~0.7.3",
-	"leaflet.fullscreen": "~1.1.2",	
-    "leaflet.markercluster": "~0.4.0"
+	"leaflet.fullscreen": "*",	
+    "leaflet.markercluster": "~0.4.0",
+	"fancybox": "~2.1.5"
   },
   "overrides": {
     "leaflet.markercluster": {
