@@ -11,14 +11,35 @@ import ast
 def get_where_clause(filters):
   # generate where clause with the filters
   filters_list = []
+
   for filter in filters:
-    vals = filter["val"]#ast.literal_eval(filter["val"])
-    if type(vals) is list:
-      name = filter["name"]
-      for val in vals:
-        filters_list.append("%s = '%s'" % (name, val))
-    else:
-      filters_list.append("%s = '%s'" % (filter["name"], vals))
+    name = filter['name']
+    val = filter['val'] #ast.literal_eval(filter["val"])
+    op = filter['op']
+
+    if op == 'in' or type(val) is list:
+
+      for v in val:
+        if type(v) is str:
+          filters_list.append("%s = '%s'" % (name.encode('UTF-8'), v.encode('UTF-8')))
+        else:
+          filters_list.append("%s = '%s'" % (name.encode('UTF-8'), v))
+
+    elif op == 'eq':
+
+      if type(val) is str:
+        filters_list.append("%s = '%s'" % (filter['name'].encode('UTF-8'), val.encode('UTF-8')))
+      else:
+        filters_list.append("%s = '%s'" % (filter['name'].encode('UTF-8'), val))
+
+    elif op == 'has':
+      # {u'name': u'aportante', u'val': {u'name': u'sexo', u'val': [u'F'], u'op': u'in'}, u'op': u'has'}
+      name = "%s.%s" % (filter['name'] , filter['val']['name'])
+      if filter['val']['op'] == 'in':
+        for value in filter['val']['val']:
+          filters_list.append("%s = '%s'" % (name, value))
+      elif filter['val']['op'] == 'eq':
+        filters_list.append("%s = '%s'" % (name, filter['val']['val']))
 
   where_clause = " and ". join(filters_list)
 
@@ -104,6 +125,7 @@ def donors_per_party(filters):
     query = "select count(aportante_id) as cantidad_aportantes, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
+             join aportantes on aportantes.id = aportante_id \
              where %s \
              group by agrupaciones.nombre \
              order by cantidad_aportantes DESC \
@@ -272,8 +294,6 @@ def parse_filters(query):
   if query:
     query = json.loads(query)
     filters = query["filters"]
-    #for filter in query["filters"]:
-    #   filters[filter["name"]]  = filter["val"]
 
   return filters
 
