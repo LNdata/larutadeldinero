@@ -105,12 +105,12 @@ angular
             { name: 'F', val: 'F' }
         ];
         $scope.ages = [
-            { name: '< 30', val: 'menos de 30' },
+            { name: '< 30', val: '30-' },
             { name: '30-39', val: '30-39' },
             { name: '40-49', val: '40-49' },
             { name: '50-59', val: '50-59' },
             { name: '60-69', val: '60-69' },
-            { name: '>= 70', val: '70 y más' }
+            { name: '>= 70', val: '70+' }
         ];
         $scope.amounts = [
             { name: '  < $500', val: '1 - $499' },
