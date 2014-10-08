@@ -243,6 +243,7 @@ def amount_per_party(filters):
     query = "select sum(importe) as monto, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
+             join aportantes on aportes.aportante_id = aportantes.id\
              where %s \
              group by agrupaciones.nombre \
              order by monto DESC \
