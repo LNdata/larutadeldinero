@@ -1,47 +1,15 @@
 <div id="map"></div>
-<br>
-<div align="center">
-	<table>
-		<tr>
-			<td>< $5.000</td>
-			<td><div id="scale"></div></td>
-			<td>>= $500.000</td>
-		</tr>
-	</table>
-</div>
+<p align="center">Los colores indican agrupamientos de nivel nacional</p>
+<svg width="960" height="120">
+<circle cx="25" cy="60" r="2.5" fill="grey" title="<$5.000" />
+<circle cx="35" cy="60" r="5" fill="grey" title="<$10.000" />
+<circle cx="53" cy="60" r="10" fill="grey" title="<$20.000" />
+<circle cx="80" cy="60" r="12.5" fill="grey" title="<$50.000" />
+<circle cx="125" cy="60" r="25" fill="grey" title="<$100.000" />
+<circle cx="205" cy="60" r="40" fill="grey" title="<$500.000" />
+<circle cx="325" cy="60" r="60" fill="grey" title=">=$500.000" title=">=$500.000" />
+</svg>
 
-<script>
-var jsonCircles = 
-  [
-	{ "x_axis": 25, "y_axis": 60, "radius": 2.5, "name" : "< $5.000" },
-    { "x_axis": 35, "y_axis": 60, "radius": 5, "name" : "$5.000 - $9.999"},
-    { "x_axis": 53, "y_axis": 60, "radius": 10, "name" : "$10.000 - $19.999"},
-	{ "x_axis": 80, "y_axis": 60, "radius": 15, "name" : "$20.000 - $49.999"},
-	{ "x_axis": 125, "y_axis": 60, "radius": 25, "name" : "$50.000 - $99.999"},
-	{ "x_axis": 205, "y_axis": 60, "radius": 40, "name" : "$100.000 - $499.999"},	
-	{ "x_axis": 325, "y_axis": 60, "radius": 60, "name" : ">= $500.000"}	
-  ];
- 
- var svg = d3.select("#scale")
-				.append("svg")
-                .attr("width", 400)
-                .attr("height", 120);
 
- var circles = svg.selectAll("circle")
-                .data(jsonCircles)
-                .enter()
-                .append("circle");
 
- var scale = circles
-				.attr("cx", function (d) { return d.x_axis; })
-				.attr("cy", function (d) { return d.y_axis; })
-				.attr("r", function (d) { return d.radius; })
-				.style("fill", "grey")
-				.attr("title", function (d) { return d.name; })
-				.on("mouseover", function()
-					{d3.select(this)
-					.style("fill", "black");})
-				.on("mouseout", function()
-					{d3.select(this)
-					.style("fill", "grey");});
-</script>
+    
