@@ -184,11 +184,17 @@ rect.parent,
 }
 
 .circle6{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
 }
 
+
+.circle7{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
 
 .cluster {
     padding: 5px 10px;
