@@ -20,11 +20,11 @@ class GenerateJson(Command):
       ]
 
   def generate_map_json(self):
-    aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
+    aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color, Aporte.codlista ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "").group_by(Aportante.documento).distinct().all()
 
     results = {
           "key": "Aportes",
-          "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4]} for aporte in aportes]
+          "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4], "codlista": aporte[5]} for aporte in aportes]
           }
 
     with open('data/map.json','w') as outfile:
@@ -126,7 +126,7 @@ class ImportData(Command):
 
           impuesto_ganancias = data[13] if data[13] else 'NC'
           impuesto_iva = data[14] if data[14] else 'NC'
-          if data[15] in ['NI', 'N', 'AC', 'S', 'EX', 'NA', 'XN', 'AN', 'NC']:
+          if data[15] in ['61','B','BC','BL','BP','BT','BV','C','D','E','F','G','G2','H','I','J','K','NI']:
             monotributo = data[15]
           else:
             monotributo = 'NC'

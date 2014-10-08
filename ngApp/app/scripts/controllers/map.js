@@ -69,7 +69,7 @@ angular.module('larutadeldinero')
                         {
                             dni: item['documento'],
                             monto: monto,
-                            radius: Math.log(monto),
+                            radius: (Math.sqrt(monto))/15,
                             fillOpacity: 0.8,
                             color: "#"+color
                         }
@@ -89,17 +89,19 @@ angular.module('larutadeldinero')
                             var montoClass="1";
                             if(sum<5000){
                                 montoClass=1;
-                            }else if( sum<20000){
+                            }else if( sum<10000){
                                 montoClass=2;
-                            }else if( sum<50000){
+                            }else if( sum<20000){
                                 montoClass=3;
-                            }else if( sum<100000){
+                            }else if( sum<50000){
                                 montoClass=4;
-                            }else if( sum< 500000){
+                            }else if( sum<100000){
                                 montoClass=5;
-                            }else{
+                            }else if( sum<500000) {
                                 montoClass=6;
-                            }
+                            }else {
+								montoClass=7;
+							}
 
                             var layer = cl.getAllChildMarkers()[0].l;
 
@@ -111,7 +113,7 @@ angular.module('larutadeldinero')
                         maxClusterRadius:80
                     });
 
-                    cluster.on('click',function(marker){
+                    cluster.on('mouseover',function(marker){
 
                         var dni = marker.layer.options.dni;
                         Aportantes.findById(dni).then(function(response){
@@ -122,9 +124,9 @@ angular.module('larutadeldinero')
                             aportante.aportes.forEach(function(a){
                                 sum+=parseInt(a.importe);
                             })
-//                            var link = ""
-//                            popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
-//                            $scope.map.openPopup(popUp);
+                            var link = ""
+                            popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
+                            $scope.map.openPopup(popUp);
                         });
 
                     });
