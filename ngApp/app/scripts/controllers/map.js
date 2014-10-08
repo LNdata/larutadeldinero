@@ -69,7 +69,7 @@ angular.module('larutadeldinero')
                         {
                             dni: item['documento'],
                             monto: monto,
-                            radius: (Math.sqrt(monto))/15,
+                            radius: (Math.round(Math.sqrt(monto))/13),
                             fillOpacity: 0.8,
                             color: "#"+color
                         }
