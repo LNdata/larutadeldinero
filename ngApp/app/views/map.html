@@ -1,16 +1,42 @@
 <div id="map"></div>
 <br>
-<div align="center">
+<div align="center" id="legend">
 	<table>
 		<tr>
-			<td>< $5.000</td>
 			<td><div id="scale"></div></td>
-			<td>>= $500.000</td>
 		</tr>
 	</table>
 </div>
 
 <script>
+					
+var jsonCirclesTrans = 
+  [
+	{ "x_axis": 30, "y_axis": 60, "radius": 3.5},
+    { "x_axis": 42, "y_axis": 60, "radius": 7.5},
+    { "x_axis": 65, "y_axis": 60, "radius": 12.5},
+	{ "x_axis": 100, "y_axis": 60, "radius": 20},
+	{ "x_axis": 160, "y_axis": 60, "radius": 32.5},
+	{ "x_axis": 260, "y_axis": 60, "radius": 50}
+  ];
+
+ var svgTrans = d3.select("#scale")
+					.append("svg")
+					.attr("width", 400)
+					.attr("height", 120);
+
+ var circlesTrans = svgTrans.selectAll("circleTrans")
+					.data(jsonCirclesTrans)
+					.enter()
+					.append("circle");
+
+ var scaleTrans = circlesTrans
+				.attr("cx", function (d) { return d.x_axis; })
+				.attr("cy", function (d) { return d.y_axis; })
+				.attr("r", function (d) { return d.radius; })
+				.style("fill", "grey")
+				.style("opacity", 0.3);
+
 var jsonCircles = 
   [
 	{ "x_axis": 25, "y_axis": 60, "radius": 2.5, "name" : "< $5.000" },
@@ -22,12 +48,7 @@ var jsonCircles =
 	{ "x_axis": 325, "y_axis": 60, "radius": 60, "name" : ">= $500.000"}	
   ];
  
- var svg = d3.select("#scale")
-				.append("svg")
-                .attr("width", 400)
-                .attr("height", 120);
-
- var circles = svg.selectAll("circle")
+ var circles = svgTrans.selectAll("circleTrans")
                 .data(jsonCircles)
                 .enter()
                 .append("circle");
@@ -38,10 +59,15 @@ var jsonCircles =
 				.attr("r", function (d) { return d.radius; })
 				.style("fill", "grey")
 				.attr("title", function (d) { return d.name; })
+				.attr("alt", function (d) { return d.name; })
 				.on("mouseover", function()
 					{d3.select(this)
-					.style("fill", "black");})
+					.style("fill", "black")
+					.style("opacity", 0.7)})
 				.on("mouseout", function()
 					{d3.select(this)
-					.style("fill", "grey");});
+					.style("fill", "grey")
+					.style("opacity", 1);})
+				.call(d3.helper.tooltip_scale(function(d) { return (d.name);}));
+				
 </script>
