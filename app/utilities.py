@@ -161,7 +161,7 @@ class ImportData(Command):
             lista = data[6]
             documento = data[7].split('.')[0]
             cuit = data[8]
-            fecha = strftime(data[9], gmtime()) #datetime.datetime.strftime(data[10], gmtime()).date() #'6/8/2013 00:00:00'
+            path = data[9]
             importe = float(data[10])
             codlista = data[11]
             color = data[12]
