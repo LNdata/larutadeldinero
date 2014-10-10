@@ -12,12 +12,12 @@
 					
 var jsonCirclesTrans = 
   [
-	{ "x_axis": 30, "y_axis": 60, "radius": 3.5},
-    { "x_axis": 42, "y_axis": 60, "radius": 7.5},
-    { "x_axis": 65, "y_axis": 60, "radius": 12.5},
-	{ "x_axis": 100, "y_axis": 60, "radius": 20},
-	{ "x_axis": 160, "y_axis": 60, "radius": 32.5},
-	{ "x_axis": 260, "y_axis": 60, "radius": 50}
+	{ "x_axis": 30, "y_axis": 60, "radius": 4},
+    { "x_axis": 42, "y_axis": 60, "radius": 7},
+    { "x_axis": 65, "y_axis": 60, "radius": 10},
+	{ "x_axis": 100, "y_axis": 60, "radius": 16},
+	{ "x_axis": 155, "y_axis": 60, "radius": 23},
+	{ "x_axis": 260, "y_axis": 60, "radius": 44}
   ];
 
  var svgTrans = d3.select("#scale")
@@ -39,13 +39,13 @@ var jsonCirclesTrans =
 
 var jsonCircles = 
   [
-	{ "x_axis": 25, "y_axis": 60, "radius": 2.5, "name" : "< $5.000" },
-    { "x_axis": 35, "y_axis": 60, "radius": 5, "name" : "$5.000 - $9.999"},
-    { "x_axis": 53, "y_axis": 60, "radius": 10, "name" : "$10.000 - $19.999"},
-	{ "x_axis": 80, "y_axis": 60, "radius": 15, "name" : "$20.000 - $49.999"},
-	{ "x_axis": 125, "y_axis": 60, "radius": 25, "name" : "$50.000 - $99.999"},
-	{ "x_axis": 205, "y_axis": 60, "radius": 40, "name" : "$100.000 - $499.999"},	
-	{ "x_axis": 325, "y_axis": 60, "radius": 60, "name" : ">= $500.000"}	
+	{ "x_axis": 25, "y_axis": 60, "radius": 3, "name" : "< $5.000" },
+    { "x_axis": 35, "y_axis": 60, "radius": 6, "name" : "$5.000"},
+    { "x_axis": 53, "y_axis": 60, "radius": 8, "name" : "$10.000"},
+	{ "x_axis": 80, "y_axis": 60, "radius": 12, "name" : "$20.000"},
+	{ "x_axis": 125, "y_axis": 60, "radius": 19, "name" : "$50.000"},
+	{ "x_axis": 205, "y_axis": 60, "radius": 40, "name" : "$100.000"},	
+	{ "x_axis": 325, "y_axis": 60, "radius": 60, "name" : "$500.000 +"}	
   ];
  
  var circles = svgTrans.selectAll("circleTrans")
