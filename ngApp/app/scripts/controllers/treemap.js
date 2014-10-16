@@ -219,7 +219,7 @@ angular.module('larutadeldinero')
                         .attr('width', function(d) { return x(d.x + d.dx) - x(d.x); })
                         .attr('height', function(d) { return y(d.y + d.dy) - y(d.y); })
                         .style("fill", function(d) {
-                            return color(d.value);
+                            return color(d.name);
                         });
                 }
 

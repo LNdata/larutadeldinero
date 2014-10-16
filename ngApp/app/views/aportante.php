@@ -12,9 +12,9 @@
 </head>
 <body>
 <?php
-    mysql_connect("host", "user", "password") or die("Error connecting to database: ".mysql_error());
+    mysql_connect("andytowcom.domaincommysql.com", "andy", "Mpjmpj11.") or die("Error connecting to database: ".mysql_error());
      
-    mysql_select_db("rutaelectoral") or die(mysql_error());
+    mysql_select_db("larutaelectoral") or die(mysql_error());
 
 	require('qs_functions.php');
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('TableCtrl', function ($scope, $rootScope, Aportes) {
+    .controller('TableCtrl', function ($scope, $rootScope, Aportes, Aportantes) {
         $scope.currentPage = 1;
         $scope.maxSize = 10;
 
@@ -18,6 +18,11 @@ angular.module('larutadeldinero')
                 $scope.average = response.data.avg__importe;
                 $scope.sum = response.data.sum__importe;
             })
+			var idNumber = $scope.aportes.documento[0];
+
+			Aportantes.findById(idNumber).then(function(response) {
+            $scope.aportante = response.data.objects[0];
+			})
         };
 
         $scope.filterByName = function() {
