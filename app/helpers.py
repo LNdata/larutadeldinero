@@ -357,3 +357,16 @@ def get_treemap():
     results["children"].append(nuevo_ciclo)
 
   return results
+
+def filter_aportes(aportes, filters):
+
+  for filter in filters:
+    if filter["op"] == "eq":
+      field = "Aporte.%s" % filter["name"]
+      aportes = aportes.filter(eval(field) == filter["val"])
+    elif filter["op"] == "in":
+      for val in filter["val"]:
+        field = "Aporte.%s" % filter["name"]
+        aportes = aportes.filter(eval(field) == val)
+
+  return aportes

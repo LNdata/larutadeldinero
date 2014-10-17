@@ -20,7 +20,6 @@ manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
 # Create API endpoints, which will be available at /api/<tablename> by
 # default. Allowed HTTP methods can be specified as well.
 manager.create_api(Aportante, methods=['GET', 'POST'], allow_functions=True)
-
 manager.create_api(Aporte, methods=['GET'], allow_functions=True)
 manager.create_api(Agrupacion, methods=['GET'], include_columns=['id', 'nombre'], max_results_per_page=-1)
 
@@ -36,6 +35,8 @@ app.add_url_rule('/api/aportantes/agrupacion', 'aportantes_por_agrupacion', apor
 app.add_url_rule('/api/aportes/sexo', 'aportes_por_sexo', aportes_por_sexo)
 app.add_url_rule('/api/aportes/edad', 'aportes_por_edad', aportes_por_edad)
 app.add_url_rule('/api/aportes/agrupacion', 'aportes_por_agrupacion', aportes_por_agrupacion)
+
+app.add_url_rule('/api/aportes/stats', 'aportes_stats', aportes_stats)
 
 # info sobre el api
 app.add_url_rule('/', 'index', index)
