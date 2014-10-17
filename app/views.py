@@ -129,16 +129,7 @@ def data_for_map():
   filters = parse_filters(request.args.get('q'))
 
   # eq e in sobre todos los campos del aportante
-  aportes = db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != "")
-
-  for filter in filters:
-    if filter["op"] == "eq":
-      field = "Aporte.%s" % filter["name"]
-      aportes = aportes.filter(field == filter["val"])
-    elif filter["op"] == "in":
-      for val in filter["val"]:
-        field = "Aporte.%s" % filter["name"]
-        aportes = aportes.filter(field == val)
+  aportes = filter_aportes(db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != ""), filters)
 
   aportes = aportes.group_by(Aportante.documento).distinct().all()
 

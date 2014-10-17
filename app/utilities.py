@@ -139,6 +139,7 @@ class ImportData(Command):
           lat = data[19]
           lon = data[20]
 
+
           aportante = Aportante(documento, cuit, nombre, apellido, persona, sexo, clase, lat, lon, designacion, contrato, autoridad, candidatura, mandato_diputado, mandato_senador, impuesto_ganancias, impuesto_iva, monotributo, integrante_sociedades, empleador, actividad_monotributo)
 
           db.session.add(aportante)
@@ -161,17 +162,18 @@ class ImportData(Command):
             lista = data[6]
             documento = data[7].split('.')[0]
             cuit = data[8]
-            path = data[9]
-            importe = float(data[10])
-            codlista = data[11]
-            color = data[12]
-            grupo_edad = data[13]
-            grupo_aporte = data[14]
+            fecha = data[9]
+            path = data[10]
+            importe = float(data[11])
+            codlista = data[12]
+            color = data[13]
+            grupo_edad = data[14]
+            grupo_aporte = data[15]
           except Exception as exception:
             print exception
             continue
 
-          aporte = Aporte(ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, documento, agrupacion_nombre, codlista, lista, color, grupo_edad, grupo_aporte)
+          aporte = Aporte(ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, path, documento, agrupacion_nombre, codlista, lista, color, grupo_edad, grupo_aporte)
 
           db.session.add(aporte)
 

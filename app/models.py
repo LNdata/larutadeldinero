@@ -30,7 +30,9 @@ class Aportante(db.Model):
 
   impuesto_ganancias = db.Column(tipo_inscripcion) # Tipo de inscripción en el Impuesto a las Ganancias
   impuesto_iva = db.Column(tipo_inscripcion) # Tipo de inscripción en el Impuesto al Valor Agregado
-  monotributo = db.Column(tipo_inscripcion)  # Tipo de inscripción en el Monotributo
+
+  tipo_inscripcion_monotributo = db.Enum('61','B','BC','BL','BP','BT','BV','C','D','E','F','G','G2','H','I','J','K','NI', 'NC')
+  monotributo = db.Column(tipo_inscripcion_monotributo)  # Tipo de inscripción en el Monotributo
 
   integrante_sociedades = db.Column(db.Boolean) # Es integrante de alguna sociedad?
   empleador = db.Column(db.Boolean) # Es empleador?
@@ -87,6 +89,7 @@ class Aporte(db.Model):
   codlista = db.Column(db.String(20))
   importe = db.Column(db.Float)
   fecha = db.Date()
+  resultado_eleccion =  db.Column(db.String(50)) # URL de los resultados de elección en el atlas electoral de Andy Tow , http://andytow.com/atlas/totalpais/{eleccion_resultado}
   color        = db.Column(db.String(50))
   grupo_edad   = db.Column(db.String(80))
   grupo_aporte = db.Column(db.String(80))
@@ -97,7 +100,7 @@ class Aporte(db.Model):
   aportante = db.relationship("Aportante", backref=backref('aportes', order_by=id))
   agrupacion = db.relationship("Agrupacion", backref=backref('aportes', order_by=id))
 
-  def __init__(self, ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, documento, agrupacion_name, codlista, lista, color, grupo_edad, grupo_aporte):
+  def __init__(self, ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, resultado_eleccion, documento, agrupacion_name, codlista, lista, color, grupo_edad, grupo_aporte):
     self.ciclo  = ciclo
     self.cargo   = cargo
     self.eleccion = eleccion
@@ -107,6 +110,7 @@ class Aporte(db.Model):
     self.codlista = codlista
     self.importe  = importe
     self.fecha    = fecha
+    self.resultado_eleccion = resultado_eleccion
     self.color        = color
     self.grupo_edad   = grupo_edad
     self.grupo_aporte = grupo_aporte # categoria de importe, calculado por andy tow
