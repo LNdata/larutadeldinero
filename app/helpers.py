@@ -32,6 +32,13 @@ def get_where_clause(filters):
       else:
         filters_list.append("%s = '%s'" % (filter['name'].encode('UTF-8'), val))
 
+    elif op == 'neq':
+
+      if type(val) is str:
+        filters_list.append("%s <> '%s'" % (filter['name'].encode('UTF-8'), val.encode('UTF-8')))
+      else:
+        filters_list.append("%s <> '%s'" % (filter['name'].encode('UTF-8'), val))
+
     elif op == 'has':
       # {u'name': u'aportante', u'val': {u'name': u'sexo', u'val': [u'F'], u'op': u'in'}, u'op': u'has'}
       name = "%s.%s" % (filter['name'] , filter['val']['name'])
@@ -40,6 +47,8 @@ def get_where_clause(filters):
           filters_list.append("%s = '%s'" % (name, value))
       elif filter['val']['op'] == 'eq':
         filters_list.append("%s = '%s'" % (name, filter['val']['val']))
+      elif filter['val']['op'] == 'neq':
+        filters_list.append("%s <> '%s'" % (name, filter['val']['val']))
 
   where_clause = " and ". join(filters_list)
 
@@ -49,15 +58,16 @@ def get_where_clause(filters):
 def donors_per_sex(filters):
   query_join = db.session.query(Aportante).join(Aporte)
 
-  for key in filters:
-    if key == 'agrupacion':
-      query_join = query_join.filter(Aporte.agrupacion.has(id = filters[key]))
-    elif key == 'ciclo':
-      query_join = query_join.filter_by(ciclo = filters[key])
-    elif key == 'eleccion':
-      query_join = query_join.filter_by(eleccion = filters[key])
-    elif key == 'distrito':
-      query_join = query_join.filter_by(distrito = filters[key])
+  for filter in filters:
+    # filter {u'name': u'ciclo', u'val': 2009, u'op': u'eq'}
+    if filter['name'] == 'agrupacion':
+      query_join = query_join.filter(Aporte.agrupacion.has(nombre = filters['val']))
+    elif filter['name'] == 'ciclo':
+      query_join = query_join.filter_by(ciclo = filter['val'])
+    elif filter['name'] == 'eleccion':
+      query_join = query_join.filter_by(eleccion = filter['val'])
+    elif filter['name'] == 'distrito':
+      query_join = query_join.filter_by(distrito = filter['val'])
 
   donors_by_sex_f = query_join.filter(Aportante.sexo=='F').distinct().count()
   donors_by_sex_m = query_join.filter(Aportante.sexo=='M').distinct().count()
