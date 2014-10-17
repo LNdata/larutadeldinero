@@ -97,6 +97,21 @@ def aportes_por_agrupacion():
 
   return jsonify( aportes )
 
+def aportes_stats():
+
+  filters = parse_filters(request.args.get('q'))
+
+  aportes =  filter_aportes(db.session.query(func.avg(Aporte.importe), func.sum(Aporte.importe)), filters)
+
+  aportes_stats = aportes.all()[0]
+
+  aportes = {
+    "avg_importe" : int(aportes_stats[0]),
+    "sum_importe" : int(aportes_stats[1])
+  }
+
+  return jsonify( aportes )
+
 # Visualizaciones ----------------------------------
 
 @app.route('/api/treemap')
