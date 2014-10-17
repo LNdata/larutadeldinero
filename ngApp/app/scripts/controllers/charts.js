@@ -139,7 +139,7 @@ angular.module('larutadeldinero')
                             .attr("y", height)
                             .attr("height", 0)
 							.style("fill", function(d) {
-                            return color(d.value);
+                            return color(d.label);
                         });
 						
 						bar.data(data)
