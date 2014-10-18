@@ -297,3 +297,37 @@ a:hover { cursor:pointer; }
       -moz-border-radius:10px;
       border-radius:10px;
         }		
+
+
+.thumbnails{
+position: relative;
+z-index: 0;
+}
+
+.thumbnails:hover{
+background-color: transparent;
+z-index: 50;
+}
+
+.thumbnails span{ /*CSS for enlarged image*/
+position: absolute;
+background-color: lightyellow;
+padding: 0px;
+left: -1000px;
+border: 0px dashed gray;
+visibility: hidden;
+text-decoration: none;
+}
+
+.thumbnails span img{ /*CSS for enlarged image*/
+border-width: 0;
+padding: 0px;
+}
+
+.thumbnails:hover span{ /*CSS for enlarged image on hover*/
+visibility: visible;
+top: 0;
+left: 0px; /*position where enlarged image should offset horizontally */
+
+}
+

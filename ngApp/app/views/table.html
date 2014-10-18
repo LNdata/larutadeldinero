@@ -1,3 +1,4 @@
+<div style="display: none; position: absolute; z-index: 110; left: 400; top: 100; width: 15; height: 15" id="preview_div"></div>
 <script>
 $(document).ready(function(){
     $("[data-toggle=tooltip]").tooltip({ placement: 'bottom'});
@@ -111,8 +112,8 @@ $(document).ready(function(){
 			<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador"></a>
 			</center>
 		</td>
-        <td width="32%"><a ng-click="setParty(aporte.agrupacion.id)">
-		<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="28" align="left">
+        <td width="32%"><a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
+		<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left"><span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span>
 		&nbsp;<small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
 		</a></td>
         <td align="right" width="10%">$ {{ aporte.importe | number:0 }}</td>
