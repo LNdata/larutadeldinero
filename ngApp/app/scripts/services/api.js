@@ -43,22 +43,8 @@ angular.module('larutadeldinero')
                 };
 
                 return $http.get(baseURL + '/aportantes?q=' + JSON.stringify(q));
-            },
-
-            forMap: function() {
-                var params = [],
-                    baseQuery = {
-                        filters: [
-                            {'name': 'lat', 'op': 'neq', 'val': ''},
-                            {'name': 'lon', 'op': 'neq', 'val': ''}
-                        ]
-                    },
-                    q = filterToQuery($rootScope.filter, baseQuery);
-
-                if (q) params.push('q=' + JSON.stringify(q));
-
-                return $http.get(baseURL + '/map' + '?' + params.join('&'));
             }
+
         }
     })
 
@@ -278,27 +264,11 @@ angular.module('larutadeldinero')
 
             stats: function() {
                 var params = [],
-                    q = filterToQuery($rootScope.filter),
-                    functions = [
-                        {
-                            'name': 'sum',
-                            'field': 'importe'
-                        },
-                        {
-                            'name': 'avg',
-                            'field': 'importe'
-                        }
-                    ];
-
-                if (!q) {
-                    q = { functions: functions }
-                } else {
-                    q.functions = functions;
-                }
+                    q = filterToQuery($rootScope.filter);
 
                 if (q) params.push('q=' + JSON.stringify(q));
 
-                return $http.get(baseURL + '/eval/aportes' + '?' + params.join('&'));
+                return $http.get(baseURL + '/aportes/stats' + '?' + params.join('&'));
             },
 
             bySex: function() {
@@ -353,7 +323,16 @@ angular.module('larutadeldinero')
                 if (q) params.push('q=' + JSON.stringify(q));
 
                 return $http.get(baseURL + '/aportantes/agrupacion' + '?' + params.join('&'));
-            }
+            },
+            forMap: function() {
+                var params = [],
+
+                    q = filterToQuery($rootScope.filter);
+
+                if (q) params.push('q=' + JSON.stringify(q));
+
+                return $http.get(baseURL + '/map' + '?' + params.join('&'));
+            }			
         }
     })
 

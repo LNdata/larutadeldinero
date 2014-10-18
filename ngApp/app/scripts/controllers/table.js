@@ -15,8 +15,8 @@ angular.module('larutadeldinero')
             });
 
             Aportes.stats().then(function(response) {
-                $scope.average = response.data.avg__importe;
-                $scope.sum = response.data.sum__importe;
+                $scope.average = response.data.avg_importe;
+                $scope.sum = response.data.sum_importe;
             })
 
         };

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('MapCtrl', function ($scope, $http, $rootScope, Aportantes) {
+    .controller('MapCtrl', function ($scope, $http, $rootScope, Aportes) {
 
         $scope.layers=[];
         $scope.map = L.map('map', {
@@ -52,7 +52,7 @@ angular.module('larutadeldinero')
             }
 
             $scope.loading=true;
-            Aportantes.forMap().then(function(response) {
+            Aportes.forMap().then(function(response) {
                 var points = response.data.values;
 
                 $(points).each(function(i,d) {
@@ -116,7 +116,7 @@ angular.module('larutadeldinero')
                     cluster.on('mouseover',function(marker){
 
                         var dni = marker.layer.options.dni;
-                        Aportantes.findById(dni).then(function(response){
+                        Aportes.findById(dni).then(function(response){
                             var popUp=new L.Popup();
                             popUp.setLatLng(marker.layer._latlng);
                             var aportante=response.data.objects[0];
