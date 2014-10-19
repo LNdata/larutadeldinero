@@ -73,7 +73,7 @@ $(document).ready(function(){
 			<img ng-repeat="aporte in aportante.aportes | unique: 'codlista'" src="images/boletas/{{ aporte.aportante.ciclo }}/{{ aporte.aportante.codlista }}.jpg" title="{{ aporte.aportante.agrupacion_id | agrupacionName }}" height="180">
 					</div>
 				</div>
-			
+			Aquí debe estar el detalle de cada aportante, cargos, mandatos, etc.
 				<table class="table">
 					<thead>
 					<th>Ciclo</th>
@@ -136,7 +136,7 @@ $(document).ready(function(){
 		&nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
 		</a></td>
         <td align="right" width="10%">$ {{ aporte.importe | number:0 }}</td>
-		<td><img src="images/icons/pdf.jpg" align="right">
+		<td><img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
 		</td>
     </tr>
     </tbody>

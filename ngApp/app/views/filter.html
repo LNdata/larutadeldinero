@@ -47,12 +47,18 @@
         </select>
     </div>
 	<hr>
-    <button class="btn btn-link" ng-click="advancedFilterCollapsed = !advancedFilterCollapsed">Filtro avanzado</button>
-    <div collapse="advancedFilterCollapsed">
+<!--    <button class="btn btn-link" ng-click="advancedFilterCollapsed = !advancedFilterCollapsed">Filtro avanzado</button>
+	<div collapse="advancedFilterCollapsed">-->
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="active"><a href="#demographics" data-toggle="tab" class="tab-btn">Avanzado</a></li>
+			<li><a href="#politonomics" data-toggle="tab" class="tab-btn">Más</a></li>
+		</ul>	
+	<div class="tab-content">
+	<div class="demographics tab-pane active" id="demographics">	
         <form role="form">
             <div class="from-group">
                 <label>
-                    Sexo
+                   
                     <a href="#" ng-click="filter.sexes = { }" ng-show="hasAnyTrueValues(filter.sexes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -93,8 +99,9 @@
                     <small>{{ amount.name }}</small>
                 </li>
 				</ul>
-            </div> 
-			
+            </div>
+		</div>
+		<div class="politonomics tab-pane" id="politonomics">	
             <div class="from-group">
                 <label>
                     Inscripción fiscal
@@ -105,6 +112,7 @@
 
                 <label ng-repeat="tax in taxes">
                     <input type="checkbox" ng-model="filter.taxes[tax.val]" ng-checked="selected">
+					<img src="images/icons/{{ tax.name }}.png" width="16">
                     <small>{{ tax.name }}&nbsp;</small>
                 </label>
             </div>
@@ -119,10 +127,12 @@
 
                 <label ng-repeat="ruler in rulers">
                     <input type="checkbox" ng-model="filter.rulers[ruler.val]" ng-checked="selected">
+					<img src="images/icons/{{ ruler.val }}.gif" width="16">
                     <small>{{ ruler.name }}&nbsp;</small>
                 </label>
             </div> 	 			
         </form>
-    </div>
+		</div>
+    <!--</div>-->
 
 </form>

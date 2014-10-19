@@ -89,7 +89,7 @@ angular
           window.location.reload();
         };
 
-        $scope.advancedFilterCollapsed = false;
+        $scope.advancedFilterCollapsed = true;
 
         // Elementos del filtro
         $scope.years = [2007,2009,2011,2013];
@@ -127,12 +127,12 @@ angular
             { name: 'Empleador', val: 'empleador' }
         ];
         $scope.rulers = [
-            { name: 'Designacion', val: 'designacion' },
+            { name: 'Designación', val: 'designacion' },
             { name: 'Candidatura', val: 'candidatura' },
-            { name: 'Contrato', val: 'contraro' },
+            { name: 'Contrato', val: 'contrato' },
             { name: 'Autoridad', val: 'autoridad' },
-			{ name: 'Diputado', val: 'diputado' },
-			{ name: 'Senador', val: 'senador' }
+			{ name: 'Fue Diputado', val: 'diputado' },
+			{ name: 'Fue Senador', val: 'senador' }
         ];		
 
         setTimeout(function() {
