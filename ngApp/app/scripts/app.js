@@ -126,6 +126,14 @@ angular
             { name: 'Monotributo', val: 'monotributo' },
             { name: 'Empleador', val: 'empleador' }
         ];
+        $scope.rulers = [
+            { name: 'Designacion', val: 'designacion' },
+            { name: 'Candidatura', val: 'candidatura' },
+            { name: 'Contrato', val: 'contraro' },
+            { name: 'Autoridad', val: 'autoridad' },
+			{ name: 'Diputado', val: 'diputado' },
+			{ name: 'Senador', val: 'senador' }
+        ];		
 
         setTimeout(function() {
             $rootScope.$watch('filter', refreshData, true);

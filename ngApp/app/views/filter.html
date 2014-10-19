@@ -61,10 +61,10 @@
                 <label ng-repeat="sex in sexes">
                     <input type="checkbox" ng-model="filter.sexes[sex.val]">
                     <img ng-src="images/icons/{{ sex.name }}.png" height="32">
-                </label>
+                </label>			
 				
             </div>
-
+			
             <div class="from-group">
                 <label>
                     Edad
@@ -104,10 +104,24 @@
                 </label><br/>
 
                 <label ng-repeat="tax in taxes">
-                    <input type="checkbox" ng-model="filter.taxes[tax.val]">
+                    <input type="checkbox" ng-model="filter.taxes[tax.val]" ng-checked="selected">
                     <small>{{ tax.name }}&nbsp;</small>
                 </label>
-            </div> 			
+            </div>
+
+            <div class="from-group">
+                <label>
+                    Dirigencia
+                    <a href="#" ng-click="filter.rulers = { }" ng-show="hasAnyTrueValues(filter.rulers)" prevent-click>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </label><br/>
+
+                <label ng-repeat="ruler in rulers">
+                    <input type="checkbox" ng-model="filter.rulers[ruler.val]" ng-checked="selected">
+                    <small>{{ ruler.name }}&nbsp;</small>
+                </label>
+            </div> 	 			
         </form>
     </div>
 

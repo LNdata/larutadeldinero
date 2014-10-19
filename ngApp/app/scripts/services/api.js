@@ -237,7 +237,82 @@ angular.module('larutadeldinero')
 
             }
 
+            // Dirigencia
+            if (filter.rulers) {
+                for (var ruler in filter.rulers) {
+                    if (filter.rulers[ruler]) {
+                        if (ruler == 'designacion') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'designacion',
+                                    'op': 'eq',
+                                    'val': true
+                                }
+                            })
+                        }
+                        if (ruler == 'candidatura') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'candidatura',
+                                    'op': 'eq',
+                                    'val': true
+                                }
+                            })
+                        }
+                        if (ruler == 'contrato') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'contrato',
+                                    'op': 'eq',
+                                    'val': true
+                                }
+                            })
+                        }
+                        if (ruler == 'autoridad') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'autoridad',
+                                    'op': 'eq',
+                                    'val': true
+                                }
+                            })
+                        }
+                        if (ruler == 'diputado') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'mandato_diputado',
+                                    'op': 'eq',
+                                    'val': true
+                                }
+                            })
+                        }
+                        if (ruler == 'senador') {
+                            filters.push({
+                                'name': 'aportante',
+                                'op': 'has',
+                                'val': {
+                                    'name': 'mandato_senador',
+                                    'op': 'eq',
+                                    'val': true
+                                }
+                            })
+                        }						
+                    }
+                }
 
+            }
+			
+			
             if (filters.length > 0) {
                 if (!q) q = {};
                 q.filters= filters;

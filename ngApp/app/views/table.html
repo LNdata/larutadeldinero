@@ -43,7 +43,7 @@ $(document).ready(function(){
         <td width="4%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
         <td width="4%"><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</font></td>
         <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
-        <td width="22%"><a id="inline" href="#{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a>
+        <td width="20%"><a id="inline" href="#{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a>
 			<div style="display:none" id="{{ aporte.aportante.documento }}">
 				<div class="row">
 					<div class="col-md-3">
@@ -96,23 +96,41 @@ $(document).ready(function(){
 				</table>
 			</div>
 		</td>
-		<td width="20%">
+		<td width="25%">
 			<center>
-			<img src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
-			<img src="images/icons/imp_ganancias/{{ aporte.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
-			<img src="images/icons/monotributo/{{ aporte.aportante.monotributo }}.png" title="Monotributo categoría {{ aporte.aportante.monotributo }}">
-			<img src="images/icons/empleador/{{ aporte.aportante.empleador }}.png" title="Empleador">
-			<img src="images/icons/autoridad/{{ aporte.aportante.autoridad }}.gif" title="Autoridad partidaria">
-			<img src="images/icons/candidatura/{{ aporte.aportante.candidatura }}.gif" title="Candidatura">
-			<img src="images/icons/contrato/{{ aporte.aportante.contrato }}.gif" title="Contrato">
-			<a href="http://poderofilia.andytow.com/details.php?doc={{ aporte.aportante.documento }}" target="_blank">
-				<img src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" title="Designación">
+			<a ng-click="filter.taxes.iva='selected'">
+				<img src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
 			</a>
-			<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
-			<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador"></a>
+			<a ng-click="filter.taxes.ganancias='selected'">
+				<img src="images/icons/imp_ganancias/{{ aporte.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
+			</a>
+			<a ng-click="filter.taxes.monotributo='selected'">
+				<img src="images/icons/monotributo/{{ aporte.aportante.monotributo }}.png" title="Monotributo categoría {{ aporte.aportante.monotributo }}">
+			</a>
+			<a ng-click="filter.taxes.empleador='selected'">
+				<img src="images/icons/empleador/{{ aporte.aportante.empleador }}.png" title="Empleador">
+			</a>
+			<a ng-click="filter.rulers.designacion='selected'">
+				<img src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" title="Designación">
+			</a>			
+			<a ng-click="filter.rulers.candidatura='selected'">
+				<img src="images/icons/candidatura/{{ aporte.aportante.candidatura }}.gif" title="Candidatura">
+			</a>
+			<a ng-click="filter.rulers.contrato='selected'">
+				<img src="images/icons/contrato/{{ aporte.aportante.contrato }}.gif" title="Contrato">
+			</a>			
+			<a ng-click="filter.rulers.autoridad='selected'">
+				<img src="images/icons/autoridad/{{ aporte.aportante.autoridad }}.gif" title="Autoridad partidaria">
+			</a>
+			<a ng-click="filter.rulers.diputado='selected'">
+				<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
+			</a>
+			<a ng-click="filter.rulers.senador='selected'">
+				<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
+			</a>
 			</center>
 		</td>
-        <td width="32%"><a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
+        <td width="30%"><a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
 		<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left">
 		<span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span></a>
 		&nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
