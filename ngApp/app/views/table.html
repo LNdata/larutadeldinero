@@ -113,8 +113,9 @@ $(document).ready(function(){
 			</center>
 		</td>
         <td width="32%"><a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
-		<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left"><span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span>
-		&nbsp;<small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
+		<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left">
+		<span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span></a>
+		&nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
 		</a></td>
         <td align="right" width="10%">$ {{ aporte.importe | number:0 }}</td>
 		<td><img src="images/icons/pdf.jpg" align="right">
