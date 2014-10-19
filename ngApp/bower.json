@@ -25,7 +25,13 @@
   "overrides": {
     "leaflet.markercluster": {
       "main": "dist/leaflet.markercluster.js"
-    }
+    },
+	"fancybox": {
+      "main": "source/jquery.fancybox.js"
+    },
+	"leaflet.fullscreen": {
+      "main": "Control.FullScreen.js"
+    }	
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
