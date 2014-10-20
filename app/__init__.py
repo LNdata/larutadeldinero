@@ -9,9 +9,9 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 
+from app.models import *
 db.create_all()
 
-from app.models import *
 from app.views import *
 
 # Create the Flask-Restless API manager.
