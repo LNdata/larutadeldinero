@@ -152,6 +152,7 @@ angular
             }
             return false;
         }
+
     })
 
     .directive('preventClick', function() {

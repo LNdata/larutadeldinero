@@ -43,7 +43,10 @@ $(document).ready(function(){
         <td width="4%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
         <td width="4%"><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</font></td>
         <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
-        <td width="20%"><a id="inline" href="#{{ aporte.aportante.documento }}">{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</a>
+        <td width="20%"><a id="inline" href="#{{ aporte.aportante.documento }}">
+						<img src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28">
+						{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}
+						</a>
 			<div style="display:none" id="{{ aporte.aportante.documento }}">
 				<div class="row">
 					<div class="col-md-3">
@@ -97,7 +100,7 @@ $(document).ready(function(){
 			</div>
 		</td>
 		<td width="25%">
-			<center>
+			<center>			
 			<a ng-click="filter.taxes.iva='selected'">
 				<img src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
 			</a>
