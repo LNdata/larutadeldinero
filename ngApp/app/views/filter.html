@@ -104,7 +104,7 @@
 		<div class="politonomics tab-pane" id="politonomics">	
             <div class="from-group">
                 <label>
-                    Inscripción fiscal
+                    Fiscal
                     <a href="#" ng-click="filter.taxes = { }" ng-show="hasAnyTrueValues(filter.taxes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -113,10 +113,10 @@
 				<ul class="list-unstyled">
                 <li ng-repeat="tax in taxes">
 					<a href="#" ng-click="filter.taxes[tax.val]='selected'">
-					<img src="images/icons/{{ tax.name }}.png" width="16">
+					<img src="images/icons/{{ tax.val }}.png" width="16">
                     <small>{{ tax.name }}&nbsp;</small>
 					</a>
-                    <a href="#" ng-click="filter.taxes[tax.val] = ''" ng-checked="selected" ng-show="hasAnyTrueValues(filter.taxes[tax.val])" prevent-click>
+                    <a href="#" ng-click="filter.taxes[tax.val] = false" ng-checked="selected" ng-show="hasAnyTrueValues(filter.taxes[tax.val])" prevent-click>
 					<span class="glyphicon glyphicon-remove"></span>
 					</a>					
                 </li>
@@ -137,7 +137,7 @@
 					<img src="images/icons/{{ ruler.val }}.gif" width="16">
                     <small>{{ ruler.name }}&nbsp;</small>
 					</a>
-					<a href="#" ng-click="filter.rulers[ruler.val] = ''" ng-checked="selected" ng-show="hasAnyTrueValues(filter.rulers[ruler.val])" prevent-click>
+					<a href="#" ng-click="filter.rulers[ruler.val] = false" ng-checked="selected" ng-show="hasAnyTrueValues(filter.rulers[ruler.val])" prevent-click>
 					<span class="glyphicon glyphicon-remove"></span>
 					</a>					
                 </label>

@@ -41,7 +41,7 @@ $(document).ready(function(){
     <tbody>
     <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
         <td width="4%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
-        <td width="4%"><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</font></td>
+        <td width="4%"><small><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</small></td>
         <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
         <td width="20%"><a id="inline" href="#{{ aporte.aportante.documento }}">
 						<img src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28">
@@ -67,7 +67,7 @@ $(document).ready(function(){
 							<img src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" title="Designación">
 							</a>
 							<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
-							<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
+							<img src="images/icons/mandato_senador/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
 					</div>
 				<div class="col-md-6">
 			<img src="images/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="120">&nbsp;&nbsp;				
@@ -93,7 +93,7 @@ $(document).ready(function(){
 					<td>{{ aporte.distrito }}</td>
 					<td>{{ aporte.cargo }}</td>
 					<td>{{ aporte.agrupacion_id | agrupacionName }}</td>
-					<td align="right">$ {{ aporte.importe | number:0 }}</td>
+					<td align="right">${{ aporte.importe | number:0 }}</td>
 				</tr>
 				</tbody>
 				</table>
@@ -129,7 +129,7 @@ $(document).ready(function(){
 				<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
 			</a>
 			<a ng-click="filter.rulers.senador='selected'">
-				<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
+				<img src="images/icons/mandato_senador/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
 			</a>
 			</center>
 		</td>
@@ -138,7 +138,7 @@ $(document).ready(function(){
 		<span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span></a>
 		&nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
 		</a></td>
-        <td align="right" width="10%">$ {{ aporte.importe | number:0 }}</td>
+        <td align="right" width="10%">${{ aporte.importe | number:0 }}</td>
 		<td><img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
 		</td>
     </tr>
