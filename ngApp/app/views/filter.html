@@ -113,7 +113,7 @@
 				<ul class="list-unstyled">
                 <li ng-repeat="tax in taxes">
 					<a href="#" ng-click="filter.taxes[tax.val]='selected'">
-					<img src="images/icons/{{ tax.name }}.png" width="16">
+					<img src="images/icons/{{ tax.val }}.png" width="16">
                     <small>{{ tax.name }}&nbsp;</small>
 					</a>
                     <a href="#" ng-click="filter.taxes[tax.val] = ''" ng-checked="selected" ng-show="hasAnyTrueValues(filter.taxes[tax.val])" prevent-click>
