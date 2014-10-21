@@ -9,6 +9,7 @@ from flask import json
 import ast
 
 def get_where_clause(filters):
+  # filters [{u'name': u'ciclo', u'val': 2009, u'op': u'eq'}, ... ]
   # generate where clause with the filters
   filters_list = []
 
@@ -54,6 +55,20 @@ def get_where_clause(filters):
 
   return where_clause
 
+
+def filter_aportes(aportes, filters):
+
+  for filter in filters:
+    if filter["op"] == "eq":
+      field = "Aporte.%s" % filter["name"]
+      aportes = aportes.filter(eval(field) == filter["val"])
+    elif filter["op"] == "in":
+      for val in filter["val"]:
+        field = "Aporte.%s" % filter["name"]
+        aportes = aportes.filter(eval(field) == val)
+
+  return aportes
+  
 # it returns the amount of donors per sex filtered by filters
 def donors_per_sex(filters):
   query_join = db.session.query(Aportante).join(Aporte)
@@ -357,16 +372,3 @@ def get_treemap():
     results["children"].append(nuevo_ciclo)
 
   return results
-
-def filter_aportes(aportes, filters):
-
-  for filter in filters:
-    if filter["op"] == "eq":
-      field = "Aporte.%s" % filter["name"]
-      aportes = aportes.filter(eval(field) == filter["val"])
-    elif filter["op"] == "in":
-      for val in filter["val"]:
-        field = "Aporte.%s" % filter["name"]
-        aportes = aportes.filter(eval(field) == val)
-
-  return aportes

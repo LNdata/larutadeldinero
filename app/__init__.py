@@ -12,6 +12,7 @@ db = SQLAlchemy(app)
 
 from app.models import *
 db.create_all()
+
 from app.views import *
 
 # Create the Flask-Restless API manager.

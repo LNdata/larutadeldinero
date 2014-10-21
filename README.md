@@ -18,7 +18,9 @@ Para migrar la base de datos usar
 
     python manage.py db init
 
-El script import_data.py importa los registros a la base de datos.
+Para importar los registros a la base de datos hay que usar
+
+    python manage.py import
 
 desde el directorio raíz (inicias el servidor web)
 
