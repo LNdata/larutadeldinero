@@ -133,11 +133,17 @@ $(document).ready(function(){
 			</a>
 			</center>
 		</td>
-        <td width="30%"><a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
-		<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left">
-		<span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span></a>
+        <td width="30%">
+			<a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
+				<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left">
+				<span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span>
+			</a>
 		&nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
-		</a></td>
+			</a>
+			<a href="http://andytow.com/atlas/totalpais/{{ aporte.resultado_eleccion }}" target="_blank">
+				<img src="images/icons/resultado_eleccion.png" height="24" align="right" title="Enlace a resultado electoral">
+			</a>
+		</td>
         <td align="right" width="10%">${{ aporte.importe | number:0 }}</td>
 		<td><img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
 		</td>
