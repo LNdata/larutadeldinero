@@ -15,7 +15,7 @@ manager.add_command('db', MigrateCommand)
 manager.add_command('json', GenerateJson)
 manager.add_command('import', ImportData)
 
-from app.models import Aporte, Aportante, Agrupacion
+# from app.models import Aporte, Aportante, Agrupacion
 
 if __name__ == '__main__':
     manager.run()

@@ -180,6 +180,7 @@ class ImportData(Command):
         db.session.commit()
 
   def run(self, name):
+    db.create_all()
     self.clean_tables()
     self.import_agrupaciones()
     self.import_aportantes()

@@ -30,7 +30,7 @@
 
 <!-- Add your site or application content here -->
 <div class="container">
-    <div class="header">
+    <div class="header" style="overflow:hidden">
         <ul class="nav nav-pills pull-right">
             <li ng-class="{ active: view == 'Treemap' && location.path() == '/' }"><a href="#" ng-click="setView('Treemap')" prevent-click><center><img src="images/icons/treemap.png" height="32"><br>Treemap</center></a></li>
             <li ng-class="{ active: view == 'Map' && location.path() == '/' }"><a href="#" ng-click="setView('Map')" prevent-click><center><img src="images/icons/map.png" height="32"><br>Mapa</center></a></li>
@@ -44,7 +44,7 @@
 			<li ng-class="{ active: view == 'Team' && location.path() == '/' }"><a href="#" ng-click="setView('Team')" prevent-click><small>Equipo</small></a></li>
 		</ul>
         <h2 class="text-muted"><a ng-click="reloadPage()">La Ruta Electoral</a></h2>
-		Financiamiento de campañas electorales en la Argentina
+		<p>Financiamiento de campañas electorales en la Argentina</p>
     </div>
 
     <div class="row">
