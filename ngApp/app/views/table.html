@@ -3,6 +3,9 @@
 $(document).ready(function(){
     $("[data-toggle=tooltip]").tooltip({ placement: 'bottom'});
 });
+
+	setorder = 'importe';
+	directionorder = 'desc';
 </script>
 <div class="row">
     <div class="col-lg-3">
@@ -30,17 +33,42 @@ $(document).ready(function(){
 
 <table class="table table-striped" ng-class="{ 'table-loading': fetching }" ng-init="pageChanged()">
     <thead>
-    <th><center>Ciclo</center></th>
-    <th><center>Elección</center></th>
-    <th><center>Distrito</center></th>
+    <th><center>
+		<a onclick="setorder = 'ciclo'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+		<a onclick="setorder = 'ciclo'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+		<small>Ciclo</small>
+		</center>
+	</th>
+    <th><center>
+		<a onclick="setorder = 'eleccion'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+		<a onclick="setorder = 'eleccion'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+		<small>Elección</small>
+		</center>
+	</th>
+    <th><center>
+		<a onclick="setorder = 'distrito'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+		<a onclick="setorder = 'distrito'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+		<small>Distrito</small>
+		</center>
+	</th>
     <th><center>Aportante</center></th>
 	<th><center>Perfil</center></th>
-    <th><center>Agrupación</center></th>
-    <th><center>Monto</center></th>
+    <th><center>
+		<a onclick="setorder = ''; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+		<a onclick="setorder = ''; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+		<small>Agrupación</small>
+		</center>
+	</th>
+    <th><center>
+		<a onclick="setorder = 'importe'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-order"></span></a>
+		<a onclick="setorder = 'importe'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-order-alt"></span></a>
+		<small>Monto</small>
+		</center>
+	</th>
     </thead>
     <tbody>
     <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
-        <td width="4%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
+        <td width="6%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
         <td width="4%"><small><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</small></td>
         <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
         <td width="20%"><a id="inline" href="#{{ aporte.aportante.documento }}">
@@ -140,7 +168,7 @@ $(document).ready(function(){
 			</a>
 		&nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
 			</a>
-			<a href="http://andytow.com/atlas/totalpais/{{ aporte.resultado_eleccion }}" target="_blank">
+			<a class="iframe" href="http://andytow.com/atlas/totalpais/{{ aporte.resultado_eleccion }}" target="_blank">
 				<img src="images/icons/resultado_eleccion.png" height="24" align="right" title="Enlace a resultado electoral">
 			</a>
 		</td>

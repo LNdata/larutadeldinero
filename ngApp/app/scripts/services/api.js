@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('larutadeldinero')
+	
     .factory('Aportantes', function($http, $rootScope) {
         var baseURL = 'http://api.larutaelectoral.com.ar/api';
 
@@ -329,7 +330,7 @@ angular.module('larutadeldinero')
 
             find: function(page, rpp) {
                 var params = ['page=' + page],
-                    order_by = [{ 'field': 'importe', 'direction': 'desc'}],
+                    order_by = [{ 'field': setorder, 'direction': directionorder}],
                     q = filterToQuery($rootScope.filter, order_by);
 
                 if (q) params.push('q=' + JSON.stringify(q));

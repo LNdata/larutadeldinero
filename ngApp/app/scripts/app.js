@@ -136,10 +136,10 @@ angular
         ];		
 
         setTimeout(function() {
-            $rootScope.$watch('filter', refreshData, true);
+            $rootScope.$watch('filter', refreshData, true)
+			$rootScope.$watch('setorder', refreshData, true);
         }, 1000);
-
-
+		
         function refreshData() {
             setTimeout(function() {
                 $rootScope.$emit('filterChanged');
