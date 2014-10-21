@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('MapCtrl', function ($scope, $http, $rootScope, Aportes) {
+    .controller('MapCtrl', function ($scope, $http, $rootScope, Aportantes, Aportes) {
 
         $scope.layers=[];
         $scope.map = L.map('map', {
@@ -116,16 +116,20 @@ angular.module('larutadeldinero')
                     cluster.on('mouseover',function(marker){
 
                         var dni = marker.layer.options.dni;
-                        Aportes.findById(dni).then(function(response){
+                        Aportantes.findById(dni).then(function(response){
                             var popUp=new L.Popup();
                             popUp.setLatLng(marker.layer._latlng);
                             var aportante=response.data.objects[0];
                             var sum=0;
+							var ciclo=0;
+							var codlista="";
                             aportante.aportes.forEach(function(a){
-                                sum+=parseInt(a.importe);
+                                sum+=parseInt(a.importe)
+								ciclo=(a.ciclo)
+								codlista=(a.codlista);
                             })
                             var link = ""
-                            popUp.setContent('<div><p style="margin:0;">' + aportante.apellido +', ' + aportante.nombre + '</p><p style="margin:0;">' + sum +  '$</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
+                            popUp.setContent('<div><p style="margin:0;"><img src="images/boletas/' + ciclo + '/' + codlista + '.jpg" height="120"></p><p style="margin:0;">$' + sum +  '</p><p style="margin:0;"><a href="#/aportante/' + dni +'">Ficha</a></p><div>');
                             $scope.map.openPopup(popUp);
                         });
 

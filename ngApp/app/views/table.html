@@ -44,7 +44,7 @@ $(document).ready(function(){
         <td width="4%"><small><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</small></td>
         <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
         <td width="20%"><a id="inline" href="#{{ aporte.aportante.documento }}">
-						<img src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28">
+						<img src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28" align="left">
 						{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}
 						</a>
 			<div style="display:none" id="{{ aporte.aportante.documento }}">
