@@ -68,8 +68,8 @@ $(document).ready(function(){
     <th><center>
 		<div ng-mouseover="agrupacion=true" ng-mouseout="agrupacion=false">
 		<div ng-show="agrupacion">		
-		<a onclick="setorder = ''; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
-		<a onclick="setorder = ''; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+		<a onclick="setorder = 'agrupacion_id'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+		<a onclick="setorder = 'agrupacion_id'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
 		</div>
 		Agrupación
 		</center>
