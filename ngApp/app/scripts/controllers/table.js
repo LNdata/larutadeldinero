@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('TableCtrl', function ($scope, $rootScope, Aportes, Aportantes) {
+    .controller('TableCtrl', function ($scope, $rootScope, Aportes, Aportantes, modalService) {
         $scope.currentPage = 1;
         $scope.maxSize = 10;
 
@@ -41,4 +41,21 @@ angular.module('larutadeldinero')
             $rootScope.$apply();
         }
 
-    });
+        $scope.open_modal = function(documento) {
+
+            Aportantes.findById(documento).then(function(response) {
+            console.log(response.data.objects[0]);
+                var modalOptions = {
+                    closeButtonText: 'Cerrar',
+                    aportante: response.data.objects[0]
+                };
+                
+                modalService.showModal({templateUrl: '/views/modals/modal_table.html'}, modalOptions).then(function (result) {
+
+                });
+            });
+        }
+
+
+
+    })

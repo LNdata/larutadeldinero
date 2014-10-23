@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h3>{{modalOptions.aportante.apellido}}, {{modalOptions.aportante.nombre}}</h3>
+</div>
+<div class="modal-body">
+	<table class="table">
+	<thead>
+	<th>Ciclo</th>
+	<th>Elecciones</th>
+	<th>Distrito</th>
+	<th>Cargo</th>
+	<th>Agrupación</th>
+	<th>Monto</th>
+	</thead>
+	<tbody>
+	<tr ng-repeat="aporte in modalOptions.aportante.aportes" ng-class="{ 'text-muted': fetching }">
+	<td>{{ aporte.ciclo }}</td>
+	<td>{{ aporte.eleccion }}</td>
+	<td>{{ aporte.distrito }}</td>
+	<td>{{ aporte.cargo }}</td>
+	<td>{{ aporte.agrupacion_id | agrupacionName }}</td>
+	<td align="right">${{ aporte.importe | number:0 }}</td>
+	</tr>
+	</tbody>
+	</table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" 
+          data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
+<!--   <button class="btn btn-primary" 
+          data-ng-click="modalOptions.ok();">{{modalOptions.actionButtonText}}</button> -->
+</div>
