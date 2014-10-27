@@ -10,6 +10,8 @@ $(document).ready(function(){
 <div class="row">
     <div class="col-lg-3">
         <h4 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h4>
+		
+		<p class="text-muted">ordene por columna</p>
     </div>
     <div class="col-lg-6">
         <form class="form-inline" role="form">
@@ -29,8 +31,6 @@ $(document).ready(function(){
 		</table>
 </div>
 <hr/>
-
-
 <table class="table table-striped" ng-class="{ 'table-loading': fetching }" ng-init="pageChanged()">
     <thead>
     <th><center>
@@ -199,7 +199,6 @@ $(document).ready(function(){
     </tr>
     </tbody>
 </table>
-
 <div class="text-center">
     <pagination total-items="totalItems"
                 ng-change="pageChanged()"
