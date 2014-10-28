@@ -100,8 +100,7 @@ def aportes_por_agrupacion():
 def aportes_stats():
 
   filters = parse_filters(request.args.get('q'))
-
-  aportes =  filter_aportes(db.session.query(func.avg(Aporte.importe), func.sum(Aporte.importe)), filters)
+  aportes =  filter_aportes(db.session.query(func.avg(Aporte.importe), func.sum(Aporte.importe)).join(Aportante), filters)
 
   aportes_stats = aportes.all()[0]
 

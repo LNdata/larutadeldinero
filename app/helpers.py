@@ -57,11 +57,18 @@ def get_where_clause(filters):
 
 
 def filter_aportes(aportes, filters):
-
+  
   for filter in filters:
-    if filter["op"] == "eq":
-      field = "Aporte.%s" % filter["name"]
-      aportes = aportes.filter(eval(field) == filter["val"])
+    
+    if filter["name"] == 'aportante':
+      field = "Aportante.%s" % filter['val']['name']
+      if filter['val']["op"] == "eq":
+        aportes = aportes.filter(eval(field) == filter['val']['val'])
+
+    elif filter["op"] == "eq":
+        field = "Aporte.%s" % filter["name"]
+        aportes = aportes.filter(eval(field) == filter["val"])
+    
     elif filter["op"] == "in":
       for val in filter["val"]:
         field = "Aporte.%s" % filter["name"]
