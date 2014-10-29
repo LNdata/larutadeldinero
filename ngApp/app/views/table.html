@@ -1,9 +1,5 @@
 <div style="display: none; position: absolute; z-index: 110; left: 400; top: 100; width: 15; height: 15" id="preview_div"></div>
 <script>
-$(document).ready(function(){
-    $("[data-toggle=tooltip]").tooltip({ placement: 'bottom'});
-});
-
 	setorder = 'importe';
 	directionorder = 'desc';
 </script>
@@ -96,57 +92,6 @@ $(document).ready(function(){
 						<img src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28" align="left">
 						{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}
 						</a>
-			<div style="display:none" id="{{ aporte.aportante.documento }}">
-				<div class="row">
-					<div class="col-md-3">
-						<h4>{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}</h4>
-							<img src="images/icons/{{ aporte.aportante.sexo }}.png">&nbsp;&nbsp;
-							Clase {{ aporte.aportante.clase }}
-						<p class="edad">(~ {{ 2014 - aporte.aportante.clase }} años de edad)</p>
-					</div>
-					<div class="col-md-3">
-							<img src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
-							<img src="images/icons/imp_ganancias/{{ aporte.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
-							<img src="images/icons/monotributo/{{ aporte.aportante.monotributo }}.png" title="Monotributo categoría {{ aportante.monotributo }}">
-							<img src="images/icons/empleador/{{ aporte.aportante.empleador }}.png" title="Empleador">
-							<img src="images/icons/autoridad/{{ aporte.aportante.autoridad }}.gif" title="Autoridad partidaria">
-							<img src="images/icons/candidatura/{{ aporte.aportante.candidatura }}.gif" title="Candidatura">
-							<img src="images/icons/contrato/{{ aporte.aportante.contrato }}.gif" title="Contrato">
-							<a href="http://poderofilia.andytow.com/details.php?doc={{ aporte.aportante.documento }}" target="_blank">
-							<img src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" title="Designación">
-							</a>
-							<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
-							<img src="images/icons/mandato_senador/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
-					</div>
-				<div class="col-md-6">
-			<img src="images/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="120">&nbsp;&nbsp;				
-			<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="180">
-			<img ng-repeat="aporte in aportante.aportes | unique: 'coddistrito'" src="images/escudos/{{ aporte.aportante.coddistrito }}.gif" title="{{ aporte.aportante.distrito }}" height="120">&nbsp;&nbsp;
-			<img ng-repeat="aporte in aportante.aportes | unique: 'codlista'" src="images/boletas/{{ aporte.aportante.ciclo }}/{{ aporte.aportante.codlista }}.jpg" title="{{ aporte.aportante.agrupacion_id | agrupacionName }}" height="180">
-					</div>
-				</div>
-			Aquí debe estar el detalle de cada aportante, cargos, mandatos, etc.
-				<table class="table">
-					<thead>
-					<th>Ciclo</th>
-					<th>Elecciones</th>
-					<th>Distrito</th>
-					<th>Cargo</th>
-					<th>Agrupación</th>
-					<th>Monto</th>
-				</thead>
-				<tbody>
-				<tr ng-repeat="aporte in aportante.aportes" ng-class="{ 'text-muted': fetching }">
-					<td>{{ aporte.ciclo }}</td>
-					<td>{{ aporte.eleccion }}</td>
-					<td>{{ aporte.distrito }}</td>
-					<td>{{ aporte.cargo }}</td>
-					<td>{{ aporte.agrupacion_id | agrupacionName }}</td>
-					<td align="right">${{ aporte.importe | number:0 }}</td>
-				</tr>
-				</tbody>
-				</table>
-			</div>
 		</td>
 		<td width="25%">
 			<center>			
@@ -214,28 +159,6 @@ $(document).ready(function(){
                 next-text="Siguiente">
     </pagination>
 </div>
-<script>
-$(document).ready(function() {
-	$("a#single_image").fancybox();
-	
-	/* Using custom settings */
-	
-	// $("a#inline").fancybox({
-	// 	'hideOnContentClick': true
-	// });
 
-	/* Apply fancybox to multiple items */
-	
-	$("a.iframe").fancybox({
-		'transitionIn'	:	'elastic',
-		'transitionOut'	:	'elastic',
-		'speedIn'		:	600, 
-		'speedOut'		:	200, 
-		'overlayShow'	:	false,
-		'type'			:   'iframe'
-	});
-	
-});
-</script>
 <!-- modal -->
 
