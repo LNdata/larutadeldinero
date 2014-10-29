@@ -115,15 +115,16 @@ def donors_per_age(filters):
   # filters [{u'name': u'ciclo', u'val': 2009, u'op': u'eq'}, ... ]
 
   if filters:
+
     #where_clause = " and ". join([ "%s = '%s'" % (filter["name"], filter["val"]) for filter in filters])
     where_clause = get_where_clause(filters)
 
     query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
                FROM ( \
-                      SELECT aportes.grupo_edad as grupo_edad, aportantes.documento \
-                      FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
+                      SELECT aportes.grupo_edad as grupo_edad, aportante.documento \
+                      FROM aportes INNER JOIN aportantes as aportante ON aportes.aportante_id = aportante.id \
                       WHERE %s AND grupo_edad != "" \
-                      GROUP BY aportes.grupo_edad, aportantes.documento \
+                      GROUP BY aportes.grupo_edad, aportante.documento \
                       HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
                      ) AS T \
                GROUP BY grupo_edad \
@@ -158,7 +159,7 @@ def donors_per_party(filters):
     query = "select count(aportante_id) as cantidad_aportantes, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
-             join aportantes on aportantes.id = aportante_id \
+             join aportantes as aportante on aportante.id = aportante_id \
              where %s \
              group by agrupaciones.nombre \
              order by cantidad_aportantes DESC \
@@ -235,10 +236,10 @@ def amount_per_age(filters):
 
     query = """SELECT grupo_edad, SUM(importe) AS CuentaDeGrupoEdad \
                FROM ( \
-                      SELECT aportes.grupo_edad as grupo_edad, aportes.importe as importe, aportantes.documento \
-                      FROM aportes INNER JOIN aportantes ON aportes.aportante_id = aportantes.id \
+                      SELECT aportes.grupo_edad as grupo_edad, aportes.importe as importe, aportante.documento \
+                      FROM aportes INNER JOIN aportantes as aportante ON aportes.aportante_id = aportante.id \
                       WHERE %s AND GRUPO_EDAD != "" \
-                     GROUP BY aportes.grupo_edad, aportantes.documento \
+                     GROUP BY aportes.grupo_edad, aportante.documento \
                      HAVING ( (Not (aportes.grupo_edad) Is Null) ) \
                      ) AS T \
                GROUP BY grupo_edad \
@@ -276,7 +277,7 @@ def amount_per_party(filters):
     query = "select sum(importe) as monto, agrupaciones.nombre \
              from aportes inner join agrupaciones \
              on agrupacion_id = agrupaciones.id \
-             join aportantes on aportes.aportante_id = aportantes.id\
+             join aportantes as aportante on aportes.aportante_id = aportante.id\
              where %s \
              group by agrupaciones.nombre \
              order by monto DESC \
