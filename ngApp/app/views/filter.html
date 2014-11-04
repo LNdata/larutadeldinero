@@ -52,22 +52,25 @@
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="active"><a href="#demographics" data-toggle="tab" class="tab-btn">Avanzado</a>
 			<div align="center">
-				<a href="#" ng-click="filter.sexes = { }" ng-show="hasAnyTrueValues(filter.sexes)" prevent-click>
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a><a href="#" ng-click="filter.ages = { }" ng-show="hasAnyTrueValues(filter.ages)" prevent-click>
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a><a href="#" ng-click="filter.amounts = { }" ng-show="hasAnyTrueValues(filter.amounts)" prevent-click>
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
+					<span ng-show="hasAnyTrueValues(filter.sexes)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+					<span ng-show="hasAnyTrueValues(filter.ages)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+					<span ng-show="hasAnyTrueValues(filter.amounts)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
 			</div>
 			</li>
 			<li><a href="#politonomics" data-toggle="tab" class="tab-btn">Perfil</a>
 			<div align="center">
-				<a href="#" ng-click="filter.taxes = { }" ng-show="hasAnyTrueValues(filter.taxes)" prevent-click>
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a><a href="#" ng-click="filter.rulers = { }" ng-show="hasAnyTrueValues(filter.rulers)" prevent-click>
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
+				<span ng-show="hasAnyTrueValues(filter.taxes)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+				<span ng-show="hasAnyTrueValues(filter.rulers)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
 			</div>
 			</li>
 		</ul>	
