@@ -50,15 +50,32 @@
 <!--    <button class="btn btn-link" ng-click="advancedFilterCollapsed = !advancedFilterCollapsed">Filtro avanzado</button>
 	<div collapse="advancedFilterCollapsed">-->
 		<ul class="nav nav-tabs" role="tablist">
-			<li class="active"><a href="#demographics" data-toggle="tab" class="tab-btn">Avanzado</a></li>
-			<li><a href="#politonomics" data-toggle="tab" class="tab-btn">Perfil</a></li>
+			<li class="active"><a href="#demographics" data-toggle="tab" class="tab-btn">Avanzado</a>
+			<div align="center">
+				<a href="#" ng-click="filter.sexes = { }" ng-show="hasAnyTrueValues(filter.sexes)" prevent-click>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a><a href="#" ng-click="filter.ages = { }" ng-show="hasAnyTrueValues(filter.ages)" prevent-click>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a><a href="#" ng-click="filter.amounts = { }" ng-show="hasAnyTrueValues(filter.amounts)" prevent-click>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+			</div>
+			</li>
+			<li><a href="#politonomics" data-toggle="tab" class="tab-btn">Perfil</a>
+			<div align="center">
+				<a href="#" ng-click="filter.taxes = { }" ng-show="hasAnyTrueValues(filter.taxes)" prevent-click>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a><a href="#" ng-click="filter.rulers = { }" ng-show="hasAnyTrueValues(filter.rulers)" prevent-click>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+			</div>
+			</li>
 		</ul>	
 	<div class="tab-content">
 	<div class="demographics tab-pane active" id="demographics">	
         <form role="form">
             <div class="from-group">
                 <label>
-                   
                     <a href="#" ng-click="filter.sexes = { }" ng-show="hasAnyTrueValues(filter.sexes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
