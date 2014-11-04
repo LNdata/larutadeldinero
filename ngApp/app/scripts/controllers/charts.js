@@ -36,7 +36,10 @@ angular.module('larutadeldinero')
             $scope.refreshData();
         })
 
-
+        $rootScope.$on('reloadChart', function(event) {
+            $scope.refreshData();
+        })
+		
         $rootScope.$on('filterChanged', function(event) {
             $scope.refreshData();
         })

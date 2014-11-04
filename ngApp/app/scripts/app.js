@@ -76,7 +76,9 @@ angular
             party: null,
             sexes: {},
             ages: {},
-            amounts: {}
+            amounts: {},
+			taxes: {},
+			rulers: {}
         };
 
         $rootScope.view = 'Treemap';
@@ -89,6 +91,10 @@ angular
           window.location.reload();
         };
 
+		$scope.reloadChart = function(){
+		$scope.$emit('reloadChart');
+        };
+		
         $scope.advancedFilterCollapsed = true;
 
         // Elementos del filtro
