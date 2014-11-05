@@ -36,10 +36,11 @@ angular.module('larutadeldinero')
         var markers=[];
 
         $rootScope.$on('filterChanged',function(event){
-            $scope.addDataToMap();
+            $scope.addDataToMap();			
         });
 
         $scope.addDataToMap=function(){
+
             if($scope.layers.length>0){
                 $scope.layers.forEach(function(d,i){
                     $scope.map.removeLayer(d);
@@ -129,7 +130,7 @@ angular.module('larutadeldinero')
 								codlista=(a.codlista);
                             })
                             var link = ""
-                            popUp.setContent('<div><p style="margin:0;"><img src="images/boletas/' + ciclo + '/' + codlista + '.jpg" height="120"></p><p style="margin:0;">$' + sum +  '</p><p>' + aportante.apellido +', ' + aportante.nombre + '</p><p><img src="images/icons/' + aportante.sexo + '.png" height="32"><img src="images/icons/imp_iva/' + aportante.impuesto_iva + '.png" title="Impuesto al Valor Agregado"><img src="images/icons/imp_ganancias/' + aportante.impuesto_ganancias + '.png" title="Impuesto a las Ganancias"><img src="images/icons/monotributo/' + aportante.monotributo +'.png" title="Monotributo categoría '+ aportante.monotributo +'"><img src="images/icons/empleador/'+ aportante.empleador +'.png" title="Empleador"><img src="images/icons/designacion/' + aportante.designacion + '.gif" title="Designación"><img src="images/icons/candidatura/' + aportante.candidatura +'.gif" title="Candidatura">	<img src="images/icons/contrato/' + aportante.contrato + '.gif" title="Contrato"><img src="images/icons/autoridad/' + aportante.autoridad +'.gif" title="Autoridad partidaria"><img src="images/icons/mandato_diputado/' + aportante.mandato_diputado + '.gif" title="Mandato como Diputado"><img src="images/icons/mandato_senador/' + aportante.mandato_senador + '.gif" title="Mandato como Senador">');
+                            popUp.setContent('<div style="font-family:Open Sans;width:100px"><div align="center"><p style="margin:0;"><img src="images/boletas/' + ciclo + '/' + codlista + '.jpg" height="120"></p><p style="margin:0;"><strong>$ ' + sum +  '</strong></p><p>' + aportante.apellido +', ' + aportante.nombre + '</p><p><img src="images/icons/' + aportante.sexo + '.png" height="32"><img src="images/icons/imp_iva/' + aportante.impuesto_iva + '.png" title="Impuesto al Valor Agregado"><img src="images/icons/imp_ganancias/' + aportante.impuesto_ganancias + '.png" title="Impuesto a las Ganancias"><img src="images/icons/monotributo/' + aportante.monotributo +'.png" title="Monotributo categoría '+ aportante.monotributo +'"><img src="images/icons/empleador/'+ aportante.empleador +'.png" title="Empleador"><img src="images/icons/designacion/' + aportante.designacion + '.gif" title="Designación"><img src="images/icons/candidatura/' + aportante.candidatura +'.gif" title="Candidatura">	<img src="images/icons/contrato/' + aportante.contrato + '.gif" title="Contrato"><img src="images/icons/autoridad/' + aportante.autoridad +'.gif" title="Autoridad partidaria"><img src="images/icons/mandato_diputado/' + aportante.mandato_diputado + '.gif" title="Mandato como Diputado"><img src="images/icons/mandato_senador/' + aportante.mandato_senador + '.gif" title="Mandato como Senador"></div></div>');
                             $scope.map.openPopup(popUp);
                         });
 
