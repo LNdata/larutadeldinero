@@ -63,6 +63,9 @@ angular.module('larutadeldinero')
                     accumulate(root);
                     layout(root);
                     display(root);
+					var treemaploading = document.getElementById('treemap-loading');
+					treemaploading.style.display="none";
+
                 })
 
                 function initialize(root) {
@@ -228,6 +231,7 @@ angular.module('larutadeldinero')
                         ? name(d.parent) + '.' + d.name
                         : d.name;
                 }
+
             }
         }
     });
