@@ -1,17 +1,27 @@
 <div class="modal-header">
-	<h3>{{modalOptions.aportante.apellido}}, {{modalOptions.aportante.nombre}}</h3>
-	<img src="images/icons/imp_iva/{{ modalOptions.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
-	<img src="images/icons/imp_ganancias/{{ modalOptions.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
-	<img src="images/icons/monotributo/{{ modalOptions.aportante.monotributo }}.png" title="Monotributo categoría {{ modalOptions.aportante.monotributo }}">
-	<img src="images/icons/empleador/{{ modalOptions.aportante.empleador }}.png" title="Empleador">
-	<img src="images/icons/designacion/{{ modalOptions.aportante.designacion }}.gif" title="Designación">
-	<img src="images/icons/candidatura/{{ modalOptions.aportante.candidatura }}.gif" title="Candidatura">
-	<img src="images/icons/contrato/{{ modalOptions.aportante.contrato }}.gif" title="Contrato">
-	<img src="images/icons/autoridad/{{ modalOptions.aportante.autoridad }}.gif" title="Autoridad partidaria">
-	<img src="images/icons/mandato_diputado/{{ modalOptions.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
-	<img src="images/icons/mandato_senador/{{ modalOptions.aportante.mandato_senador }}.gif" title="Mandato como Senador">
-</div>
+	<div class="row">
+	<div class="col-lg-8">
+		<h3>{{modalOptions.aportante.apellido}}, {{modalOptions.aportante.nombre}}</h3>
+		<strong>CUIT:</strong> {{ modalOptions.aportante.cuit }}
+		<img src="images/icons/imp_iva/{{ modalOptions.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
+		<img src="images/icons/imp_ganancias/{{ modalOptions.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
+		<img src="images/icons/monotributo/{{ modalOptions.aportante.monotributo }}.png" title="Monotributo categoría {{ modalOptions.aportante.monotributo }}">
+		<img src="images/icons/empleador/{{ modalOptions.aportante.empleador }}.png" title="Empleador">
+		<img src="images/icons/designacion/{{ modalOptions.aportante.designacion }}.gif" title="Designación">
+		<img src="images/icons/candidatura/{{ modalOptions.aportante.candidatura }}.gif" title="Candidatura">
+		<img src="images/icons/contrato/{{ modalOptions.aportante.contrato }}.gif" title="Contrato">
+		<img src="images/icons/autoridad/{{ modalOptions.aportante.autoridad }}.gif" title="Autoridad partidaria">
+		<img src="images/icons/mandato_diputado/{{ modalOptions.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
+		<img src="images/icons/mandato_senador/{{ modalOptions.aportante.mandato_senador }}.gif" title="Mandato como Senador">
+	</div>
+	<div class="col-lg-4">
+		<img ng-repeat="aporte in modalOptions.aportante.aportes | unique: 'coddistrito'" src="images/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="80">
+	</div>
+	</div>
+</div>	
 <div class="modal-body">
+<div class="row">
+	<center><img ng-repeat="aporte in modalOptions.aportante.aportes | unique: 'codlista'" src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="120"></center>
 	<table class="table">
 	<thead>
 	<th>Ciclo</th>
@@ -32,6 +42,7 @@
 	</tr>
 	</tbody>
 	</table>
+</div>	
 </div>
 <div class="modal-footer">
   <button type="button" class="btn" 
