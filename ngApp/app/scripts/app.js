@@ -177,13 +177,13 @@ angular
     .service('modalService', ['$modal',
         // http://weblogs.asp.net/dwahlin/building-an-angularjs-modal-service
 
-        function ($modal, name) {
-
+        function ($modal) {
+            console.log($modal)
             var modalDefaults = {
                 backdrop: true,
                 keyboard: true,
                 modalFade: true,
-                templateUrl: '/views/modals/'+name+'.html'
+                templateUrl: '/views/modals/modal.html'
             };
 
             var modalOptions = {

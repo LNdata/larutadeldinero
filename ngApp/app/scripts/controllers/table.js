@@ -49,7 +49,7 @@ angular.module('larutadeldinero')
                         aportante: response.data.objects[0]
                     };
                     
-                    modalService.showModal({templateUrl: '/views/modals/modal_table.html'}, modalOptions);
+                    modalService.showModal({templateUrl: 'views/modals/modal_table.html'}, modalOptions);
                 
                 });
         }
