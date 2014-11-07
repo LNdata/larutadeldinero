@@ -108,7 +108,8 @@ angular
         // Elementos del filtro avanzado
         $scope.sexes = [
             { name: 'M', val: 'M' },
-            { name: 'F', val: 'F' }
+            { name: 'F', val: 'F' },
+			{ name: 'J', val: 'J' }
         ];
         $scope.ages = [
             { name: '< 30', val: '30-' },
@@ -116,7 +117,7 @@ angular
             { name: '40-49', val: '40-49' },
             { name: '50-59', val: '50-59' },
             { name: '60-69', val: '60-69' },
-            { name: '>= 70', val: '70+' }
+            { name: '>= 70', val: '70 y más' }
         ];
         $scope.amounts = [
             { name: '  < $500', val: '1 - $499' },
