@@ -50,15 +50,35 @@
 <!--    <button class="btn btn-link" ng-click="advancedFilterCollapsed = !advancedFilterCollapsed">Filtro avanzado</button>
 	<div collapse="advancedFilterCollapsed">-->
 		<ul class="nav nav-tabs" role="tablist">
-			<li class="active"><a href="#demographics" data-toggle="tab" class="tab-btn">Avanzado</a></li>
-			<li><a href="#politonomics" data-toggle="tab" class="tab-btn">Perfil</a></li>
+			<li class="active"><a href="#demographics" data-toggle="tab" class="tab-btn">Avanzado</a>
+			<div align="center">
+					<span ng-show="hasAnyTrueValues(filter.sexes)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+					<span ng-show="hasAnyTrueValues(filter.ages)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+					<span ng-show="hasAnyTrueValues(filter.amounts)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+			</div>
+			</li>
+			<li><a href="#politonomics" data-toggle="tab" class="tab-btn">Perfil</a>
+			<div align="center">
+				<span ng-show="hasAnyTrueValues(filter.taxes)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+				<span ng-show="hasAnyTrueValues(filter.rulers)">
+                        <span class="glyphicon glyphicon-filter"></span>
+                    </span>
+			</div>
+			</li>
 		</ul>	
 	<div class="tab-content">
 	<div class="demographics tab-pane active" id="demographics">	
         <form role="form">
             <div class="from-group">
                 <label>
-                   
                     <a href="#" ng-click="filter.sexes = { }" ng-show="hasAnyTrueValues(filter.sexes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -105,6 +125,7 @@
             <div class="from-group">
                 <label>
                     Fiscal
+					<span class="glyphicon glyphicon-info-sign" title="Inscripciones de los aportantes ante la Administración Federal de Ingresos Públicos"></span>
                     <a href="#" ng-click="filter.taxes = { }" ng-show="hasAnyTrueValues(filter.taxes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -126,6 +147,7 @@
             <div class="from-group">
                 <label>
                     Dirigencial
+					<span class="glyphicon glyphicon-info-sign" title="Atributos políticos de los aportantes"></span>
                     <a href="#" ng-click="filter.rulers = { }" ng-show="hasAnyTrueValues(filter.rulers)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -146,6 +168,4 @@
         </form>
 		</div>
     <!--</div>-->
-
 </form>
-<p align="center"><a href="https://github.com/gabelula/larutadeldinero/" target="_blank"><img src="http://decadavotada.com.ar/assets/img/GitHub-Mark-32px.png" data-toggle="tooltip" title="Fork me!"></a></p>				

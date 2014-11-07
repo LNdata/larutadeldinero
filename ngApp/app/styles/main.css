@@ -250,6 +250,16 @@ rect.parent,
     background-position-y: 50%;
 }
 
+.map-loading {
+    background: url('../images/ajax-loader.gif');
+    background-repeat: no-repeat;	
+}
+
+.borderless tbody tr td, .borderless thead tr th {
+    border: none;
+	padding: 0px;	
+	}
+
 .table-loading.table-striped > tbody > tr:nth-child(odd) > td {
     background-color: transparent;
 }

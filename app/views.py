@@ -8,8 +8,8 @@ from flask import request, render_template, \
 from app import app
 from app import db
 
-from app.forms import FilterForm
-from app.helpers import *
+# from app.forms import FilterForm
+# from app.helpers import *
 from app.models import Aporte, Aportante, Agrupacion
 
 from sqlalchemy import func

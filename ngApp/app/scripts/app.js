@@ -76,7 +76,9 @@ angular
             party: null,
             sexes: {},
             ages: {},
-            amounts: {}
+            amounts: {},
+			taxes: {},
+			rulers: {}
         };
 
         $rootScope.view = 'Treemap';
@@ -89,6 +91,10 @@ angular
           window.location.reload();
         };
 
+		$scope.reloadChart = function(){
+		$scope.$emit('reloadChart');
+        };
+		
         $scope.advancedFilterCollapsed = true;
 
         // Elementos del filtro
@@ -127,10 +133,10 @@ angular
             { name: 'Empleador', val: 'empleador' }
         ];
         $scope.rulers = [
-            { name: 'Designación', val: 'designacion' },
-            { name: 'Candidatura', val: 'candidatura' },
-            { name: 'Contrato', val: 'contrato' },
-            { name: 'Autoridad', val: 'autoridad' },
+            { name: 'Fue designado', val: 'designacion' },
+            { name: 'Fue candidato', val: 'candidatura' },
+            { name: 'Fue contratado', val: 'contrato' },
+            { name: 'Es autoridad partidaria', val: 'autoridad' },
 			{ name: 'Fue Diputado', val: 'diputado' },
 			{ name: 'Fue Senador', val: 'senador' }
         ];		
