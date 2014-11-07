@@ -24,8 +24,8 @@ def get_where_clause(filters):
         if type(v) is str:
           filters_list.append("%s = '%s'" % (name.encode('UTF-8'), v.encode('UTF-8')))
         else:
-          filters_list.append("%s = '%s'" % (name.encode('UTF-8'), v))
-
+          # filters_list.append("%s = '%s'" % (name.encode('UTF-8'), v))
+          pass
     elif op == 'eq':
 
       if type(val) is str:
