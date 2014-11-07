@@ -19,7 +19,8 @@
     "colorbrewer2": "*",
     "leaflet": "~0.7.3",
 	"leaflet.fullscreen": "~1.1.3",	
-    "leaflet.markercluster": "~0.4.0"
+    "leaflet.markercluster": "~0.4.0",
+	"L.EasyButton": "*"
   },
   "overrides": {
     "leaflet.markercluster": {

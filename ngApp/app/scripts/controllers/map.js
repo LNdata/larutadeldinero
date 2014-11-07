@@ -24,13 +24,18 @@ angular.module('larutadeldinero')
 
         L.control.zoom().addTo($scope.map);
 
+		L.control.scale().addTo($scope.map);
+			 
         $scope.center={
             lat: 24.0391667,
             lng: 121.525,
             zoom: 8
         };
 
-
+		document.getElementById('left').onclick = function(e)  { e.preventDefault(); $scope.map.panBy([-100, 0]); };
+		document.getElementById('right').onclick = function(e) { e.preventDefault(); $scope.map.panBy([100, 0]);  };
+		document.getElementById('down').onclick = function(e)  { e.preventDefault(); $scope.map.panBy([0, 100]);  };
+		document.getElementById('up').onclick = function(e)    { e.preventDefault(); $scope.map.panBy([0, -100]); };
 
         var colors = ['868a08','386cb0','61380b','d7191c','018571','969696'];
         var markers=[];
