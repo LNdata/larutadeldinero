@@ -64,7 +64,8 @@ def filter_aportes(aportes, filters):
         aportes = aportes.filter(eval(field) == filter['val']['val'])
       
       elif filter['val']['op'] == 'in':
-        pass
+        field = "Aportante.%s.in_(%s)" % (filter['val']['name'], filter['val']['val'])
+        aportes = aportes.filter(eval(field))
 
     elif filter["op"] == "eq":
         field = "Aporte.%s" % filter["name"]
