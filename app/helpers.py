@@ -1,6 +1,6 @@
 from app import db
 
-from app.forms import FilterForm
+# from app.forms import FilterForm
 from app.models import Aporte, Aportante, Agrupacion
 
 from sqlalchemy import func
@@ -58,7 +58,6 @@ def get_where_clause(filters):
 
 def filter_aportes(aportes, filters):
   for filter in filters:
-    
     if filter["name"] == 'aportante':
       field = "Aportante.%s" % filter['val']['name']
       if filter['val']['op'] == 'eq':
@@ -71,9 +70,8 @@ def filter_aportes(aportes, filters):
         field = "Aporte.%s" % filter["name"]
         aportes = aportes.filter(eval(field) == filter["val"])
     elif filter["op"] == "in":
-      for val in filter["val"]:
-        field = "Aporte.%s" % filter["name"]
-        aportes = aportes.filter(eval(field) == val)
+      field = "Aporte.%s.in_(%s)" % (filter["name"], filter["val"])
+      aportes = aportes.filter(eval(field))
 
   return aportes
   
