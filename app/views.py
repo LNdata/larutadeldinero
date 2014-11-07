@@ -105,8 +105,8 @@ def aportes_stats():
   aportes_stats = aportes.all()[0]
 
   aportes = {
-    "avg_importe" : int(aportes_stats[0]),
-    "sum_importe" : int(aportes_stats[1])
+    "avg_importe" : int(aportes_stats[0]) if aportes_stats[0] else aportes_stats[0],
+    "sum_importe" : int(aportes_stats[1]) if aportes_stats[0] else aportes_stats[1]
   }
 
   return jsonify( aportes )
