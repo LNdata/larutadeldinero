@@ -20,12 +20,15 @@ def get_where_clause(filters):
 
     if op == 'in' or type(val) is list:
 
+      val_tmp = []
       for v in val:
         if type(v) is str:
-          filters_list.append("%s = '%s'" % (name.encode('UTF-8'), v.encode('UTF-8')))
+          val_tmp.append("'%s'" % (v.encode('UTF-8')))
         else:
-          # filters_list.append("%s = '%s'" % (name.encode('UTF-8'), v))
-          pass
+          val_tmp.append("'%s'" % (v))
+      
+      filters_list.append( "%s IN (%s)" % (name, ", ". join(val_tmp)))
+
     elif op == 'eq':
 
       if type(val) is str:
@@ -52,7 +55,7 @@ def get_where_clause(filters):
         filters_list.append("%s <> '%s'" % (name, filter['val']['val']))
 
   where_clause = " and ". join(filters_list)
-
+  print where_clause
   return where_clause
 
 
@@ -73,7 +76,7 @@ def filter_aportes(aportes, filters):
     elif filter["op"] == "in":
       field = "Aporte.%s.in_(%s)" % (filter["name"], filter["val"])
       aportes = aportes.filter(eval(field))
-
+  print aportes
   return aportes
   
 # it returns the amount of donors per sex filtered by filters
@@ -120,7 +123,7 @@ def donors_per_age(filters):
 
     query = """SELECT grupo_edad, COUNT(grupo_edad) AS CuentaDeGrupoEdad \
                FROM ( \
-                      SELECT aportes.grupo_edad as grupo_edad, aportante.documento \
+                      SELECT aportes.grupo_edad as grupo_edad, aportes.grupo_aporte as grupo_aporte, aportante.documento \
                       FROM aportes INNER JOIN aportantes as aportante ON aportes.aportante_id = aportante.id \
                       WHERE %s AND grupo_edad != "" \
                       GROUP BY aportes.grupo_edad, aportante.documento \
