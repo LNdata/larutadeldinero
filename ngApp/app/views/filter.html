@@ -53,24 +53,34 @@
 			<li class="active"><a href="#demographics" data-toggle="tab" class="tab-btn">Avanzado</a>
 			<div align="center">
 					<span ng-show="hasAnyTrueValues(filter.sexes)">
-                        <span class="glyphicon glyphicon-filter"></span>
+						<a href="#demographics" data-toggle="tab" class="tab-btn">
+							<span class="glyphicon glyphicon-filter"></span>
+						</a>
                     </span>
 					<span ng-show="hasAnyTrueValues(filter.ages)">
-                        <span class="glyphicon glyphicon-filter"></span>
+						<a href="#demographics" data-toggle="tab" class="tab-btn">
+							<span class="glyphicon glyphicon-filter"></span>
+						</a>
                     </span>
 					<span ng-show="hasAnyTrueValues(filter.amounts)">
-                        <span class="glyphicon glyphicon-filter"></span>
+						<a href="#demographics" data-toggle="tab" class="tab-btn">
+							<span class="glyphicon glyphicon-filter"></span>
+						</a>
                     </span>
 			</div>
 			</li>
 			<li><a href="#politonomics" data-toggle="tab" class="tab-btn">Perfil</a>
 			<div align="center">
 				<span ng-show="hasAnyTrueValues(filter.taxes)">
+					<a href="#politonomics" data-toggle="tab" class="tab-btn">
                         <span class="glyphicon glyphicon-filter"></span>
+					</a>
                     </span>
 				<span ng-show="hasAnyTrueValues(filter.rulers)">
-                        <span class="glyphicon glyphicon-filter"></span>
-                    </span>
+					<a href="#politonomics" data-toggle="tab" class="tab-btn">
+						<span class="glyphicon glyphicon-filter"></span>
+					</a>
+				</span>
 			</div>
 			</li>
 		</ul>	
@@ -79,6 +89,7 @@
         <form role="form">
             <div class="from-group">
                 <label>
+					Persona
                     <a href="#" ng-click="filter.sexes = { }" ng-show="hasAnyTrueValues(filter.sexes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
