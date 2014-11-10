@@ -207,7 +207,8 @@ def amount_per_sex(filters):
   # ?q={"filters":[{"name":"age","op":"in","val":"22"}]}
   # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
 
-  query_join = db.session.query(func.sum(Aporte.importe))
+  query_join = db.session.query(func.sum(Aporte.importe)).join(Aportante)
+  print '*****************************'
 
   for filter in filters:
     field = "Aporte.%s" % filter["name"]
@@ -215,6 +216,19 @@ def amount_per_sex(filters):
     val = filter["val"]
     if op == "eq":
       query_join = query_join.filter(eval(field) == val)
+    elif op == "neq":
+      query_join = query_join.filter(eval(field) != val)
+    
+    elif op == "has":
+      if filter["name"] == 'aportante':
+        field = "Aportante.%s" % val["name"]
+        if val['op'] == 'eq':
+          query_join = query_join.filter(eval(field) == val['val'])
+        elif val['op'] == 'neq':
+          query_join = query_join.filter(eval(field) != val['val'])
+        elif val['op'] == 'is_not_null':
+          query_join = query_join.filter(eval(field) != None)
+      
     elif op == "in":
       for v in val:
         query_join = query_join.filter(eval(field) == v)
