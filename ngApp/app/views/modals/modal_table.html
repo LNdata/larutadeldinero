@@ -2,15 +2,15 @@
 	<div class="row">
 	<div class="col-lg-5">
 		<h3>{{modalOptions.aportante.apellido}}, {{modalOptions.aportante.nombre}}</h3>
-		<strong>CUIT:</strong> {{ modalOptions.aportante.cuit }}
+		<strong>CUIT:</strong> <a href="http://www.cuitonline.com/search.php?q={{ modalOptions.aportante.cuit }}" target="_blank">{{ modalOptions.aportante.cuit }}
 		<img src="images/icons/imp_iva/{{ modalOptions.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
 		<img src="images/icons/imp_ganancias/{{ modalOptions.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
 		<img src="images/icons/monotributo/{{ modalOptions.aportante.monotributo }}.png" title="Monotributo categoría {{ modalOptions.aportante.monotributo }}">
-		<img src="images/icons/empleador/{{ modalOptions.aportante.empleador }}.png" title="Empleador">
-		<img src="images/icons/designacion/{{ modalOptions.aportante.designacion }}.gif" title="Designación">
+		<img src="images/icons/empleador/{{ modalOptions.aportante.empleador }}.png" title="Empleador"></a>
+		<a class="iframe" href="http://poderofilia.andytow.com/consulta.php?doc={{ modalOptions.aportante.documento }}" target="_blank"><img src="images/icons/designacion/{{ modalOptions.aportante.designacion }}.gif" title="Designación"></a>
 		<img src="images/icons/candidatura/{{ modalOptions.aportante.candidatura }}.gif" title="Candidatura">
 		<img src="images/icons/contrato/{{ modalOptions.aportante.contrato }}.gif" title="Contrato">
-		<img src="images/icons/autoridad/{{ modalOptions.aportante.autoridad }}.gif" title="Autoridad partidaria">
+		<a class="iframe" href="http://poderofilia.andytow.com/consulta.php?doc={{ modalOptions.aportante.documento }}" target="_blank"><img src="images/icons/autoridad/{{ modalOptions.aportante.autoridad }}.gif" title="Autoridad partidaria"></a>
 		<img src="images/icons/mandato_diputado/{{ modalOptions.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
 		<img src="images/icons/mandato_senador/{{ modalOptions.aportante.mandato_senador }}.gif" title="Mandato como Senador">
 	</div>
@@ -50,3 +50,26 @@
 <div class="modal-footer">
   <button type="button" class="btn" data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
 </div>
+<script>
+$(document).ready(function() {
+	$("a#single_image").fancybox();
+	
+	/* Using custom settings */
+	
+	// $("a#inline").fancybox({
+	// 	'hideOnContentClick': true
+	// });
+
+	/* Apply fancybox to multiple items */
+	
+	$("a.iframe").fancybox({
+		'transitionIn'	:	'elastic',
+		'transitionOut'	:	'elastic',
+		'speedIn'		:	600, 
+		'speedOut'		:	200, 
+		'overlayShow'	:	false,
+		'type'			:   'iframe'
+	});
+	
+});
+</script>

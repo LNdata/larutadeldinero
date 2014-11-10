@@ -21,7 +21,7 @@
     </div>
 	<div class="col-lg-3">
 		<div align="center">
-			<img ng-repeat="aporte in aportes | unique: 'codlista'" src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="80">
+			<img ng-repeat="aporte in aportes | unique: 'codlista'" src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="60">
 		</div>
 	</div>
 	<div class="col-lg-3">
@@ -171,6 +171,28 @@
                 next-text="Siguiente">
     </pagination>
 </div>
+<script>
+$(document).ready(function() {
+	$("a#single_image").fancybox();
+	
+	/* Using custom settings */
+	
+	// $("a#inline").fancybox({
+	// 	'hideOnContentClick': true
+	// });
 
+	/* Apply fancybox to multiple items */
+	
+	$("a.iframe").fancybox({
+		'transitionIn'	:	'elastic',
+		'transitionOut'	:	'elastic',
+		'speedIn'		:	600, 
+		'speedOut'		:	200, 
+		'overlayShow'	:	false,
+		'type'			:   'iframe'
+	});
+	
+});
+</script>
 <!-- modal -->
 
