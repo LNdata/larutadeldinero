@@ -91,10 +91,26 @@ def donors_per_sex(filters):
     # filter {u'name': u'ciclo', u'val': 2009, u'op': u'eq'}
     if filter['name'] == 'agrupacion':
       query_join = query_join.filter(Aporte.agrupacion.has(nombre = filters['val']))
+    
+    elif filter['op'] == 'has' and filter['name'] == 'aportante':
+      field = "Aportante.%s" % filter['val']['name']
+      
+      if filter['val']['op'] == 'eq':
+        query_join = query_join.filter(eval(field) == filter['val']['val'])
+      
+      if filter['val']['op'] == 'neq':
+        query_join = query_join.filter(eval(field) != filter['val']['val'])
+      
+      elif filter['val']['op'] == 'is_not_null':
+        query_join = query_join.filter(eval(field) != None)
+
+
     elif filter['name'] == 'ciclo':
       query_join = query_join.filter_by(ciclo = filter['val'])
+    
     elif filter['name'] == 'eleccion':
       query_join = query_join.filter_by(eleccion = filter['val'])
+    
     elif filter['name'] == 'distrito':
       query_join = query_join.filter_by(distrito = filter['val'])
 
