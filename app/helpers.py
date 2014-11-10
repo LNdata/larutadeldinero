@@ -55,7 +55,6 @@ def get_where_clause(filters):
         filters_list.append("%s <> '%s'" % (name, filter['val']['val']))
 
   where_clause = " and ". join(filters_list)
-  print where_clause
   return where_clause
 
 
@@ -65,10 +64,16 @@ def filter_aportes(aportes, filters):
       field = "Aportante.%s" % filter['val']['name']
       if filter['val']['op'] == 'eq':
         aportes = aportes.filter(eval(field) == filter['val']['val'])
+
+      elif filter['val']['op'] == 'neq':
+        aportes = aportes.filter(eval(field) != filter['val']['val'])
       
       elif filter['val']['op'] == 'in':
         field = "Aportante.%s.in_(%s)" % (filter['val']['name'], filter['val']['val'])
         aportes = aportes.filter(eval(field))
+      
+      elif filter['val']['op'] == 'is_not_null':
+        aportes = aportes.filter(eval(field) != None)
 
     elif filter["op"] == "eq":
         field = "Aporte.%s" % filter["name"]
@@ -76,7 +81,6 @@ def filter_aportes(aportes, filters):
     elif filter["op"] == "in":
       field = "Aporte.%s.in_(%s)" % (filter["name"], filter["val"])
       aportes = aportes.filter(eval(field))
-  print aportes
   return aportes
   
 # it returns the amount of donors per sex filtered by filters
