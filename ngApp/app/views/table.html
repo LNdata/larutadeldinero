@@ -6,10 +6,9 @@
 <div class="row">
     <div class="col-lg-3">
         <h4 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h4>
-		
 		<p class="text-muted">ordene por columna</p>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-3">
         <form class="form-inline" role="form">
             <div class="form-group">
                 <input type="search" class="form-control" id="filterName" ng-model="filter.aportanteName" placeholder="Buscar por apellido">
@@ -20,6 +19,11 @@
             </a>
         </form>
     </div>
+	<div class="col-lg-3">
+		<div align="center">
+			<img ng-repeat="aporte in aportes | unique: 'codlista'" src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="80">
+		</div>
+	</div>
 	<div class="col-lg-3">
 		<table class="table">
 		<tr><td>Promedio</td><td align="right">$<b>{{ average | number:0 }}</b></td></tr>
