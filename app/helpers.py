@@ -208,7 +208,6 @@ def amount_per_sex(filters):
   # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
 
   query_join = db.session.query(func.sum(Aporte.importe)).join(Aportante)
-  print '*****************************'
 
   for filter in filters:
     field = "Aporte.%s" % filter["name"]
