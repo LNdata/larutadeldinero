@@ -21,7 +21,7 @@
     </div>
     <div class="col-lg-3">
         <div align="center">
-            <img ng-repeat="aporte in aportes | unique: 'codlista'" ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="60">
+            <img ng-repeat="aporte in aportes | unique: 'codlista'" ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }} - {{ aporte.distrito }} {{ aporte.ciclo }}" height="60">
         </div>
     </div>
     <div class="col-lg-3">
@@ -141,7 +141,7 @@
     </td>
     <td width="30%">
         <a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
-            <img ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left">
+            <img ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="20px" height="32px" align="left">
             <span><img ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span>
         </a>
         &nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
