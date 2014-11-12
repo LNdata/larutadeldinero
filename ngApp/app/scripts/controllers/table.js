@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('larutadeldinero')
-    .controller('TableCtrl', function ($scope, $rootScope, Aportes, Aportantes, modalService) {
+    // Cuando se inyectan dependencias en Angular y se va a minificar el código, en lugar de una función con las
+    // dependencias, pasar un array con sus nombres (en strings) y la función, ya que los nombres de las variables
+    // pueden cambiar.
+    .controller('TableCtrl', ['$scope', '$rootScope', 'Aportes', 'Aportantes', 'modalService', function($scope, $rootScope, Aportes, Aportantes, modalService) {
         $scope.currentPage = 1;
         $scope.maxSize = 10;
 
@@ -48,11 +51,11 @@ angular.module('larutadeldinero')
                         closeButtonText: 'Cerrar',
                         aportante: response.data.objects[0]
                     };
-                    
+
                     modalService.showModal({templateUrl: 'views/modals/modal_table.html'}, modalOptions);
-                
+
                 });
         }
 
 
-    })
+    }]);
