@@ -1,77 +1,77 @@
 <div class="modal-header">
-	<div class="row">
-	<div class="col-lg-5">
-		<h3>{{modalOptions.aportante.apellido}}, {{modalOptions.aportante.nombre}}</h3>
-		<div ng-show="{{ modalOptions.aportante.clase | map | sum | !=: 0 }}"><p class="edad">(~ {{ 2014 - modalOptions.aportante.clase }} años de edad)</p></div>
-		<img src="images/icons/{{ modalOptions.aportante.sexo }}.png" height="32">
-		<strong>CUIT:</strong> <a href="http://www.cuitonline.com/search.php?q={{ modalOptions.aportante.cuit }}" target="_blank">{{ modalOptions.aportante.cuit }}
-		<img src="images/icons/imp_iva/{{ modalOptions.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
-		<img src="images/icons/imp_ganancias/{{ modalOptions.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
-		<img src="images/icons/monotributo/{{ modalOptions.aportante.monotributo }}.png" title="Monotributo categoría {{ modalOptions.aportante.monotributo }}">
-		<img src="images/icons/empleador/{{ modalOptions.aportante.empleador }}.png" title="Empleador"></a>
-		<a class="iframe" href="http://poderofilia.andytow.com/consulta.php?doc={{ modalOptions.aportante.documento }}" target="_blank"><img src="images/icons/designacion/{{ modalOptions.aportante.designacion }}.gif" title="Designación"></a>
-		<img src="images/icons/candidatura/{{ modalOptions.aportante.candidatura }}.gif" title="Candidatura">
-		<img src="images/icons/contrato/{{ modalOptions.aportante.contrato }}.gif" title="Contrato">
-		<a class="iframe" href="http://poderofilia.andytow.com/consulta.php?doc={{ modalOptions.aportante.documento }}" target="_blank"><img src="images/icons/autoridad/{{ modalOptions.aportante.autoridad }}.gif" title="Autoridad partidaria"></a>
-		<img src="images/icons/mandato_diputado/{{ modalOptions.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
-		<img src="images/icons/mandato_senador/{{ modalOptions.aportante.mandato_senador }}.gif" title="Mandato como Senador">
-	</div>
-	<div class="col-lg-3">
-		<center><img ng-repeat="aporte in modalOptions.aportante.aportes | unique: 'coddistrito'" src="images/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="80"></center>
-	</div>
-	<div class="col-lg-4">
-		<center><img ng-repeat="aporte in modalOptions.aportante.aportes | unique: 'codlista'" src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="120"></center>
-	</div>
-	</div>
-</div>	
+    <div class="row">
+        <div class="col-lg-5">
+            <h3>{{aportante.apellido}}, {{aportante.nombre}}</h3>
+            <div ng-show="{{ aportante.clase | map | sum | !=: 0 }}"><p class="edad">(~ {{ 2014 - aportante.clase }} años de edad)</p></div>
+            <img ng-src="images/icons/{{ aportante.sexo }}.png" height="32">
+            <strong>CUIT:</strong> <a ng-href="http://www.cuitonline.com/search.php?q={{ aportante.cuit }}" target="_blank">{{ aportante.cuit }}
+            <img ng-src="images/icons/imp_iva/{{ aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
+            <img ng-src="images/icons/imp_ganancias/{{ aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
+            <img ng-src="images/icons/monotributo/{{ aportante.monotributo }}.png" title="Monotributo categoría {{ aportante.monotributo }}">
+            <img ng-src="images/icons/empleador/{{ aportante.empleador }}.png" title="Empleador"></a>
+            <a class="iframe" ng-href="http://poderofilia.andytow.com/consulta.php?doc={{ aportante.documento }}" target="_blank"><img ng-src="images/icons/designacion/{{ aportante.designacion }}.gif" title="Designación"></a>
+            <img ng-src="images/icons/candidatura/{{ aportante.candidatura }}.gif" title="Candidatura">
+            <img ng-src="images/icons/contrato/{{ aportante.contrato }}.gif" title="Contrato">
+            <a class="iframe" ng-href="http://poderofilia.andytow.com/consulta.php?doc={{ aportante.documento }}" target="_blank"><img ng-src="images/icons/autoridad/{{ aportante.autoridad }}.gif" title="Autoridad partidaria"></a>
+            <img ng-src="images/icons/mandato_diputado/{{ aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
+            <img ng-src="images/icons/mandato_senador/{{ aportante.mandato_senador }}.gif" title="Mandato como Senador">
+        </div>
+        <div class="col-lg-3">
+            <center><img ng-repeat="aporte in aportante.aportes | unique: 'coddistrito'" ng-src="images/escudos/{{ aporte.coddistrito }}.gif" title="{{ aporte.distrito }}" height="80"></center>
+        </div>
+        <div class="col-lg-4">
+            <center><img ng-repeat="aporte in aportante.aportes | unique: 'codlista'" ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="120"></center>
+        </div>
+    </div>
+</div>
 <div class="modal-body">
-<div class="row">
-	
-	<table class="table">
-	<thead>
-	<th>Ciclo</th>
-	<th>Elecciones</th>
-	<th>Distrito</th>
-	<th>Cargo</th>
-	<th>Agrupación</th>
-	<th>Monto</th>
-	</thead>
-	<tbody>
-	<tr ng-repeat="aporte in modalOptions.aportante.aportes" ng-class="{ 'text-muted': fetching }">
-	<td>{{ aporte.ciclo }}</td>
-	<td>{{ aporte.eleccion }}</td>
-	<td>{{ aporte.distrito }}</td>
-	<td>{{ aporte.cargo }}</td>
-	<td>{{ aporte.agrupacion_id | agrupacionName }}</td>
-	<td align="right">${{ aporte.importe | number:0 }}</td>
-	</tr>
-	</tbody>
-	</table>
-</div>	
+    <div class="row">
+
+        <table class="table">
+            <thead>
+            <th>Ciclo</th>
+            <th>Elecciones</th>
+            <th>Distrito</th>
+            <th>Cargo</th>
+            <th>Agrupación</th>
+            <th>Monto</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="aporte in aportante.aportes" ng-class="{ 'text-muted': fetching }">
+                <td>{{ aporte.ciclo }}</td>
+                <td>{{ aporte.eleccion }}</td>
+                <td>{{ aporte.distrito }}</td>
+                <td>{{ aporte.cargo }}</td>
+                <td>{{ aporte.agrupacion_id | agrupacionName }}</td>
+                <td align="right">${{ aporte.importe | number:0 }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn" data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
+    <button type="button" class="btn" data-ng-click="close()">Cerrar</button>
 </div>
 <script>
-$(document).ready(function() {
-	$("a#single_image").fancybox();
-	
-	/* Using custom settings */
-	
-	// $("a#inline").fancybox({
-	// 	'hideOnContentClick': true
-	// });
+    $(document).ready(function() {
+        $("a#single_image").fancybox();
 
-	/* Apply fancybox to multiple items */
-	
-	$("a.iframe").fancybox({
-		'transitionIn'	:	'elastic',
-		'transitionOut'	:	'elastic',
-		'speedIn'		:	600, 
-		'speedOut'		:	200, 
-		'overlayShow'	:	false,
-		'type'			:   'iframe'
-	});
-	
-});
+        /* Using custom settings */
+
+        // $("a#inline").fancybox({
+        // 	'hideOnContentClick': true
+        // });
+
+        /* Apply fancybox to multiple items */
+
+        $("a.iframe").fancybox({
+            'transitionIn'	:	'elastic',
+            'transitionOut'	:	'elastic',
+            'speedIn'		:	600,
+            'speedOut'		:	200,
+            'overlayShow'	:	false,
+            'type'			:   'iframe'
+        });
+
+    });
 </script>

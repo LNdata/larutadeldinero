@@ -1,12 +1,12 @@
 <div style="display: none; position: absolute; z-index: 110; left: 400; top: 100; width: 15; height: 15" id="preview_div"></div>
 <script>
-	setorder = 'importe';
-	directionorder = 'desc';
+    setorder = 'importe';
+    directionorder = 'desc';
 </script>
 <div class="row">
     <div class="col-lg-3">
         <h4 style="margin-top: 0px; margin-bottom: 0px">Aportes ({{ totalItems }})</h4>
-		<p class="text-muted">ordene por columna</p>
+        <p class="text-muted">ordene por columna</p>
     </div>
     <div class="col-lg-3">
         <form class="form-inline" role="form">
@@ -19,142 +19,142 @@
             </a>
         </form>
     </div>
-	<div class="col-lg-3">
-		<div align="center">
-			<img ng-repeat="aporte in aportes | unique: 'codlista'" src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="60">
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<table class="table">
-		<tr><td>Promedio</td><td align="right">$<b>{{ average | number:0 }}</b></td></tr>
-		<tr><td>Total</td><td align="right">$<b>{{ sum | number:0 }}</b></td></tr>
-		</table>
+    <div class="col-lg-3">
+        <div align="center">
+            <img ng-repeat="aporte in aportes | unique: 'codlista'" ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" height="60">
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <table class="table">
+            <tr><td>Promedio</td><td align="right">$<b>{{ average | number:0 }}</b></td></tr>
+            <tr><td>Total</td><td align="right">$<b>{{ sum | number:0 }}</b></td></tr>
+        </table>
+    </div>
+    <hr/>
+    <table class="table table-striped" ng-class="{ 'table-loading': fetching }" ng-init="pageChanged()">
+        <thead>
+        <th><center>
+            <div ng-mouseover="ciclo=true" ng-mouseout="ciclo=false">
+                <div ng-show="ciclo">
+                    <a onclick="setorder = 'ciclo'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                    <a onclick="setorder = 'ciclo'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                </div>
+                Ciclo
+        </center>
 </div>
-<hr/>
-<table class="table table-striped" ng-class="{ 'table-loading': fetching }" ng-init="pageChanged()">
-    <thead>
-    <th><center>
-		<div ng-mouseover="ciclo=true" ng-mouseout="ciclo=false">
-		<div ng-show="ciclo">
-		<a onclick="setorder = 'ciclo'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
-		<a onclick="setorder = 'ciclo'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
-		</div>
-		Ciclo
-		</center>		
-		</div>
-	</th>
-    <th><center>
-		<div ng-mouseover="eleccion=true" ng-mouseout="eleccion=false">
-		<div ng-show="eleccion">	
-		<a onclick="setorder = 'eleccion'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
-		<a onclick="setorder = 'eleccion'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
-		</div>
-		Elección
-		</center>
-		</div>
-	</th>
-    <th><center>
-		<div ng-mouseover="distrito=true" ng-mouseout="distrito=false">
-		<div ng-show="distrito">		
-		<a onclick="setorder = 'distrito'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
-		<a onclick="setorder = 'distrito'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
-		</div>
-		Distrito
-		</center>
-		</div>
-	</th>
-    <th><center>
-		<!-- <div ng-mouseover="aportante=true" ng-mouseout="aportante=false">
-		<div ng-show="aportante">		
-		<a onclick="setorder = 'aportante'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
-		<a onclick="setorder = 'aportante'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
-		</div>
-		</div> -->
-	    <br>Aportante</center>
-    </th>
-	<th><center>Perfil</center></th>
-    <th><center>
-		<div ng-mouseover="agrupacion=true" ng-mouseout="agrupacion=false">
-		<div ng-show="agrupacion">		
-		<a onclick="setorder = 'agrupacion_id'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
-		<a onclick="setorder = 'agrupacion_id'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
-		</div>
-		Agrupación
-		</center>
-		</div>
-	</th>
-    <th><center>
-		<div ng-mouseover="importe=true" ng-mouseout="importe=false">
-		<div ng-show="importe">	
-		<a onclick="setorder = 'importe'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-order"></span></a>
-		<a onclick="setorder = 'importe'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-order-alt"></span></a>
-		</div>
-		Monto
-		</center>
-		</div>
-	</th>
-    </thead>
-    <tbody>
-    <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
-        <td width="6%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
-        <td width="4%"><small><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</small></td>
-        <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
-        <td width="20%"><a ng-click="open_modal({{ aporte.aportante.documento }})">
+</th>
+<th><center>
+    <div ng-mouseover="eleccion=true" ng-mouseout="eleccion=false">
+        <div ng-show="eleccion">
+            <a onclick="setorder = 'eleccion'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+            <a onclick="setorder = 'eleccion'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+        </div>
+        Elección
+</center>
+    </div>
+</th>
+<th><center>
+    <div ng-mouseover="distrito=true" ng-mouseout="distrito=false">
+        <div ng-show="distrito">
+            <a onclick="setorder = 'distrito'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+            <a onclick="setorder = 'distrito'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+        </div>
+        Distrito
+</center>
+    </div>
+</th>
+<th><center>
+    <!-- <div ng-mouseover="aportante=true" ng-mouseout="aportante=false">
+    <div ng-show="aportante">
+    <a onclick="setorder = 'aportante'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+    <a onclick="setorder = 'aportante'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+    </div>
+    </div> -->
+    <br>Aportante</center>
+</th>
+<th><center>Perfil</center></th>
+<th><center>
+    <div ng-mouseover="agrupacion=true" ng-mouseout="agrupacion=false">
+        <div ng-show="agrupacion">
+            <a onclick="setorder = 'agrupacion_id'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+            <a onclick="setorder = 'agrupacion_id'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+        </div>
+        Agrupación
+</center>
+    </div>
+</th>
+<th><center>
+    <div ng-mouseover="importe=true" ng-mouseout="importe=false">
+        <div ng-show="importe">
+            <a onclick="setorder = 'importe'; directionorder='asc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-order"></span></a>
+            <a onclick="setorder = 'importe'; directionorder='desc'" ng-click="orderData()"><span class="glyphicon glyphicon-sort-by-order-alt"></span></a>
+        </div>
+        Monto
+</center>
+    </div>
+</th>
+</thead>
+<tbody>
+<tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
+    <td width="6%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
+    <td width="4%"><small><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</small></td>
+    <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img ng-src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
+    <td width="20%"><a ng-click="open_modal({{ aporte.aportante.documento }})">
         <!-- href="#/aportante/{{ aporte.aportante.documento }}" -->
-						<img src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28" align="left">
-						{{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}
-						</a>
-		</td>
-		<td width="25%">
-			<center>			
-			<a ng-click="filter.taxes.iva='selected'">
-				<img src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
-			</a>
-			<a ng-click="filter.taxes.ganancias='selected'">
-				<img src="images/icons/imp_ganancias/{{ aporte.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
-			</a>
-			<a ng-click="filter.taxes.monotributo='selected'">
-				<img src="images/icons/monotributo/{{ aporte.aportante.monotributo }}.png" title="Monotributo categoría {{ aporte.aportante.monotributo }}">
-			</a>
-			<a ng-click="filter.taxes.empleador='selected'">
-				<img src="images/icons/empleador/{{ aporte.aportante.empleador }}.png" title="Empleador">
-			</a>
-			<a ng-click="filter.rulers.designacion='selected'">
-				<img src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" title="Designación">
-			</a>			
-			<a ng-click="filter.rulers.candidatura='selected'">
-				<img src="images/icons/candidatura/{{ aporte.aportante.candidatura }}.gif" title="Candidatura">
-			</a>
-			<a ng-click="filter.rulers.contrato='selected'">
-				<img src="images/icons/contrato/{{ aporte.aportante.contrato }}.gif" title="Contrato">
-			</a>			
-			<a ng-click="filter.rulers.autoridad='selected'">
-				<img src="images/icons/autoridad/{{ aporte.aportante.autoridad }}.gif" title="Autoridad partidaria">
-			</a>
-			<a ng-click="filter.rulers.diputado='selected'">
-				<img src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
-			</a>
-			<a ng-click="filter.rulers.senador='selected'">
-				<img src="images/icons/mandato_senador/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
-			</a>
-			</center>
-		</td>
-        <td width="30%">
-			<a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
-				<img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left">
-				<span><img src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span>
-			</a>
-		&nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
-			</a>
-			<a class="iframe" href="http://andytow.com/atlas/totalpais/{{ aporte.resultado_eleccion }}" target="_blank">
-				<img src="images/icons/resultado_eleccion.png" height="24" align="right" title="Enlace a resultado electoral">
-			</a>
-		</td>
-        <td align="right" width="10%">${{ aporte.importe | number:0 }}</td>
-		<td><img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
-		</td>
-    </tr>
-    </tbody>
+        <img ng-src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28" align="left">
+        {{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}
+    </a>
+    </td>
+    <td width="25%">
+        <center>
+            <a ng-click="filter.taxes.iva='selected'">
+                <img ng-src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
+            </a>
+            <a ng-click="filter.taxes.ganancias='selected'">
+                <img ng-src="images/icons/imp_ganancias/{{ aporte.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
+            </a>
+            <a ng-click="filter.taxes.monotributo='selected'">
+                <img ng-src="images/icons/monotributo/{{ aporte.aportante.monotributo }}.png" title="Monotributo categoría {{ aporte.aportante.monotributo }}">
+            </a>
+            <a ng-click="filter.taxes.empleador='selected'">
+                <img ng-src="images/icons/empleador/{{ aporte.aportante.empleador }}.png" title="Empleador">
+            </a>
+            <a ng-click="filter.rulers.designacion='selected'">
+                <img ng-src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" title="Designación">
+            </a>
+            <a ng-click="filter.rulers.candidatura='selected'">
+                <img ng-src="images/icons/candidatura/{{ aporte.aportante.candidatura }}.gif" title="Candidatura">
+            </a>
+            <a ng-click="filter.rulers.contrato='selected'">
+                <img ng-src="images/icons/contrato/{{ aporte.aportante.contrato }}.gif" title="Contrato">
+            </a>
+            <a ng-click="filter.rulers.autoridad='selected'">
+                <img ng-src="images/icons/autoridad/{{ aporte.aportante.autoridad }}.gif" title="Autoridad partidaria">
+            </a>
+            <a ng-click="filter.rulers.diputado='selected'">
+                <img ng-src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
+            </a>
+            <a ng-click="filter.rulers.senador='selected'">
+                <img ng-src="images/icons/mandato_senador/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
+            </a>
+        </center>
+    </td>
+    <td width="30%">
+        <a ng-click="setParty(aporte.agrupacion.id)" class="thumbnails">
+            <img ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }}" width="20px" height="32px" align="left">
+            <span><img ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" width="150" height="240" align="left"></span>
+        </a>
+        &nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
+    </a>
+        <a class="iframe" ng-href="http://andytow.com/atlas/totalpais/{{ aporte.resultado_eleccion }}" target="_blank">
+            <img src="images/icons/resultado_eleccion.png" height="24" align="right" title="Enlace a resultado electoral">
+        </a>
+    </td>
+    <td align="right" width="10%">${{ aporte.importe | number:0 }}</td>
+    <td><img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
+    </td>
+</tr>
+</tbody>
 </table>
 <div class="text-center">
     <pagination total-items="totalItems"
@@ -172,27 +172,27 @@
     </pagination>
 </div>
 <script>
-$(document).ready(function() {
-	$("a#single_image").fancybox();
-	
-	/* Using custom settings */
-	
-	// $("a#inline").fancybox({
-	// 	'hideOnContentClick': true
-	// });
+    $(document).ready(function() {
+        $("a#single_image").fancybox();
 
-	/* Apply fancybox to multiple items */
-	
-	$("a.iframe").fancybox({
-		'transitionIn'	:	'elastic',
-		'transitionOut'	:	'elastic',
-		'speedIn'		:	600, 
-		'speedOut'		:	200, 
-		'overlayShow'	:	false,
-		'type'			:   'iframe'
-	});
-	
-});
+        /* Using custom settings */
+
+        // $("a#inline").fancybox({
+        // 	'hideOnContentClick': true
+        // });
+
+        /* Apply fancybox to multiple items */
+
+        $("a.iframe").fancybox({
+            'transitionIn'	:	'elastic',
+            'transitionOut'	:	'elastic',
+            'speedIn'		:	600,
+            'speedOut'		:	200,
+            'overlayShow'	:	false,
+            'type'			:   'iframe'
+        });
+
+    });
 </script>
 <!-- modal -->
 

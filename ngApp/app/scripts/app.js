@@ -42,18 +42,18 @@ angular
                         templateUrl: 'views/table.html',
                         controller: 'TableCtrl'
                     },
-					'Sitio': {
+                    'Sitio': {
                         templateUrl: 'views/sitio.html'
-					},
-					'Faq': {
+                    },
+                    'Faq': {
                         templateUrl: 'views/faq.html'
-					},
-					'Team': {
+                    },
+                    'Team': {
                         templateUrl: 'views/team.html'
-					},
-					'Tutorial': {
+                    },
+                    'Tutorial': {
                         templateUrl: 'views/tutorial.html'
-					}
+                    }
 
                 }
             })
@@ -77,8 +77,8 @@ angular
             sexes: {},
             ages: {},
             amounts: {},
-			taxes: {},
-			rulers: {}
+            taxes: {},
+            rulers: {}
         };
 
         $rootScope.view = 'Treemap';
@@ -88,13 +88,13 @@ angular
         };
 
         $scope.reloadPage = function(){
-          window.location.reload();
+            window.location.reload();
         };
 
-		$scope.reloadChart = function(){
-		$scope.$emit('reloadChart');
+        $scope.reloadChart = function(){
+            $scope.$emit('reloadChart');
         };
-		
+
         $scope.advancedFilterCollapsed = true;
 
         // Elementos del filtro
@@ -109,7 +109,7 @@ angular
         $scope.sexes = [
             { name: 'M', val: 'M' },
             { name: 'F', val: 'F' },
-			{ name: 'J', val: 'J' }
+            { name: 'J', val: 'J' }
         ];
         $scope.ages = [
             { name: '< 30', val: '30-' },
@@ -138,15 +138,15 @@ angular
             { name: 'Fue candidato', val: 'candidatura' },
             { name: 'Fue contratado', val: 'contrato' },
             { name: 'Es autoridad partidaria', val: 'autoridad' },
-			{ name: 'Fue Diputado', val: 'diputado' },
-			{ name: 'Fue Senador', val: 'senador' }
-        ];		
+            { name: 'Fue Diputado', val: 'diputado' },
+            { name: 'Fue Senador', val: 'senador' }
+        ];
 
         setTimeout(function() {
             $rootScope.$watch('filter', refreshData, true)
-			$rootScope.$watch('setorder', refreshData, true);
+            $rootScope.$watch('setorder', refreshData, true);
         }, 1000);
-		
+
         function refreshData() {
             setTimeout(function() {
                 $rootScope.$emit('filterChanged');
@@ -159,7 +159,7 @@ angular
             }
             return false;
         }
-        
+
 
     })
 
@@ -179,57 +179,4 @@ angular
 
             return filtered.length > 0 ? filtered[0].nombre : '-';
         }
-    })
-
-    .service('modalService', ['$modal',
-        // http://weblogs.asp.net/dwahlin/building-an-angularjs-modal-service
-
-        function ($modal) {
-            console.log($modal)
-            var modalDefaults = {
-                backdrop: true,
-                keyboard: true,
-                modalFade: true,
-                templateUrl: '/views/modals/modal.html'
-            };
-
-            var modalOptions = {
-                closeButtonText: 'Close',
-                actionButtonText: 'OK',
-                headerText: 'Proceed?',
-                bodyText: 'Perform this action?'
-            };
-
-            this.showModal = function (customModalDefaults, customModalOptions) {
-                if (!customModalDefaults) customModalDefaults = {};
-                customModalDefaults.backdrop = 'static';
-                return this.show(customModalDefaults, customModalOptions);
-            };
-
-            this.show = function (customModalDefaults, customModalOptions) {
-                //Create temp objects to work with since we're in a singleton service
-                var tempModalDefaults = {};
-                var tempModalOptions = {};
-
-                //Map angular-ui modal custom defaults to modal defaults defined in service
-                angular.extend(tempModalDefaults, modalDefaults, customModalDefaults);
-
-                //Map modal.html $scope custom properties to defaults defined in service
-                angular.extend(tempModalOptions, modalOptions, customModalOptions);
-
-                if (!tempModalDefaults.controller) {
-                    tempModalDefaults.controller = function ($scope, $modalInstance) {
-                        $scope.modalOptions = tempModalOptions;
-                        $scope.modalOptions.ok = function (result) {
-                            $modalInstance.close(result);
-                        };
-                        $scope.modalOptions.close = function (result) {
-                            $modalInstance.dismiss('cancel');
-                        };
-                    }
-                }
-
-                return $modal.open(tempModalDefaults).result;
-            };
-
-        }])
+    });
