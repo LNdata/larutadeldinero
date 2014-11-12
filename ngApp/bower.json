@@ -29,7 +29,10 @@
     },
 	"leaflet.fullscreen": {
       "main": "Control.FullScreen.js"
-    }	
+    },
+    "fancybox": {
+      "main": "source/jquery.fancybox.pack.js"
+    }
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
