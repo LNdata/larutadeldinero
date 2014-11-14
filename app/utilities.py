@@ -112,9 +112,9 @@ class ImportData(Command):
           nombre = data[2]
           apellido = data[3]
           persona = data[4]
-          if data[5] in ['M', 'F']:
+          if data[5] in ['M', 'F', 'J']:
             sexo = data[5]
-
+          
           clase = int(float(data[6])) if data[6] else 0
 
           designacion = True if data[7] else False

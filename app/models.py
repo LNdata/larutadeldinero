@@ -15,7 +15,7 @@ class Aportante(db.Model):
   nombre = db.Column(db.String(80))
   apellido = db.Column(db.String(80))
   persona = db.Column(db.String(50))
-  sexo = db.Column(db.Enum('F', 'M', name='sexo_types'))
+  sexo = db.Column(db.Enum('F', 'M', 'J', name='sexo_types'))
   clase = db.Column(db.Integer)
   lat = db.Column(db.String(50))
   lon = db.Column(db.String(50))
