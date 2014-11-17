@@ -151,7 +151,10 @@
         </a>
     </td>
     <td align="right" width="10%">${{ aporte.importe | number:0 }}</td>
-    <td><img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
+    <td>
+		<a href="{{ aporte.fuente }}" target="_blank">
+			<img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
+		</a>
     </td>
 </tr>
 </tbody>
