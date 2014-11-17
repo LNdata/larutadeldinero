@@ -136,7 +136,7 @@
             <div class="from-group">
                 <label>
                     Fiscal
-					<span class="glyphicon glyphicon-info-sign" title="Inscripciones de los aportantes ante la Administración Federal de Ingresos Públicos"></span>
+					<span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Inscripciones de los aportantes ante la Administración Federal de Ingresos Públicos" tooltip></span>
                     <a href="#" ng-click="filter.taxes = { }" ng-show="hasAnyTrueValues(filter.taxes)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -158,7 +158,7 @@
             <div class="from-group">
                 <label>
                     Dirigencial
-					<span class="glyphicon glyphicon-info-sign" title="Atributos políticos de los aportantes"></span>
+					<span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Atributos políticos de los aportantes" tooltip></span>
                     <a href="#" ng-click="filter.rulers = { }" ng-show="hasAnyTrueValues(filter.rulers)" prevent-click>
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>

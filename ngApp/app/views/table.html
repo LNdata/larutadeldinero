@@ -21,7 +21,7 @@
     </div>
     <div class="col-lg-3">
         <div align="center">
-            <img ng-repeat="aporte in aportes | unique: 'codlista'" ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }} - {{ aporte.distrito }} {{ aporte.ciclo }}" height="60">
+            <img ng-repeat="aporte in aportes | unique: 'codlista'" ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }} - {{ aporte.distrito }} {{ aporte.ciclo }}" data-toggle="tooltip" height="60" tooltip>
         </div>
     </div>
     <div class="col-lg-3">
@@ -98,44 +98,44 @@
 <tr ng-repeat="aporte in aportes" ng-class="{ 'text-muted': fetching }">
     <td width="6%"><a ng-click="filter.year={{ aporte.ciclo }}">{{ aporte.ciclo }}</a></td>
     <td width="4%"><small><a ng-click="filter.type='{{ aporte.eleccion }}'">{{ aporte.eleccion }}</small></td>
-    <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img ng-src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" title="{{ aporte.distrito }}"></a></center></td>
+    <td width="3%"><center><a ng-click="filter.district='{{ aporte.distrito }}'"><img ng-src="images/escudos_alt/{{ aporte.coddistrito }}.gif" height="28" data-toggle="tooltip" title="{{ aporte.distrito }}" tooltip></a></center></td>
     <td width="20%"><a ng-click="open_modal({{ aporte.aportante.documento }})">
         <!-- href="#/aportante/{{ aporte.aportante.documento }}" -->
-        <img ng-src="images/icons/{{ aporte.aportante.sexo }}.png" title="Sexo" height="28" align="left">
+        <img ng-src="images/icons/{{ aporte.aportante.sexo }}.png" height="28" align="left">
         {{ aporte.aportante.nombre }} {{ aporte.aportante.apellido }}
     </a>
     </td>
     <td width="25%">
         <center>
             <a ng-click="filter.taxes.iva='selected'">
-                <img ng-src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" title="Impuesto al Valor Agregado">
+				<img ng-src="images/icons/imp_iva/{{ aporte.aportante.impuesto_iva }}.png" data-toggle="tooltip" title="Impuesto al Valor Agregado" tooltip>
             </a>
             <a ng-click="filter.taxes.ganancias='selected'">
-                <img ng-src="images/icons/imp_ganancias/{{ aporte.aportante.impuesto_ganancias }}.png" title="Impuesto a las Ganancias">
+                <img ng-src="images/icons/imp_ganancias/{{ aporte.aportante.impuesto_ganancias }}.png" data-toggle="tooltip" title="Impuesto a las Ganancias" tooltip>
             </a>
             <a ng-click="filter.taxes.monotributo='selected'">
-                <img ng-src="images/icons/monotributo/{{ aporte.aportante.monotributo }}.png" title="Monotributo categoría {{ aporte.aportante.monotributo }}">
+                <img ng-src="images/icons/monotributo/{{ aporte.aportante.monotributo }}.png" data-toggle="tooltip" title="Monotributo categoría {{ aporte.aportante.monotributo }}" tooltip>
             </a>
             <a ng-click="filter.taxes.empleador='selected'">
-                <img ng-src="images/icons/empleador/{{ aporte.aportante.empleador }}.png" title="Empleador">
+                <img ng-src="images/icons/empleador/{{ aporte.aportante.empleador }}.png" data-toggle="tooltip" title="Empleador" tooltip>
             </a>
             <a ng-click="filter.rulers.designacion='selected'">
-                <img ng-src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" title="Designación">
+                <img ng-src="images/icons/designacion/{{ aporte.aportante.designacion }}.gif" data-toggle="tooltip" title="Designación" tooltip>
             </a>
             <a ng-click="filter.rulers.candidatura='selected'">
-                <img ng-src="images/icons/candidatura/{{ aporte.aportante.candidatura }}.gif" title="Candidatura">
+                <img ng-src="images/icons/candidatura/{{ aporte.aportante.candidatura }}.gif" data-toggle="tooltip" title="Candidatura" tooltip>
             </a>
             <a ng-click="filter.rulers.contrato='selected'">
-                <img ng-src="images/icons/contrato/{{ aporte.aportante.contrato }}.gif" title="Contrato">
+                <img ng-src="images/icons/contrato/{{ aporte.aportante.contrato }}.gif" data-toggle="tooltip" title="Contrato" tooltip>
             </a>
             <a ng-click="filter.rulers.autoridad='selected'">
-                <img ng-src="images/icons/autoridad/{{ aporte.aportante.autoridad }}.gif" title="Autoridad partidaria">
+                <img ng-src="images/icons/autoridad/{{ aporte.aportante.autoridad }}.gif" data-toggle="tooltip" title="Autoridad partidaria" tooltip>
             </a>
             <a ng-click="filter.rulers.diputado='selected'">
-                <img ng-src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" title="Mandato como Diputado">
+                <img ng-src="images/icons/mandato_diputado/{{ aporte.aportante.mandato_diputado }}.gif" data-toggle="tooltip" title="Mandato como Diputado" tooltip>
             </a>
             <a ng-click="filter.rulers.senador='selected'">
-                <img ng-src="images/icons/mandato_senador/{{ aporte.aportante.mandato_senador }}.gif" title="Mandato como Senador">
+                <img ng-src="images/icons/mandato_senador/{{ aporte.aportante.mandato_senador }}.gif" data-toggle="tooltip" title="Mandato como Senador" tooltip>
             </a>
         </center>
     </td>
@@ -147,13 +147,13 @@
         &nbsp;<a ng-click="setParty(aporte.agrupacion.id)"><small><font color="#{{ aporte.color }}">{{ aporte.agrupacion.nombre }}</font><small>
     </a>
         <a class="iframe" ng-href="http://andytow.com/atlas/totalpais/{{ aporte.resultado_eleccion }}" target="_blank">
-            <img src="images/icons/resultado_eleccion.png" height="24" align="right" title="Enlace a resultado electoral">
+            <img src="images/icons/resultado_eleccion.png" height="24" align="right" data-toggle="tooltip" title="Enlace a resultado electoral" tooltip>
         </a>
     </td>
     <td align="right" width="10%">${{ aporte.importe | number:0 }}</td>
     <td>
 		<a href="{{ aporte.fuente }}" target="_blank">
-			<img src="images/icons/pdf.jpg" align="right" title="link a fuente de datos">
+			<img src="images/icons/pdf.jpg" align="right" data-toggle="tooltip" title="link a fuente de datos" tooltip>
 		</a>
     </td>
 </tr>
