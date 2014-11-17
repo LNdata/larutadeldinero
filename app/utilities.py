@@ -169,11 +169,12 @@ class ImportData(Command):
             color = data[13]
             grupo_edad = data[14]
             grupo_aporte = data[15]
+            url_fuente = data[16]
           except Exception as exception:
             print exception
             continue
 
-          aporte = Aporte(ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, path, documento, agrupacion_nombre, codlista, lista, color, grupo_edad, grupo_aporte)
+          aporte = Aporte(ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, path, documento, agrupacion_nombre, codlista, lista, color, grupo_edad, grupo_aporte, url_fuente)
 
           db.session.add(aporte)
 
