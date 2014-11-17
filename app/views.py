@@ -128,12 +128,15 @@ def data_for_map():
   filters = parse_filters(request.args.get('q'))
 
   # eq e in sobre todos los campos del aportante
-  aportes = filter_aportes(db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aportante.aportes).filter(Aportante.lon  != "", Aportante.lat != ""), filters)
+  aportes = filter_aportes(db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aporte).filter(Aportante.lon  != "", Aportante.lat != ""), filters)
+
+  print aportes
 
   aportes = aportes.group_by(Aportante.documento).distinct().all()
-
+  
   results = {
         "key": "Aportantes",
+        "num_results": len(aportes),
         "values": [ { "documento": aporte[0], "latitud": aporte[1], "longitud": aporte[2], "monto": aporte[3], "color": aporte[4]} for aporte in aportes]
         }
 
