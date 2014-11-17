@@ -59,6 +59,7 @@ angular.module('larutadeldinero')
 
             $scope.loading=true;
             Aportes.forMap().then(function(response) {
+				$scope.totalItems = response.data.num_results;
                 var points = response.data.values;
 
                 $(points).each(function(i,d) {
