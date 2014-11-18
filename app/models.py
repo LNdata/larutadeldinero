@@ -100,6 +100,7 @@ class Aporte(db.Model):
 
   aportante = db.relationship("Aportante", backref=backref('aportes', order_by=id))
   agrupacion = db.relationship("Agrupacion", backref=backref('aportes', order_by=id))
+  aportante_nombre = db.Column(db.String(140))
 
   def __init__(self, ciclo, cargo, eleccion, coddistrito, distrito, importe, fecha, resultado_eleccion, documento, agrupacion_name, codlista, lista, color, grupo_edad, grupo_aporte, url_fuente):
     self.ciclo  = ciclo
@@ -118,6 +119,8 @@ class Aporte(db.Model):
     self.url_fuente = url_fuente # categoria de importe, calculado por andy tow
     self.aportante  = Aportante.query.filter_by(documento=documento).first()
     self.agrupacion = Agrupacion.query.filter_by(nombre=agrupacion_name).first()
+    if self.aportante:
+      self.aportante_nombre = self.aportante.apellido
 
   def __repr__(self):
     return '<Aporte documento %s, importe %s>' % (self.aportante.documento, self.importe)
