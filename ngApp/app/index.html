@@ -43,9 +43,18 @@
 			<li ng-class="{ active: view == 'Faq' && location.path() == '/' }"><a href="#" ng-click="setView('Faq')" prevent-click><small>Preguntas frecuentes</small></a></li>
 			<li ng-class="{ active: view == 'Tutorial' && location.path() == '/' }"><a href="#" ng-click="setView('Tutorial')" prevent-click><small>Tutorial</small></a></li>
 			<li ng-class="{ active: view == 'Team' && location.path() == '/' }"><a href="#" ng-click="setView('Team')" prevent-click><small>Equipo</small></a></li>
-		</ul>
-        <h2 class="text-muted"><a ng-click="reloadPage()">La Ruta Electoral</a></h2>
-		<p>Financiamiento privado de campañas electorales en la Argentina</p>
+		</ul>	
+        <h2 class="text-muted"><a ng-click="reloadPage()">La Ruta Electoral</a></h2><sup>Financiamiento privado de campañas electorales en la Argentina</sup>
+
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input type="search" class="form-control" id="filterName" ng-click="setView('Table')" ng-model="filter.aportanteName" placeholder="Buscar por apellido">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="filterByName();setView('Table')">Buscar</button>
+            <a href="#" ng-click="filter.aportanteName = null; filterByName()" ng-show="filter.aportanteName" prevent-click>
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        </form>			
     </div>
 
     <div class="row">
