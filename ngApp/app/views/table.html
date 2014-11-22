@@ -22,7 +22,8 @@
 -->
     <div class="col-lg-6">
         <div align="center">
-            <img ng-repeat="aporte in aportes | unique: 'codlista'" ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }} - {{ aporte.distrito }} {{ aporte.ciclo }}" data-toggle="tooltip" height="60" tooltip>
+            <span ng-repeat="aporte in aportes | unique: 'codlista'"><a ng-click="setParty(aporte.agrupacion.id); filter.year={{ aporte.ciclo }}; filter.district='{{ aporte.distrito }}'; filter.type='{{ aporte.eleccion }}'"><img ng-src="images/boletas/{{ aporte.ciclo }}/{{ aporte.codlista }}.jpg" title="{{ aporte.agrupacion_id | agrupacionName }} - {{ aporte.distrito }} {{ aporte.ciclo }}" data-toggle="tooltip" height="60" tooltip></a>
+			</span>
         </div>
     </div>
     <div class="col-lg-3">
