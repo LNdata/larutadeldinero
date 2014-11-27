@@ -16,7 +16,8 @@ from sqlalchemy import func
 
 from flask.ext.cache import Cache
 
-cache = Cache(app=None, with_jinja2_ext=True, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
+# cache = Cache(app=None, with_jinja2_ext=True, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
+cache = Cache(app=None, with_jinja2_ext=True, config={'CACHE_TYPE': 'simple'})
 cache.init_app(app)
 
 def make_cache_key(*args, **kwargs):
