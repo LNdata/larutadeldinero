@@ -15,3 +15,4 @@ Thumbs.db
 npm-debug.log
 .idea/
 fabfile.py
+cache
