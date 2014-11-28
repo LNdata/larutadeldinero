@@ -144,7 +144,7 @@
 				
 				<ul class="list-unstyled">
                 <li ng-repeat="tax in taxes">
-					<a href="#" ng-click="filter.taxes[tax.val]='selected'">
+					<a ng-click="filter.taxes[tax.val]='selected'">
 					<img ng-src="images/icons/{{ tax.val }}.png" width="16">
                     <small>{{ tax.name }}&nbsp;</small>
 					</a>
@@ -166,7 +166,7 @@
 
 				<ul class="list-unstyled">
                 <li ng-repeat="ruler in rulers">
-					<a href="#" ng-click="filter.rulers[ruler.val]='selected'">
+					<a ng-click="filter.rulers[ruler.val]='selected'">
 					<img ng-src="images/icons/{{ ruler.val }}.gif" width="16">
                     <small>{{ ruler.name }}&nbsp;</small>
 					</a>
