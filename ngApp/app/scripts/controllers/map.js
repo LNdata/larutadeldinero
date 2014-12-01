@@ -18,7 +18,7 @@ angular.module('larutadeldinero')
         var mapLink='<a href="http://openstreetmap.org">OpenStreetMap</a>';
 	
         L.tileLayer(
-            'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; ' + mapLink + ' Contributors'
             }).addTo($scope.map);
 
