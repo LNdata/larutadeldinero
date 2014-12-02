@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import os
 from flask import request, render_template, \
                   flash, g, session, redirect, url_for, \
                   jsonify
@@ -16,11 +17,13 @@ from sqlalchemy import func
 
 from flask.ext.cache import Cache
 
-cache = Cache(app=None, with_jinja2_ext=True, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
+CACHE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "cache")
+cache = Cache(app=None, with_jinja2_ext=True, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': CACHE_PATH})
 # cache = Cache(app=None, with_jinja2_ext=True, config={'CACHE_TYPE': 'simple'})
 cache.init_app(app)
 
 def make_cache_key(*args, **kwargs):
+    print CACHE_PATH
     path = request.path
     args = str(hash(frozenset(request.args.items())))
     # lang = get_locale()
@@ -28,7 +31,7 @@ def make_cache_key(*args, **kwargs):
 
 
 @app.route('/')
-@cache.cached(timeout=60*10, key_prefix=make_cache_key)
+# @cache.cached(timeout=60*10, key_prefix=make_cache_key)
 def index():
   return render_template('index.html')
 
