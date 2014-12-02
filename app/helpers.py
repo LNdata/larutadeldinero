@@ -93,7 +93,6 @@ def donors_per_sex(filters):
       query_join = query_join.filter(Aporte.agrupacion.has(nombre = filters['val']))
     
     elif filter['op'] == 'has' and filter['name'] == 'aportante':
-      field = "Aportante.%s" % filter['val']['name']
       
       if filter['val']['op'] == 'eq':
         query_join = query_join.filter(eval(field) == filter['val']['val'])
@@ -103,7 +102,10 @@ def donors_per_sex(filters):
       
       elif filter['val']['op'] == 'is_not_null':
         query_join = query_join.filter(eval(field) != None)
-
+      
+      elif filter['val']['op'] == 'in':
+        fieldfield = "Aportante.%s.in_(%s)" % (filter['val']["name"], filter['val']["val"])
+        query_join = query_join.filter(eval(fieldfield))
 
     elif filter['name'] == 'ciclo':
       query_join = query_join.filter_by(ciclo = filter['val'])
@@ -113,7 +115,13 @@ def donors_per_sex(filters):
     
     elif filter['name'] == 'distrito':
       query_join = query_join.filter_by(distrito = filter['val'])
-
+    
+    elif filter['op'] == 'in':
+      fieldfield = "Aporte.%s.in_(%s)" % (filter["name"], filter["val"])
+      
+      query_join = query_join.filter(eval(fieldfield))
+      
+      
   donors_by_sex_f = query_join.filter(Aportante.sexo=='F').distinct().count()
   donors_by_sex_m = query_join.filter(Aportante.sexo=='M').distinct().count()
 

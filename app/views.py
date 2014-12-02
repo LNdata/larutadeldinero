@@ -23,7 +23,6 @@ cache = Cache(app=None, with_jinja2_ext=True, config={'CACHE_TYPE': 'filesystem'
 cache.init_app(app)
 
 def make_cache_key(*args, **kwargs):
-    print CACHE_PATH
     path = request.path
     args = str(hash(frozenset(request.args.items())))
     # lang = get_locale()
@@ -38,7 +37,7 @@ def index():
 # Consultas -----------------------
 
 @app.route('/api/aportantes/sexo')
-@cache.cached(timeout=60*10, key_prefix=make_cache_key)
+# @cache.cached(timeout=60*10, key_prefix=make_cache_key)
 def aportantes_por_sexo():
 
   filters = parse_filters(request.args.get('q'))
