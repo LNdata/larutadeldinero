@@ -149,6 +149,7 @@ angular.module('larutadeldinero')
 						.call(d3.helper.tooltip_chart(function(d) { return (fmt(d.value)).replace(',','.').replace(',','.');}));
 
                         bar.attr("width", x.rangeBand());
+                        bar.attr("x", function(d) { return x(d.label); });
 
                         bar.transition()
                             .attr("y", function(d) { return y(d.value); })
