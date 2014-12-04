@@ -147,7 +147,7 @@ def data_for_treemap():
   return jsonify(treemap_data)
 
 @app.route('/api/map')
-@cache.cached(timeout=60*10, key_prefix=make_cache_key)
+# @cache.cached(timeout=60*10, key_prefix=make_cache_key)
 def data_for_map():
 
 # ?q={"filters":[{"name":"age","op":"eq","val":"22"}]}
@@ -155,11 +155,14 @@ def data_for_map():
 # ?q={"filters":[{"name":"age","op":"has","val":"22"}]}
 
   filters = parse_filters(request.args.get('q'))
-
   # eq e in sobre todos los campos del aportante
+
   aportes = filter_aportes(db.session.query(Aportante.documento, Aportante.lat, Aportante.lon, func.sum(Aporte.importe), Aporte.color ).join(Aporte).filter(Aportante.lon  != "", Aportante.lat != ""), filters)
 
-
+  if not filters:
+    """Si no hay filtro aplicado toma los mayores de 10.000"""  
+    aportes = aportes.filter(Aporte.grupo_aporte.in_(['$10.000 - $49.999', '$50.000 y más']))
+  
   aportes = aportes.group_by(Aportante.documento).distinct().all()
   
   results = {
